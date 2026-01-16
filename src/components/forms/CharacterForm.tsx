@@ -1482,7 +1482,7 @@ export const CharacterForm = () => {
                                         All specific artwork, logos, and game mechanics referenced herein are the property of their respective owners. This tool is provided free of charge for community use and does not claim ownership over any official intellectual property.
                                     </p>
                                     <p>
-                                        The source code of this application is licensed under the <a href="https://vinyamar.nl" className="text-cosmere-blue hover:text-cosmere-blue-hover underline font-bold" target="_blank" rel="noopener noreferrer">MIT License</a>.
+                                        The source code of this application is licensed under the <a href="https://github.com/deafol/cosmere-rpg-character-builder/blob/main/LICENSE" className="text-cosmere-blue hover:text-cosmere-blue-hover underline font-bold" target="_blank" rel="noopener noreferrer">MIT License</a>.
                                     </p>
                                 </div>
                             </div>

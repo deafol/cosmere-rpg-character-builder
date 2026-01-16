@@ -1,0 +1,1027 @@
+{
+  "Agent": {
+    "keyTalent": "Opportunist",
+    "talents": [
+      {
+        "id": "tal_opportunist",
+        "name": "Opportunist",
+        "description": "Once per round, you can reroll your plot die.",
+        "prerequisites": "None",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_watchful_eye",
+        "name": "Watchful Eye",
+        "description": "Use Opportunist on the plot die of a willing ally within 20 feet.",
+        "prerequisites": "Deduction 1+",
+        "specialty": "Investigator",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_quick_analysis",
+        "name": "Quick Analysis",
+        "description": "Spend 2 focus to gain 2 actions for cognitive tests with Use a Skill, Gain Advantage, or an Agent talent.",
+        "prerequisites": "None",
+        "specialty": "Investigator",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_get_em_talking",
+        "name": "Get 'Em Talking",
+        "description": "Spend 1 focus to test Deduction vs. Spiritual to learn the target's motivation. During this scene, you can raise the stakes on tests to leverage this motivation.",
+        "prerequisites": "Insight 2+",
+        "specialty": "Investigator",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_baleful",
+        "name": "Baleful",
+        "description": "To resist your influence, a character must spend additional focus equal to your tier.",
+        "prerequisites": "None",
+        "specialty": "Investigator",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_gather_evidence",
+        "name": "Gather Evidence",
+        "description": "Gain Legal Codes expertise. When you succeed on a cognitive test against a target, you become Focused.",
+        "prerequisites": "Insight 2+",
+        "specialty": "Investigator",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_hardy",
+        "name": "Hardy",
+        "description": "Gain +1 max health per level (including previous levels).",
+        "prerequisites": "None",
+        "specialty": "Investigator",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_sleuth_s_instincts",
+        "name": "Sleuth's Instincts",
+        "description": "Gain an advantage on cognitive tests against characters whose motivation you know. You know when those characters lie to you.",
+        "prerequisites": "Deduction 3+",
+        "specialty": "Investigator",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_close_the_case",
+        "name": "Close the Case",
+        "description": "Spend 3 focus to test Deduction vs. Cognitive, gaining an advantage if you know the target's motivation. On failure, the target gains an advantage against you. On success, they back down.",
+        "prerequisites": "Deduction 3+",
+        "specialty": "Investigator",
+        "activation": "►►►"
+      },
+      {
+        "id": "tal_sure_outcome",
+        "name": "Sure Outcome",
+        "description": "When you use Opportunist, spend 2 focus to change a blank plot die result to a 4, or change any Complication to a Success.",
+        "prerequisites": "Insight 2+",
+        "specialty": "Spy",
+        "activation": "★"
+      },
+      {
+        "id": "tal_plausible_excuse",
+        "name": "Plausible Excuse",
+        "description": "Gain Sleight of Hand expertise. When discovered skulking, spend 2 focus to feign innocence.",
+        "prerequisites": "Deception 1+",
+        "specialty": "Spy",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_collected",
+        "name": "Collected",
+        "description": "Increase your Cognitive and Spiritual defenses by 2.",
+        "prerequisites": "None",
+        "specialty": "Spy",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cover_story",
+        "name": "Cover Story",
+        "description": "Gain a false identity and a relevant cultural expertise.",
+        "prerequisites": "None",
+        "specialty": "Spy",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_subtle_takedown",
+        "name": "Subtle Takedown",
+        "description": "Make an unarmed attack with Insight vs. an unsuspecting target's Cognitive, raising the stakes. On a hit, they can't communicate.",
+        "prerequisites": "Insight 3+",
+        "specialty": "Spy",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_mighty",
+        "name": "Mighty",
+        "description": "When you hit with a weapon or unarmed attack, for each action spent, deal extra damage equal to 1 + your tier.",
+        "prerequisites": "None",
+        "specialty": "Spy",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_mercurial_facade",
+        "name": "Mercurial Facade",
+        "description": "Disguise yourself using Deception without needing physical supplies. The first character to see through your disguise is Surprised.",
+        "prerequisites": "Deception 3+",
+        "specialty": "Spy",
+        "activation": "★"
+      },
+      {
+        "id": "tal_high_society_contacts",
+        "name": "High Society Contacts",
+        "description": "Gain High Society expertise. Spend 2 focus to add a Success to a test to interact in high society.",
+        "prerequisites": "Patron in high society",
+        "specialty": "Spy",
+        "activation": "★"
+      },
+      {
+        "id": "tal_risky_behavior",
+        "name": "Risky Behavior",
+        "description": "Spend 1 focus to raise the stakes on your test.",
+        "prerequisites": "Insight 2+",
+        "specialty": "Thief",
+        "activation": "★"
+      },
+      {
+        "id": "tal_cheap_shot",
+        "name": "Cheap Shot",
+        "description": "Spend 1 focus to make an unarmed attack with Thievery vs. Cognitive, raising the stakes. On a hit, the target is Stunned.",
+        "prerequisites": "None",
+        "specialty": "Thief",
+        "activation": "►"
+      },
+      {
+        "id": "tal_double_down",
+        "name": "Double Down",
+        "description": "You can reroll again with Opportunist, but on a Complication, you lose 2 focus.",
+        "prerequisites": "None",
+        "specialty": "Thief",
+        "activation": "★"
+      },
+      {
+        "id": "tal_surefooted",
+        "name": "Surefooted",
+        "description": "Your movement increases by 10. Reduce damage from falling and dangerous terrain by twice your tier.",
+        "prerequisites": "None",
+        "specialty": "Thief",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_underworld_contacts",
+        "name": "Underworld Contacts",
+        "description": "Gain Criminal Groups expertise. Spend 2 focus to add a Success to a social test against criminals.",
+        "prerequisites": "Patron or follower in criminal underworld",
+        "specialty": "Thief",
+        "activation": "★"
+      },
+      {
+        "id": "tal_shadow_step",
+        "name": "Shadow Step",
+        "description": "After you Disengage, spend 2 focus to test Thievery vs. each enemy's Cognitive to hide from them. You gain an advantage if in cover or obscured.",
+        "prerequisites": "Thievery 3+",
+        "specialty": "Thief",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_fast_talker",
+        "name": "Fast Talker",
+        "description": "Spend 2 focus to gain 2 actions for spiritual tests with Use a Skill, Gain Advantage, or an Agent talent.",
+        "prerequisites": "Insight 3+",
+        "specialty": "Thief",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_trickster_s_hand",
+        "name": "Trickster's Hand",
+        "description": "Spend 2 focus to gain 2 actions for physical tests with Use a Skill, Gain Advantage, or an Agent talent.",
+        "prerequisites": "Thievery 3+",
+        "specialty": "Thief",
+        "activation": "▷"
+      }
+    ]
+  },
+  "Envoy": {
+    "keyTalent": "Rousing Presence",
+    "talents": [
+      {
+        "id": "tal_rousing_presence",
+        "name": "Rousing Presence",
+        "description": "An ally becomes Determined until end of scene.",
+        "prerequisites": "None",
+        "isKeyTalent": true,
+        "activation": "►"
+      },
+      {
+        "id": "tal_steadfast_challenge",
+        "name": "Steadfast Challenge",
+        "description": "Spend 1 focus to test Discipline vs. an enemy's Spiritual. On success, they are Disoriented and gain a disadvantage on tests against you.",
+        "prerequisites": "Discipline 1+",
+        "specialty": "Diplomat",
+        "activation": "►"
+      },
+      {
+        "id": "tal_collected",
+        "name": "Collected",
+        "description": "Increase your Cognitive and Spiritual defenses by 2.",
+        "prerequisites": "None",
+        "specialty": "Diplomat",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_withering_retort",
+        "name": "Withering Retort",
+        "description": "Use your Steadfast Challenge before an attack and increase your deflect against the attack by your ranks in Discipline.",
+        "prerequisites": "Discipline 2+",
+        "specialty": "Diplomat",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_well_dressed",
+        "name": "Well Dressed",
+        "description": "Gain Fashion expertise. While wearing Presentable armor or fashionable clothing, gain an advantage on your first Deception, Leadership, or Persuasion test.",
+        "prerequisites": "None",
+        "specialty": "Diplomat",
+        "activation": "★"
+      },
+      {
+        "id": "tal_calm_appeal",
+        "name": "Calm Appeal",
+        "description": "When your Steadfast Challenge makes a target Disoriented, spend 1 focus to pacify them. Resisting your Steadfast Challenge costs additional focus equal to your ranks in Discipline.",
+        "prerequisites": "Discipline 2+",
+        "specialty": "Diplomat",
+        "activation": "★"
+      },
+      {
+        "id": "tal_high_society_contacts",
+        "name": "High Society Contacts",
+        "description": "Gain High Society expertise. Spend 2 focus to add expertise to a test to interact in high society.",
+        "prerequisites": "Patron in high society",
+        "specialty": "Diplomat",
+        "activation": "★"
+      },
+      {
+        "id": "tal_peaceful_solution",
+        "name": "Peaceful Solution",
+        "description": "If all non-minion enemies are pacified, you ease tensions and end combat.",
+        "prerequisites": "Discipline 3+",
+        "specialty": "Diplomat",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_practiced_oratory",
+        "name": "Practiced Oratory",
+        "description": "When you use Rousing Presence or Steadfast Challenge, spend focus up to your ranks in Persuasion to add that many targets.",
+        "prerequisites": "Persuasion 3+",
+        "specialty": "Diplomat",
+        "activation": "★"
+      },
+      {
+        "id": "tal_customary_garb",
+        "name": "Customary Garb",
+        "description": "While wearing Presentable armor or appropriate clothing, increase your Physical and Spiritual defenses by 2.",
+        "prerequisites": "None",
+        "specialty": "Faithful",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_galvanize",
+        "name": "Galvanize",
+        "description": "An ally rolls their recovery die and recovers that much focus.",
+        "prerequisites": "None",
+        "specialty": "Faithful",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_devoted_presence",
+        "name": "Devoted Presence",
+        "description": "When you use Rousing Presence, spend 1 focus to remove Prone, Slowed, Stunned, and Surprised from your target.",
+        "prerequisites": "Lore 1+",
+        "specialty": "Faithful",
+        "activation": "★"
+      },
+      {
+        "id": "tal_composed",
+        "name": "Composed",
+        "description": "Increase your max and current focus by your tier.",
+        "prerequisites": "None",
+        "specialty": "Faithful",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_stalwart_presence",
+        "name": "Stalwart Presence",
+        "description": "When you use Rousing Presence, spend 1 focus to increase one of the target's defenses by 2.",
+        "prerequisites": "Discipline 2+",
+        "specialty": "Faithful",
+        "activation": "★"
+      },
+      {
+        "id": "tal_applied_motivation",
+        "name": "Applied Motivation",
+        "description": "When you cause a character to recover focus, they recover additional focus equal to half your ranks in Lore.",
+        "prerequisites": "Discipline 2+",
+        "specialty": "Faithful",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_sage_counsel",
+        "name": "Sage Counsel",
+        "description": "When you Aid a character, spend 1 focus to grant them Rousing Presence.",
+        "prerequisites": "Lore 3+",
+        "specialty": "Faithful",
+        "activation": "★"
+      },
+      {
+        "id": "tal_inspired_zeal",
+        "name": "Inspired Zeal",
+        "description": "When an ally uses Determined, choose other allies to recover 1 focus, up to your ranks in Discipline.",
+        "prerequisites": "Discipline 3+",
+        "specialty": "Faithful",
+        "activation": "★"
+      },
+      {
+        "id": "tal_sound_advice",
+        "name": "Sound Advice",
+        "description": "Spend 1 focus to use Rousing Presence on an ally who failed a skill test.",
+        "prerequisites": "None",
+        "specialty": "Mentor",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_practical_demonstration",
+        "name": "Practical Demonstration",
+        "description": "When you Gain Advantage or hit with an attack, use your Rousing Presence as a free action.",
+        "prerequisites": "Leadership 1+",
+        "specialty": "Mentor",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_lessons_in_patience",
+        "name": "Lessons in Patience",
+        "description": "Gain Motivational Speech expertise. When you use Rousing Presence, your target recovers 1 focus.",
+        "prerequisites": "Discipline 2+",
+        "specialty": "Mentor",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_mighty",
+        "name": "Mighty",
+        "description": "When you hit with a weapon or unarmed attack, for each focus spent, deal extra damage equal to 1 + your tier.",
+        "prerequisites": "None",
+        "specialty": "Mentor",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_instill_confidence",
+        "name": "Instill Confidence",
+        "description": "Rousing Presence can make an ally Focused instead of Determined.",
+        "prerequisites": "A companion",
+        "specialty": "Mentor",
+        "activation": "★"
+      },
+      {
+        "id": "tal_guiding_oration",
+        "name": "Guiding Oration",
+        "description": "After you Gain Advantage, an ally within 10 feet of your target gains an advantage on their next test against your target.",
+        "prerequisites": "Leadership 2+",
+        "specialty": "Mentor",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_foresight",
+        "name": "Foresight",
+        "description": "Gain an additional reaction each turn.",
+        "prerequisites": "Discipline 3+",
+        "specialty": "Mentor",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_rallying_shout",
+        "name": "Rallying Shout",
+        "description": "Rousing Presence can revive an Unconscious ally, and if they have 0 health, they recover health equal to their recovery die + your ranks in Leadership.",
+        "prerequisites": "Leadership 3+",
+        "specialty": "Mentor",
+        "activation": "∞"
+      }
+    ]
+  },
+  "Hunter": {
+    "keyTalent": "Seek Quarry",
+    "talents": [
+      {
+        "id": "tal_seek_quarry",
+        "name": "Seek Quarry",
+        "description": "Choose a character to be your quarry, gaining an advantage on tests to find, attack, and study them.",
+        "prerequisites": "None",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_tagging_shot",
+        "name": "Tagging Shot",
+        "description": "Move 5 feet and make a ranged attack. On a hit or a graze, the target becomes your quarry.",
+        "prerequisites": "Perception 2+",
+        "specialty": "Archer",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_combat_training",
+        "name": "Combat Training",
+        "description": "Gain expertise in a weapon, an armor, and Military Life. Once per round, graze without spending focus.",
+        "prerequisites": "None",
+        "specialty": "Archer",
+        "activation": "★"
+      },
+      {
+        "id": "tal_sharp_eye",
+        "name": "Sharp Eye",
+        "description": "Observe a target then test Perception vs. Cognitive to learn their lowest attribute, lowest defense, or if their health, focus, or Investiture are below half.",
+        "prerequisites": "None",
+        "specialty": "Archer",
+        "activation": "★"
+      },
+      {
+        "id": "tal_steady_aim",
+        "name": "Steady Aim",
+        "description": "Increase your weapon range by half and deal extra damage equal to your ranks in Perception.",
+        "prerequisites": "Agility 1+",
+        "specialty": "Archer",
+        "activation": "►"
+      },
+      {
+        "id": "tal_exploit_weakness",
+        "name": "Exploit Weakness",
+        "description": "Gain Advantage on your quarry without spending an action.",
+        "prerequisites": "Perception 3+",
+        "specialty": "Archer",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_backstep",
+        "name": "Backstep",
+        "description": "After making a ranged attack, spend 2 focus to Disengage without spending an action, and Brace if you enter cover or obscured area.",
+        "prerequisites": "Agility 2+",
+        "specialty": "Archer",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_unrelenting_salvo",
+        "name": "Unrelenting Salvo",
+        "description": "You can Strike your quarry more than once per turn with the same ranged weapon.",
+        "prerequisites": "Agility 3+",
+        "specialty": "Archer",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_hardy",
+        "name": "Hardy",
+        "description": "Gain +1 max health per level (including previous levels).",
+        "prerequisites": "None",
+        "specialty": "Archer",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_startling_blow",
+        "name": "Startling Blow",
+        "description": "Make an unarmed or improvised weapon attack vs. Cognitive. On a hit or graze, the target is Surprised.",
+        "prerequisites": "Stealth 1+",
+        "specialty": "Assassin",
+        "activation": "►"
+      },
+      {
+        "id": "tal_killing_edge",
+        "name": "Killing Edge",
+        "description": "Gain Knives and Slings expertises. These weapons gain the Deadly and Quickdraw expert traits.",
+        "prerequisites": "Perception 2+",
+        "specialty": "Assassin",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_fatal_thrust",
+        "name": "Fatal Thrust",
+        "description": "Attack an unsuspecting target with a light melee weapon vs. Cognitive. Add 4d4 damage, and gain two advantages if the weapon is Discreet. Max damage rolls add a penalty to the injury roll.",
+        "prerequisites": "Perception 3+",
+        "specialty": "Assassin",
+        "activation": "►"
+      },
+      {
+        "id": "tal_shadowing",
+        "name": "Shadowing",
+        "description": "Your quarry gains a disadvantage to sense you, and you gain an advantage to avoid their notice. When you succeed vs. Spiritual while in cover or obscured, spend 3 focus to designate that target as your quarry.",
+        "prerequisites": "Stealth 2+",
+        "specialty": "Assassin",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_mighty",
+        "name": "Mighty",
+        "description": "When you hit with a weapon or unarmed attack, for each action spent, deal extra damage equal to 1 + your tier.",
+        "prerequisites": "None",
+        "specialty": "Assassin",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cold_eyes",
+        "name": "Cold Eyes",
+        "description": "After you defeat your quarry, recover 1 focus and choose a new quarry.",
+        "prerequisites": "None",
+        "specialty": "Assassin",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_swift_strikes",
+        "name": "Swift Strikes",
+        "description": "Spend 1 focus to make a second Strike with the same weapon.",
+        "prerequisites": "None",
+        "specialty": "Assassin",
+        "activation": "↩"
+      },
+      {
+        "id": "tal_sidestep",
+        "name": "Sidestep",
+        "description": "Gain an additional reaction to Dodge when you're not wearing armor with deflect of 2 or higher.",
+        "prerequisites": "Stealth 3+",
+        "specialty": "Assassin",
+        "activation": "↩"
+      },
+      {
+        "id": "tal_deadly_trap",
+        "name": "Deadly Trap",
+        "description": "Conceal a 5-foot entangling or impaling trap. Entangling: Test Survival vs. Cognitive, 2d4 damage, Immobilized. Impaling: Test Survival vs. Physical, 2d4 damage, Afflicted.",
+        "prerequisites": "Survival 1+",
+        "specialty": "Tracker",
+        "activation": "►"
+      },
+      {
+        "id": "tal_animal_bond",
+        "name": "Animal Bond",
+        "description": "While your companion is within 10 feet, defenses +1. Use bonus action to give actions to companion. They can use Track as bonus action. Your companion's reach defines your quarry.",
+        "prerequisites": "Animal companion",
+        "specialty": "Tracker",
+        "activation": "►"
+      },
+      {
+        "id": "tal_experienced_trapper",
+        "name": "Experienced Trapper",
+        "description": "Easily forage for characters. Fashion natural tools. Deadly Traps increase to 2d6 damage and 2 rounds duration.",
+        "prerequisites": "Perception 2+",
+        "specialty": "Tracker",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_protective_bond",
+        "name": "Protective Bond",
+        "description": "Your animal companion protects an ally within 30 feet, and that ally gains your Animal Bond bonus instead of you.",
+        "prerequisites": "Animal Bond talent",
+        "specialty": "Tracker",
+        "activation": "↩"
+      },
+      {
+        "id": "tal_surefooted",
+        "name": "Surefooted",
+        "description": "Movement increases by 10. Reduce damage from falling and dangerous terrain by twice your tier.",
+        "prerequisites": "None",
+        "specialty": "Tracker",
+        "activation": "►"
+      },
+      {
+        "id": "tal_feral_connection",
+        "name": "Feral Connection",
+        "description": "Gain Animal Care expertise. Animal companion health increases by 5 x tier, defenses by 2, and tests gain a bonus equal to Survival ranks.",
+        "prerequisites": "Survival 2+",
+        "specialty": "Tracker",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_hunter_s_edge",
+        "name": "Hunter's Edge",
+        "description": "Animal companion gains advantage against quarry. Deadly Traps increase to 2d8 damage and 3 rounds duration.",
+        "prerequisites": "Survival 3+",
+        "specialty": "Tracker",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_pack_hunting",
+        "name": "Pack Hunting",
+        "description": "Spend 1 focus to add your ranks in Survival to an ally's attack or damage roll against your quarry.",
+        "prerequisites": "Perception 3+",
+        "specialty": "Tracker",
+        "activation": "∞"
+      }
+    ]
+  },
+  "Leader": {
+    "keyTalent": "Decisive Command",
+    "talents": [
+      {
+        "id": "tal_decisive_command",
+        "name": "Decisive Command",
+        "description": "Your voice carries the certainty of steel. When you acquire this talent, you gain a command die, starting as a d4. By spending 1 focus, you can choose an ally within 20 feet; the next time they make a test before the end of their next turn, they can roll your command die along with other dice.",
+        "prerequisites": "None",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_combat_coordination",
+        "name": "Combat Coordination",
+        "description": "After you Strike, you can use Decisive Command without spending focus. If your Strike did not hit, you still do not spend focus.",
+        "prerequisites": "Leadership 2+",
+        "specialty": "Champion",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_demonstrative_command",
+        "name": "Demonstrative Command",
+        "description": "Before making an Athletics, Agility, or Leadership test, you can spend 1 focus to roll your command die and add the result to your d20 roll. Acquiring this talent also increases the size of your command die.",
+        "prerequisites": "Decisive Command",
+        "specialty": "Champion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_hardy",
+        "name": "Hardy",
+        "description": "Gain +1 max health per level (including previous levels).",
+        "prerequisites": "None",
+        "specialty": "Champion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_imposing_posture",
+        "name": "Imposing Posture",
+        "description": "After an enemy resists your influence while they are within your weapon's reach, they become Disoriented until the end of their next turn.",
+        "prerequisites": "Athletics 2+; Combat Coordination talent",
+        "specialty": "Champion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_valiant_intervention",
+        "name": "Valiant Intervention",
+        "description": "Spend 1 focus to move up to 10 feet. Afterwards, you make an Athletics test against an enemy's Spiritual defense. If successful, that enemy gains disadvantage on tests against your allies until the end of their next turn. If the target resists this influence, you gain advantage on your next test against them until the end of your next turn.",
+        "prerequisites": "Athletics 1+",
+        "specialty": "Champion",
+        "activation": "►"
+      },
+      {
+        "id": "tal_resolute_stand",
+        "name": "Resolute Stand",
+        "description": "When you use Valiant Intervention, you can spend focus up to your ranks in Leadership to target that many additional characters. Additionally, after you affect a target with Valiant Intervention, they cannot make Reactive Strikes against your allies until the end of that target's next turn.",
+        "prerequisites": "Athletics 1+; Hardy talent",
+        "specialty": "Champion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_resilient_hero",
+        "name": "Resilient Hero",
+        "description": "Once per scene, before your health drops to 0, you can use this reaction to instead change your health to equal your Athletics modifier.",
+        "prerequisites": "Athletics 3+; Resolute Stand talent",
+        "specialty": "Champion",
+        "activation": "↩"
+      },
+      {
+        "id": "tal_mighty",
+        "name": "Mighty",
+        "description": "When you hit with a weapon or unarmed attack, for each action spent, deal extra damage equal to 1 + your tier.",
+        "prerequisites": "Imposing Posture talent",
+        "specialty": "Champion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_composed",
+        "name": "Composed",
+        "description": "Increase your maximum and current focus by your tier.",
+        "prerequisites": "None",
+        "specialty": "Officer",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_well_supplied",
+        "name": "Well Supplied",
+        "description": "You gain Military Logistics expertise. You can spend 2 focus to add to your test when requisitioning resources.",
+        "prerequisites": "Persuasion 2+",
+        "specialty": "Officer",
+        "activation": "★"
+      },
+      {
+        "id": "tal_relentless_march",
+        "name": "Relentless March",
+        "description": "Decisive Command increases your target's movement by 10 feet, and they ignore the Exhausted, Slowed, and Surprised conditions.",
+        "prerequisites": "Persuasion 3+",
+        "specialty": "Officer",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_synchronized_assault",
+        "name": "Synchronized Assault",
+        "description": "You can spend 2 focus to test Leadership versus an enemy's Cognitive defense. On a success, allies numbering up to your ranks in Leadership gain an additional Strike against the target.",
+        "prerequisites": "Leadership 3+",
+        "specialty": "Officer",
+        "activation": "►►►"
+      },
+      {
+        "id": "tal_through_the_fray",
+        "name": "Through the Fray",
+        "description": "An ally within 20 feet of you can Disengage or Gain Advantage as a bonus action.",
+        "prerequisites": "Persuasion 1+",
+        "specialty": "Officer",
+        "activation": "►"
+      },
+      {
+        "id": "tal_customary_garb",
+        "name": "Customary Garb",
+        "description": "While visibly wearing Presentable armor or clothing appropriate for your station, your Physical and Spiritual defenses increase by 2.",
+        "prerequisites": "None",
+        "specialty": "Officer",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_confident_command",
+        "name": "Confident Command",
+        "description": "You increase the size of your command die. You can spend 1 focus to add your command die to your Intimidation, Leadership, or Persuasion d20 roll.",
+        "prerequisites": "Leadership 2+",
+        "specialty": "Officer",
+        "activation": "★"
+      },
+      {
+        "id": "tal_authority",
+        "name": "Authority",
+        "description": "You double the range of Leader talents that affect allies, and you double the number of allies affected by them.",
+        "prerequisites": "Title granting you command of 5+ people",
+        "specialty": "Officer",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cutthroat_tactics",
+        "name": "Cutthroat Tactics",
+        "description": "Your ally can choose to raise the stakes instead of rolling your command die. If they roll, you recover 1 focus.",
+        "prerequisites": "Deception 1+",
+        "specialty": "Politico",
+        "activation": "★"
+      },
+      {
+        "id": "tal_rumormonger",
+        "name": "Rumormonger",
+        "description": "Gain Scandal expertise. When you make a test to spread misinformation or gather rumors, you can spend 2 focus to add an Opportunity to the result.",
+        "prerequisites": "Have a patron; Cutthroat Tactics talent",
+        "specialty": "Politico",
+        "activation": "★"
+      },
+      {
+        "id": "tal_baleful",
+        "name": "Baleful",
+        "description": "To resist your influence, a character must spend additional focus equal to your tier.",
+        "prerequisites": "None",
+        "specialty": "Politico",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_shrewd_command",
+        "name": "Shrewd Command",
+        "description": "Increases the size of your command die. You can spend 1 focus to add your command die to a Deception, Insight, or Leadership d20 roll.",
+        "prerequisites": "Leadership 2+",
+        "specialty": "Politico",
+        "activation": "★"
+      },
+      {
+        "id": "tal_tactical_ploy",
+        "name": "Tactical Ploy",
+        "description": "Allows you to test Deception versus a target's Cognitive defense to make them lose an action and gain a disadvantage on their next cognitive or spiritual test.",
+        "prerequisites": "Deception 2+",
+        "specialty": "Politico",
+        "activation": "►"
+      },
+      {
+        "id": "tal_well_dressed",
+        "name": "Well Dressed",
+        "description": "Gain Fashion expertise. While wearing Presentable armor or fashionable clothing, gain an advantage on your first Deception, Leadership, or Persuasion test.",
+        "prerequisites": "None",
+        "specialty": "Politico",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_set_at_odds",
+        "name": "Set At Odds",
+        "description": "You choose two or more characters you can influence and spend focus equal to the number of targets to test Leadership versus their highest Spiritual defense to make them hostile towards each other.",
+        "prerequisites": "Leadership 3+; Baleful talent",
+        "specialty": "Politico",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_grand_deception",
+        "name": "Grand Deception",
+        "description": "You can spend 3 focus to test Deception (DC 15) to reveal a ruse that alters a specific detail.",
+        "prerequisites": "Deception 3+",
+        "specialty": "Politico",
+        "activation": "►►►"
+      }
+    ]
+  },
+  "Scholar": {
+    "keyTalent": "Erudition",
+    "talents": [
+      {
+        "id": "tal_erudition",
+        "name": "Erudition",
+        "description": "This talent grants you an additional cultural or utility expertise and two additional non-surge cognitive skills.",
+        "prerequisites": "None",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_prized_acquisition",
+        "name": "Prized Acquisition",
+        "description": "Upon acquiring this talent, you gain Fabrial Crafting expertise and a special gem that can be immediately used to craft a fabrial of your current tier. You bypass the usual time requirements for attracting a spren and crafting the fabrial the first time you use this gem.",
+        "prerequisites": "Erudition key talent",
+        "specialty": "Artifabrian",
+        "activation": "★"
+      },
+      {
+        "id": "tal_efficient_engineer",
+        "name": "Efficient Engineer",
+        "description": "Gain utility expertise in Armor Crafting, Equipment Crafting, or Weapon Crafting. When crafting items or inventing fabrials, Opportunity range expands by 2 and raw material costs are halved. You also receive a painrial or spanreeds.",
+        "prerequisites": "Crafting 1+; Erudition key talent",
+        "specialty": "Artifabrian",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_fine_handiwork",
+        "name": "Fine Handiwork",
+        "description": "When you are crafting, advanced features will only cost one upgrade instead of the usual two.",
+        "prerequisites": "None",
+        "specialty": "Artifabrian",
+        "activation": "★"
+      },
+      {
+        "id": "tal_experiment_tinkering",
+        "name": "Experiment Tinkering",
+        "description": "When crafting, your Opportunity range expands by 1, and your crafting time is halved. During a long rest, you can reconfigure your Prized Acquisition fabrial into a different fabrial.",
+        "prerequisites": "None",
+        "specialty": "Artifabrian",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deep_study",
+        "name": "Deep Study",
+        "description": "When you acquire this talent, your Erudition talent grants you one additional cultural or utility expertise and two additional cognitive skills that are not surge skills.",
+        "prerequisites": "Efficient Engineer talent",
+        "specialty": "Artifabrian",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_inventive_design",
+        "name": "Inventive Design",
+        "description": "Your Prized Acquisition fabrial can achieve an effect that is one tier higher than the tier you are currently crafting.",
+        "prerequisites": "Crafting 2+",
+        "specialty": "Artifabrian",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_overcharge",
+        "name": "Overcharge",
+        "description": "Once per turn, you can increase the stakes on a fabrial attack, and then spend a resource to Strike with that fabrial as a bonus action.",
+        "prerequisites": "Crafting 3+",
+        "specialty": "Artifabrian",
+        "activation": "★"
+      },
+      {
+        "id": "tal_overwhelm_with_details",
+        "name": "Overwhelm with Details",
+        "description": "You can spend 2 focus to apply your Lore modifier to another cognitive or spiritual test.",
+        "prerequisites": "Lore 3+",
+        "specialty": "Artifabrian",
+        "activation": "★"
+      },
+      {
+        "id": "tal_strategize",
+        "name": "Strategize",
+        "description": "After you use your Gain Advantage action with an Erudition skill, you can grant that advantage to an ally instead of taking it yourself. You can also spend 2 focus to prevent the target of your Gain Advantage from using reactions against the chosen ally until the end of your next turn.",
+        "prerequisites": "Deduction 1+",
+        "specialty": "Strategist",
+        "activation": "★"
+      },
+      {
+        "id": "tal_composed",
+        "name": "Composed",
+        "description": "When you acquire this talent, your maximum and current focus increase by your tier.",
+        "prerequisites": "Strategize talent",
+        "specialty": "Strategist",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_deep_contemplation",
+        "name": "Deep Contemplation",
+        "description": "Allows you to search your mental archives. Upon activation, you can reassign up to two skills and expertises gained from your Erudition.",
+        "prerequisites": "Lore 2+; Composed talent",
+        "specialty": "Strategist",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_contingency",
+        "name": "Contingency",
+        "description": "You can spend 2 focus to remove a disadvantage from the test of an ally within 20 feet.",
+        "prerequisites": "Lore 3+",
+        "specialty": "Strategist",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_mind_and_body",
+        "name": "Mind and Body",
+        "description": "Your Erudition talent grants you an additional skill, and you can use Erudition to choose physical skills that are not surges. Additionally, you gain one weapon expertise of your choice.",
+        "prerequisites": "Erudition key talent",
+        "specialty": "Strategist",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_keen_insight",
+        "name": "Keen Insight",
+        "description": "After successfully gaining an advantage, you can exploit one of your target's crucial traits, strengths, or flaws. Unless the target resists, they suffer a disadvantage on their next test during that encounter.",
+        "prerequisites": "Deep Contemplation talent",
+        "specialty": "Strategist",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_know_your_moment",
+        "name": "Know Your Moment",
+        "description": "After the start of each round, all of your defenses increase by 2 until the beginning of your next turn.",
+        "prerequisites": "Deduction 2+; Mind and Body talent",
+        "specialty": "Strategist",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_turning_point",
+        "name": "Turning Point",
+        "description": "Once per scene, you can spend 2 focus to identify a weakness in an opposing group's strategy. Make a Deduction test against the Cognitive defense of the top-ranking enemy leader. On success, you and allies gain an additional reaction.",
+        "prerequisites": "Deduction 3+",
+        "specialty": "Strategist",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_field_medicine",
+        "name": "Field Medicine",
+        "description": "Spend 1 focus and make a Medicine test (DC 15) to heal a conscious character. If successful, add your ranks in Medicine to their recovery die.",
+        "prerequisites": "Medicine 1+; Erudition",
+        "specialty": "Surgeon",
+        "activation": "►"
+      },
+      {
+        "id": "tal_applied_medicine",
+        "name": "Applied Medicine",
+        "description": "Your healing abilities restore additional health equal to your ranks in Lore.",
+        "prerequisites": "Lore 2+",
+        "specialty": "Surgeon",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_swift_healer",
+        "name": "Swift Healer",
+        "description": "You can use your Field Medicine talent as a Reaction. Also, when you restore health to another character, they recover additional health equal to your ranks in Medicine.",
+        "prerequisites": "Medicine 2+; Field Medicine talent",
+        "specialty": "Surgeon",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_emotional_intelligence",
+        "name": "Emotional Intelligence",
+        "description": "Your Erudition talent grants you an additional skill, and you can now use Erudition to choose spiritual skills that are not surge skills. Gain utility expertise in Diagnosis.",
+        "prerequisites": "Erudition key talent",
+        "specialty": "Surgeon",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_collected",
+        "name": "Collected",
+        "description": "Your Cognitive and Spiritual defenses increase by 2.",
+        "prerequisites": "Emotional Intelligence talent",
+        "specialty": "Surgeon",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_ongoing_care",
+        "name": "Ongoing Care",
+        "description": "Gain Mental Health Care expertise. During a rest, you can make a Medicine test (DC 10) to treat an ally, removing one condition caused by their injury.",
+        "prerequisites": "Lore 3+",
+        "specialty": "Surgeon",
+        "activation": "★"
+      },
+      {
+        "id": "tal_resuscitation",
+        "name": "Resuscitation",
+        "description": "You can spend 3 focus when using Field Medicine to revive an Unconscious character or one who has died recently.",
+        "prerequisites": "Medicine 3+",
+        "specialty": "Surgeon",
+        "activation": "★"
+      },
+      {
+        "id": "tal_anatomical_insight",
+        "name": "Anatomical Insight",
+        "description": "Your knowledge of anatomy helps you strike vital points to incapacitate enemies while minimizing permanent harm.",
+        "prerequisites": "Field Medicine talent",
+        "specialty": "Surgeon",
+        "activation": "★"
+      }
+    ]
+  }
+}

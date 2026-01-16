@@ -1,0 +1,86 @@
+[
+  {
+    "id": "path_agent",
+    "name": "Agent",
+    "description": "An operative skilled at solving problems with a keen mind or deft hand.",
+    "associated_orders": [
+      "Investigator",
+      "Spy",
+      "Thief"
+    ],
+    "key_attributes": [
+      "Insight (Starting Skill)",
+      "Opportunist (Key Talent): Reroll the plot die once per round."
+    ]
+  },
+  {
+    "id": "path_envoy",
+    "name": "Envoy",
+    "description": "An insightful negotiator who adeptly influences others.",
+    "associated_orders": [
+      "Diplomat",
+      "Faithful",
+      "Mentor"
+    ],
+    "key_attributes": [
+      "Discipline (Starting Skill)",
+      "Rousing Presence (Key Talent): Make an ally Determined."
+    ]
+  },
+  {
+    "id": "path_hunter",
+    "name": "Hunter",
+    "description": "A skilled sharpshooter and outdoorsperson who seeks and eliminates problems.",
+    "associated_orders": [
+      "Archer",
+      "Assassin",
+      "Tracker"
+    ],
+    "key_attributes": [
+      "Perception (Starting Skill)",
+      "Seek Quarry (Key Talent): Choose one character to pursue and gain an advantage against."
+    ]
+  },
+  {
+    "id": "path_leader",
+    "name": "Leader",
+    "description": "A poised commander who directs and guides others to be their best.",
+    "associated_orders": [
+      "Champion",
+      "Officer",
+      "Politico"
+    ],
+    "key_attributes": [
+      "Leadership (Starting Skill)",
+      "Decisive Command (Key Talent): Add a d4 'command die' to an ally's tests."
+    ]
+  },
+  {
+    "id": "path_scholar",
+    "name": "Scholar",
+    "description": "An adroit thinker who excels at planning and building.",
+    "associated_orders": [
+      "Artifabrian",
+      "Strategist",
+      "Surgeon"
+    ],
+    "key_attributes": [
+      "Lore (Starting Skill)",
+      "Erudition (Key Talent): Gain bonus skill ranks that you can reallocate."
+    ]
+  },
+  {
+    "id": "path_warrior",
+    "name": "Warrior",
+    "description": "A fighter who relies on their skill, brute strength, or indomitable will.",
+    "associated_orders": [
+      "Duelist",
+      "Shardbearer",
+      "Soldier"
+    ],
+    "key_attributes": [
+      "Athletics (Starting Skill)",
+      "Vigilant Stance (Key Talent): Gain a fighting stance that makes you more responsive and flexible in combat."
+    ]
+  }
+]

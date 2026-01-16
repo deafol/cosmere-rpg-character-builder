@@ -1,0 +1,165 @@
+{
+    "surges": [
+        {
+            "id": "surge_abrasion",
+            "name": "Abrasion",
+            "attribute": "Speed",
+            "attr_abbrev": "SPD",
+            "activation": [
+                "► 1+ Investiture (Infuse Object)",
+                "⟳ 1 Investiture/Round (Sustain)",
+                "► 1 Investiture/Round (Infuse Self): ▷ 2 Focus (Skate), ∞ Passive (Slide)"
+            ],
+            "description": "Spend 1 Investiture or more to infuse an object or portion of a surface within your reach, making it nearly frictionless; to do so, you must have a hand free and touch the target. This infusion uses 1 Investiture each round, and for the duration, the object or surface slides freely.",
+            "short_description": "Manipulate friction to make objects or your body slick or rough.",
+            "radiant_paths": [
+                "Dustbringer",
+                "Edgedancer"
+            ]
+        },
+        {
+            "id": "surge_adhesion",
+            "name": "Adhesion",
+            "attribute": "Presence",
+            "attr_abbrev": "PRE",
+            "activation": [
+                "► 1+ Investiture (Full Lashing)",
+                "⟳ 1 Investiture/Round (Sustain)"
+            ],
+            "description": "Spend 1 Investiture or more to infuse it into two unsecured objects within your reach and within 5 feet of each other; you must have a hand free and touch the targets. The infusion uses 1 Investiture each round, and for the duration, the two objects become stuck together.",
+            "short_description": "Binds things together, creating a Full Lashing to adhere objects.",
+            "radiant_paths": [
+                "Bondsmith",
+                "Windrunner"
+            ]
+        },
+        {
+            "id": "surge_cohesion",
+            "name": "Cohesion",
+            "attribute": "Willpower",
+            "attr_abbrev": "WIL",
+            "activation": [
+                "► 1+ Investiture (Infuse Stone)",
+                "⟳ 1 Investiture/Round (Sustain)"
+            ],
+            "description": "Infuse 1 Investiture or more into an unattended object or portion of a surface within your reach that is made of stone; to do so, you must have a hand free and touch the target. This infusion uses 1 Investiture each round, and for the duration, the stone becomes moldable and soft like clay.",
+            "short_description": "Alter the shape and solidity of objects at a molecular level.",
+            "radiant_paths": [
+                "Stoneward",
+                "Willshaper"
+            ]
+        },
+        {
+            "id": "surge_division",
+            "name": "Division",
+            "attribute": "Intellect",
+            "attr_abbrev": "INT",
+            "activation": [
+                "►► 1 Investiture (Character Attack)",
+                "►► 1+ Investiture (Object or Area)"
+            ],
+            "description": "You can target a character regardless of their size. Spend 1 Investiture to make a melee Division attack against the Spiritual defense of the target, rolling 3d4 spirit damage. To destroy an object or the contents of an area, spend Investiture equal to requirements.",
+            "short_description": "Decay, burn, or destroy matter with a touch.",
+            "radiant_paths": [
+                "Dustbringer",
+                "Skybreaker"
+            ]
+        },
+        {
+            "id": "surge_gravitation",
+            "name": "Gravitation",
+            "attribute": "Awareness",
+            "attr_abbrev": "AWA",
+            "activation": [
+                "► 1+ Investiture (Basic Lashing)",
+                "⟳ 1 Investiture/Round (Sustain)"
+            ],
+            "description": "To perform a Basic Lashing, spend 1 Investiture or more to infuse a character or object within your reach; you must have a hand free and touch the target. The infusion uses 1 Investiture each round, and for the duration, the target's gravity changes directions.",
+            "short_description": "Alter an object's gravitational pull to fall in different directions.",
+            "radiant_paths": [
+                "Skybreaker",
+                "Windrunner"
+            ]
+        },
+        {
+            "id": "surge_illumination",
+            "name": "Illumination",
+            "attribute": "Presence",
+            "attr_abbrev": "PRE",
+            "activation": [
+                "∞ 1 Investiture/10 Mins (Simple Illusion)",
+                "⟳ 1 Investiture/Round (Complex Illusion)",
+                "▷ Free/Needs 1 Investiture (Disguise Self)"
+            ],
+            "description": "To Lightweave an illusion, spend 1 Investiture or more to infuse it into thin air in a space within your spren bond range. Simple illusions use 1 Investiture every 10 minutes, while complex illusions use 1 Investiture each round.",
+            "short_description": "Create visual and auditory illusions to deceive or entertain.",
+            "radiant_paths": [
+                "Lightweaver",
+                "Truthwatcher"
+            ]
+        },
+        {
+            "id": "surge_progression",
+            "name": "Progression",
+            "attribute": "Awareness",
+            "attr_abbrev": "AWA",
+            "activation": [
+                "►► 1 Investiture (Plant Growth)",
+                "►► 1+ Investiture (Character Regrowth)",
+                "⟳ 1 Investiture/Round (Sustain Regrowth)"
+            ],
+            "description": "If you target a living plant (or its seed) with Growth, spend 1 Investiture to cause it to rapidly grow to a size of your choice. If you target a living character with Regrowth, infuse 1 Investiture or more into them. The infusion uses 1 Investiture each round, and for the duration, that character recovers health.",
+            "short_description": "Heal injuries and accelerate growth of plants or organic matter.",
+            "radiant_paths": [
+                "Edgedancer",
+                "Truthwatcher"
+            ]
+        },
+        {
+            "id": "surge_tension",
+            "name": "Tension",
+            "attribute": "Strength",
+            "attr_abbrev": "STR",
+            "activation": [
+                "► 1+ Investiture (Infuse Object)",
+                "⟳ 1 Investiture/Round (Sustain)"
+            ],
+            "description": "To use this surge, spend 1 or more Investiture to infuse a soft object within your reach; you must have a hand free and touch the target. The infusion uses 1 Investiture each round, and for the duration, the object becomes completely rigid.",
+            "short_description": "Alter the stiffness of objects, making them rigid or flexible.",
+            "radiant_paths": [
+                "Bondsmith",
+                "Stoneward"
+            ]
+        },
+        {
+            "id": "surge_transformation",
+            "name": "Transformation",
+            "attribute": "Willpower",
+            "attr_abbrev": "WIL",
+            "activation": [
+                "►► Skill Check/1+ Investiture (Soulcast)"
+            ],
+            "description": "To Soulcast a material, choose a non-living object or portion of a surface within your reach and make a Transformation test. To do so, you must have a hand free and touch the target.",
+            "short_description": "Change the material composition of objects (Soulcasting).",
+            "radiant_paths": [
+                "Elsecaller",
+                "Lightweaver"
+            ]
+        },
+        {
+            "id": "surge_transportation",
+            "name": "Transportation",
+            "attribute": "Intellect",
+            "attr_abbrev": "INT",
+            "activation": [
+                "► 1+ Investiture (Cognitive Glance)"
+            ],
+            "description": "Spend 1 Investiture or more to look into the Cognitive Realm where it corresponds to your current location. This allows you to see the true nature of many things around you.",
+            "short_description": "Move instantaneously between locations or realms.",
+            "radiant_paths": [
+                "Elsecaller",
+                "Willshaper"
+            ]
+        }
+    ]
+}

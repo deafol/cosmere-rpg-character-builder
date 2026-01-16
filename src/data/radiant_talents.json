@@ -1,0 +1,1847 @@
+{
+  "Dustbringer": {
+    "keyTalent": "First Ideal (Dustbringer)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_dustbringer",
+        "name": "First Ideal (Dustbringer)",
+        "description": "Grants Investiture, Stormlight access. Gain Abrasion and Division skills.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_dustbringer",
+        "name": "Second Ideal (Dustbringer)",
+        "description": "I will bring order to the chaos.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Ashspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_dustbringer",
+        "name": "Third Ideal (Dustbringer)",
+        "description": "I will learn to control my power. Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Ashspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_dustbringer",
+        "name": "Fourth Ideal (Dustbringer)",
+        "description": "I will become the person who can protect. Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Ashspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Ashspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Ashspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Abrasion/Division) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Ashspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Ashspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_searing_dust_storm",
+        "name": "Searing Dust Storm",
+        "description": "Create dust storm while moving (1 Investiture/round). Enemy takes extra damage equal to Discipline ranks.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Ashspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_distant_surgebinding",
+        "name": "Distant Surgebinding",
+        "description": "Use surges as though reach is 20 feet.",
+        "prerequisites": "Reverse Abrasion talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_frictionless_motion",
+        "name": "Frictionless Motion",
+        "description": "Movement increased by 10 ft while infused. Ignore Slowed from terrain.",
+        "prerequisites": "Graceful Skating talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_graceful_skating",
+        "name": "Graceful Skating",
+        "description": "Skate dynamically without straight line restriction.",
+        "prerequisites": "Slippery Target talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_reverse_abrasion",
+        "name": "Reverse Abrasion",
+        "description": "Increase friction on object/surface to make it easier to grip.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Abrasion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_slick_combatant",
+        "name": "Slick Combatant",
+        "description": "Interrupt movement to act. Deal extra 1d4 damage on melee attack during movement.",
+        "prerequisites": "Slippery Target talent",
+        "specialty": "Abrasion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_slippery_target",
+        "name": "Slippery Target",
+        "description": "While infused, attacks cannot graze you and Reactive Strikes against you have disadvantage.",
+        "prerequisites": "Abrasion 1+",
+        "specialty": "Abrasion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_smooth_operator",
+        "name": "Smooth Operator",
+        "description": "Gain benefits of Abrasion infusion without spending Investiture (at 1+ Invest). Skate cost reduced.",
+        "prerequisites": "Distant Surgebinding talent or Slippery Target talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_stormlight_reclamation",
+        "name": "Stormlight Reclamation",
+        "description": "Reclaim Stormlight from active infusions. End available infusions to recover Investiture.",
+        "prerequisites": "Reverse Abrasion talent",
+        "specialty": "Abrasion",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_bodily_decay",
+        "name": "Bodily Decay",
+        "description": "Spend Investiture to inflict an injury on a target hit by a Division attack.",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "★"
+      },
+      {
+        "id": "tal_devastating_division",
+        "name": "Devastating Division",
+        "description": "Roll an additional damage die of the same size for Division attacks.",
+        "prerequisites": "Division 2+",
+        "specialty": "Division",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_eroding_escape",
+        "name": "Eroding Escape",
+        "description": "Spend Investiture to end Immobilized, Restrained, or physical disadvantage effects.",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "►"
+      },
+      {
+        "id": "tal_gout_of_flame",
+        "name": "Gout of Flame",
+        "description": "Spend 3 Investiture to spray flame over a large area. Deals 3d4 energy damage to each target.",
+        "prerequisites": "Division 3+",
+        "specialty": "Division",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_igniting_division",
+        "name": "Igniting Division",
+        "description": "Spend Investiture to set target's space on fire. Ongoing damage equal to Division modifier.",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "★"
+      },
+      {
+        "id": "tal_inescapable_spark",
+        "name": "Inescapable Spark",
+        "description": "Spark extends to bond range. No line of effect needed if sensed. Targets cannot Brace.",
+        "prerequisites": "Spark Sending talent",
+        "specialty": "Division",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_spark_sending",
+        "name": "Spark Sending",
+        "description": "Use Division through solid surfaces if reach is blocked (up to 20 feet).",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_unleashed_entropy",
+        "name": "Unleashed Entropy",
+        "description": "Division skill cost reduced by 1. Under Pressure DC lowered by 5.",
+        "prerequisites": "Division 3+",
+        "specialty": "Division",
+        "activation": "★"
+      }
+    ]
+  },
+  "Edgedancer": {
+    "keyTalent": "First Ideal (Edgedancer)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_edgedancer",
+        "name": "First Ideal (Edgedancer)",
+        "description": "Initiates bonding with a cultivationspren. Grants Investiture and access to Abrasion and Progression surges.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_edgedancer",
+        "name": "Second Ideal (Edgedancer)",
+        "description": "I will listen to those who have been ignored.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Cultivationspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_edgedancer",
+        "name": "Third Ideal (Edgedancer)",
+        "description": "I will remember those who have been forgotten. Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Cultivationspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_edgedancer",
+        "name": "Fourth Ideal (Edgedancer)",
+        "description": "I will speak for those who have no voice. Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Cultivationspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_edgedancer_s_grace",
+        "name": "Edgedancer's Grace",
+        "description": "Start turn with 1+ Investiture to gain extra Avoid Danger/Dodge action. Dodge reaction cost ignored.",
+        "prerequisites": "Abrasion 2+; Progression 2+; Speak the First Ideal",
+        "specialty": "Cultivationspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Cultivationspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Cultivationspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Abrasion/Progression) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Cultivationspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Cultivationspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_distant_surgebinding",
+        "name": "Distant Surgebinding",
+        "description": "Use surges as though reach is 20 feet.",
+        "prerequisites": "Reverse Abrasion talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_frictionless_motion",
+        "name": "Frictionless Motion",
+        "description": "Movement increased by 10 ft while infused. Ignore Slowed from terrain.",
+        "prerequisites": "Graceful Skating talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_graceful_skating",
+        "name": "Graceful Skating",
+        "description": "Skate dynamically without straight line restriction.",
+        "prerequisites": "Slippery Target talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_reverse_abrasion",
+        "name": "Reverse Abrasion",
+        "description": "Increase friction on object/surface to make it easier to grip.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Abrasion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_slick_combatant",
+        "name": "Slick Combatant",
+        "description": "Interrupt movement to act. Deal extra 1d4 damage on melee attack during movement.",
+        "prerequisites": "Slippery Target talent",
+        "specialty": "Abrasion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_slippery_target",
+        "name": "Slippery Target",
+        "description": "While infused, attacks cannot graze you and Reactive Strikes against you have disadvantage.",
+        "prerequisites": "Abrasion 1+",
+        "specialty": "Abrasion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_smooth_operator",
+        "name": "Smooth Operator",
+        "description": "Gain benefits of Abrasion infusion without spending Investiture (at 1+ Invest). Skate cost reduced.",
+        "prerequisites": "Distant Surgebinding talent or Slippery Target talent",
+        "specialty": "Abrasion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_stormlight_reclamation",
+        "name": "Stormlight Reclamation",
+        "description": "Reclaim Stormlight from active infusions. End available infusions to recover Investiture.",
+        "prerequisites": "Reverse Abrasion talent",
+        "specialty": "Abrasion",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_explosive_growth",
+        "name": "Explosive Growth",
+        "description": "Spend 1 Investiture to grow plants explosively, dealing 2d4 damage in an area. Can Immobilize targets.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Progression",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_extended_regrowth",
+        "name": "Extended Regrowth",
+        "description": "Regrowth infusions expend 1 Investiture per (ranks in Progression) rounds.",
+        "prerequisites": "Swift Regeneration talent",
+        "specialty": "Progression",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_font_of_life",
+        "name": "Font of Life",
+        "description": "Costs 1 fewer Investiture to use Progression and its talents.",
+        "prerequisites": "Extended Regrowth talent or Reliable Progression talent",
+        "specialty": "Progression",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_from_the_brink",
+        "name": "From the Brink",
+        "description": "Revive a willing character who died within the last minute to Unconscious with 0 health.",
+        "prerequisites": "Progression 3+; Extended Regrowth talent",
+        "specialty": "Progression",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_injury_regrowth",
+        "name": "Injury Regrowth",
+        "description": "Recover from temporary (2 Investiture) or permanent (3 Investiture) injuries rapidly.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Progression",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_overgrowth",
+        "name": "Overgrowth",
+        "description": "Grow a plant beyond normal size limits. Increases health by 2d4.",
+        "prerequisites": "Explosive Growth talent",
+        "specialty": "Progression",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_reliable_progression",
+        "name": "Reliable Progression",
+        "description": "Treat low rolls for Growth/Regrowth as equal to your ranks in Progression.",
+        "prerequisites": "Progression 2+; Overgrowth talent",
+        "specialty": "Progression",
+        "activation": "★"
+      },
+      {
+        "id": "tal_swift_regeneration",
+        "name": "Swift Regeneration",
+        "description": "Regenerate 1d6 + mod health. Add modifier to injury rolls.",
+        "prerequisites": "Progression 2+; Injury Regrowth talent",
+        "specialty": "Progression",
+        "activation": "★"
+      }
+    ]
+  },
+  "Elsecaller": {
+    "keyTalent": "First Ideal (Elsecaller)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_elsecaller",
+        "name": "First Ideal (Elsecaller)",
+        "description": "Initiates bonding with an inkspren. Grants Investiture and access to Transformation and Transportation.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_elsecaller",
+        "name": "Second Ideal (Elsecaller)",
+        "description": "I will reach my potential.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Inkspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_elsecaller",
+        "name": "Third Ideal (Elsecaller)",
+        "description": "Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Inkspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_elsecaller",
+        "name": "Fourth Ideal (Elsecaller)",
+        "description": "Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Inkspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Inkspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Inkspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Transformation/Transportation) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Inkspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Inkspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_elsecaller_s_perspicacity",
+        "name": "Elsecaller's Perspicacity",
+        "description": "Advantage on Deduction, reaction, and information gathering tests between realms while holding 1+ Investiture.",
+        "prerequisites": "Transformation 2+; Transportation 2+; Speak the First Ideal",
+        "specialty": "Inkspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_bloodcasting",
+        "name": "Bloodcasting",
+        "description": "Cleanse poison and reduce injury recovery time by 5 days.",
+        "prerequisites": "Living Soulcasting talent",
+        "specialty": "Transformation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_distant_surgebinding",
+        "name": "Distant Surgebinding",
+        "description": "Use surges as though reach is 20 feet.",
+        "prerequisites": "Soulcast Parry talent",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_expansive_transmuter",
+        "name": "Expansive Transmuter",
+        "description": "Soulcasting non-living material costs 2 fewer Investiture.",
+        "prerequisites": "None listed",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_flamecasting",
+        "name": "Flamecasting",
+        "description": "Gain 'Flame' as Soulcasting category. Soulcasting flames deals 2d4 energy damage area attack.",
+        "prerequisites": "None listed",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_living_soulcasting",
+        "name": "Living Soulcasting",
+        "description": "Soulcast living flesh. Deal 3d4 spirit damage. If reduced to 0 health, target dies and transforms.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Transformation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_persistent_transformation",
+        "name": "Persistent Transformation",
+        "description": "Max DC 15 for non-living. Can reattempt failed Soulcasting at increased cost.",
+        "prerequisites": "Transformation 2+; Distant Surgebinding talent",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_soulcast_defense",
+        "name": "Soulcast Defense",
+        "description": "Reaction to projectiles. Test Transformation to turn projectile into Essence.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Transformation",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_soulcast_parry",
+        "name": "Soulcast Parry",
+        "description": "Use Soulcast Defense against melee weapon attacks.",
+        "prerequisites": "Soulcast Defense talent",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cognitive_farsight",
+        "name": "Cognitive Farsight",
+        "description": "See 3x bond range in Shadesmar. Always aware of North/civilization.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Transportation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cognitive_vision",
+        "name": "Cognitive Vision",
+        "description": "Learn Intent of enemies or Locate Objects in Shadesmar.",
+        "prerequisites": "Cognitive Farsight talent",
+        "specialty": "Transportation",
+        "activation": "►"
+      },
+      {
+        "id": "tal_elsecalling",
+        "name": "Elsecalling",
+        "description": "Transport between Physical and Cognitive Realms.",
+        "prerequisites": "Speak the Third Ideal; Realmic Step talent",
+        "specialty": "Transportation",
+        "activation": "►►►"
+      },
+      {
+        "id": "tal_elsegate",
+        "name": "Elsegate",
+        "description": "Transport yourself and up to 10 companions to visited Oathgate/Perpendicularity.",
+        "prerequisites": "Speak the Fourth Ideal",
+        "specialty": "Transportation",
+        "activation": "★"
+      },
+      {
+        "id": "tal_realmic_evasion",
+        "name": "Realmic Evasion",
+        "description": "Reaction to avoid attack by testing Transportation vs attack result.",
+        "prerequisites": "Speak the Second Ideal",
+        "specialty": "Transportation",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_realmic_step",
+        "name": "Realmic Step",
+        "description": "Briefly transport to Cognitive Realm to move within bond range.",
+        "prerequisites": "Realmic Evasion talent",
+        "specialty": "Transportation",
+        "activation": "►"
+      },
+      {
+        "id": "tal_realmwalker",
+        "name": "Realmwalker",
+        "description": "Automatically succeed on Transportation tests for talents.",
+        "prerequisites": "Elsecalling talent",
+        "specialty": "Transportation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_shared_transportation",
+        "name": "Shared Transportation",
+        "description": "Transport willing characters with you via Elsecalling or Realmic Step.",
+        "prerequisites": "Transportation 4+; Elsecalling talent",
+        "specialty": "Transportation",
+        "activation": "★"
+      }
+    ]
+  },
+  "Lightweaver": {
+    "keyTalent": "First Ideal (Lightweaver)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_lightweaver",
+        "name": "First Ideal (Lightweaver)",
+        "description": "Initiates bonding with a cryptic. Grants Investiture and access to Illumination and Transformation.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_lightweaver",
+        "name": "Second Ideal (Lightweaver)",
+        "description": "Speak a personal truth.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Cryptic Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_lightweaver",
+        "name": "Third Ideal (Lightweaver)",
+        "description": "Speak a profound truth about yourself. Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Cryptic Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_lightweaver",
+        "name": "Fourth Ideal (Lightweaver)",
+        "description": "Speak a fundamental truth. Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Cryptic Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Cryptic Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Cryptic Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Illumination/Transformation) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Cryptic Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Cryptic Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_physical_illusion",
+        "name": "Physical Illusion",
+        "description": "Spend 1+ Investiture to give illusions physical properties (weight/tangibility).",
+        "prerequisites": "Speak the Fourth Ideal; Wound Regeneration talent",
+        "specialty": "Cryptic Bond",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_disorienting_flash",
+        "name": "Disorienting Flash",
+        "description": "Burst of light/sound. Targets failing Cognitive defense are Disoriented.",
+        "prerequisites": "Distracting Illusion talent",
+        "specialty": "Illumination",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_distracting_illusion",
+        "name": "Distracting Illusion",
+        "description": "Create a moving illusory duplicate. Attacks against it have disadvantage.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Illumination",
+        "activation": "►"
+      },
+      {
+        "id": "tal_endless_illusions",
+        "name": "Endless Illusions",
+        "description": "Maintain illusions indefinitely without spending Investiture at start of turn (min 1 Investiture).",
+        "prerequisites": "Multiplicative Lightweaving talent or Spiritual Illumination talent",
+        "specialty": "Illumination",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_lingering_lightweaving",
+        "name": "Lingering Lightweaving",
+        "description": "Infuse spheres with illusions. Expends 1 Investiture per (ranks in Illumination) rounds.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Illumination",
+        "activation": "★"
+      },
+      {
+        "id": "tal_multiplicative_lightweaving",
+        "name": "Multiplicative Lightweaving",
+        "description": "Create additional illusions up to ranks in Illumination without extra cost.",
+        "prerequisites": "Stormlight Reclamation talent",
+        "specialty": "Illumination",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_painful_truth",
+        "name": "Painful Truth",
+        "description": "Haunting image. Target is Slowed and must spend focus or flee.",
+        "prerequisites": "Spiritual Illumination talent",
+        "specialty": "Illumination",
+        "activation": "►"
+      },
+      {
+        "id": "tal_spiritual_illumination",
+        "name": "Spiritual Illumination",
+        "description": "Inspiring Lightweaving. Ally becomes Determined and Focused.",
+        "prerequisites": "Disorienting Flash talent",
+        "specialty": "Illumination",
+        "activation": "►"
+      },
+      {
+        "id": "tal_stormlight_reclamation",
+        "name": "Stormlight Reclamation",
+        "description": "End active illusions to recover remaining Investiture.",
+        "prerequisites": "Distracting Illusion talent",
+        "specialty": "Illumination",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_bloodcasting",
+        "name": "Bloodcasting",
+        "description": "Cleanse poison and reduce injury recovery time by 5 days.",
+        "prerequisites": "Living Soulcasting talent",
+        "specialty": "Transformation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_distant_surgebinding",
+        "name": "Distant Surgebinding",
+        "description": "Use surges as though reach is 20 feet.",
+        "prerequisites": "Soulcast Parry talent",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_expansive_transmuter",
+        "name": "Expansive Transmuter",
+        "description": "Soulcasting non-living material costs 2 fewer Investiture.",
+        "prerequisites": "None listed",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_flamecasting",
+        "name": "Flamecasting",
+        "description": "Gain 'Flame' as Soulcasting category. Soulcasting flames deals 2d4 energy damage area attack.",
+        "prerequisites": "None listed",
+        "specialty": "Transformation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_living_soulcasting",
+        "name": "Living Soulcasting",
+        "description": "Soulcast living flesh. Deal 3d4 spirit damage. If reduced to 0 health, target dies and transforms.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Transformation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_persistent_transformation",
+        "name": "Persistent Transformation",
+        "description": "Max DC 15 for non-living. Can reattempt failed Soulcasting at increased cost.",
+        "prerequisites": "Transformation 2+; Distant Surgebinding talent",
+        "specialty": "Transformation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_soulcast_defense",
+        "name": "Soulcast Defense",
+        "description": "Reaction to projectiles. Test Transformation to turn projectile into Essence.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Transformation",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_soulcast_parry",
+        "name": "Soulcast Parry",
+        "description": "Use Soulcast Defense against melee weapon attacks.",
+        "prerequisites": "Soulcast Defense talent",
+        "specialty": "Transformation",
+        "activation": "∞"
+      }
+    ]
+  },
+  "Skybreaker": {
+    "keyTalent": "First Ideal (Skybreaker)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_skybreaker",
+        "name": "First Ideal (Skybreaker)",
+        "description": "Begins the bonding with a highspren. Grants Investiture and access to Division and Gravitation.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_skybreaker",
+        "name": "Second Ideal (Skybreaker)",
+        "description": "I will put the law before all else.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Highspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_soaring_destruction",
+        "name": "Soaring Destruction",
+        "description": "After you Move with a Basic Lashing, spend 1 focus to gain ► for Division or its talents.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Highspren Bond",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_third_ideal_skybreaker",
+        "name": "Third Ideal (Skybreaker)",
+        "description": "I will swear to follow a person or a code. Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Highspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_skybreaker",
+        "name": "Fourth Ideal (Skybreaker)",
+        "description": "I will become the law. Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Highspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Highspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Highspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Division/Gravitation) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Highspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Highspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_bodily_decay",
+        "name": "Bodily Decay",
+        "description": "Spend Investiture to inflict an injury on a target hit by a Division attack.",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "★"
+      },
+      {
+        "id": "tal_devastating_division",
+        "name": "Devastating Division",
+        "description": "Roll an additional damage die of the same size for Division attacks.",
+        "prerequisites": "Division 2+",
+        "specialty": "Division",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_eroding_escape",
+        "name": "Eroding Escape",
+        "description": "Spend Investiture to end Immobilized, Restrained, or physical disadvantage effects.",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "►"
+      },
+      {
+        "id": "tal_gout_of_flame",
+        "name": "Gout of Flame",
+        "description": "Spend 3 Investiture to spray flame over a large area. Deals 3d4 energy damage to each target.",
+        "prerequisites": "Division 3+",
+        "specialty": "Division",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_igniting_division",
+        "name": "Igniting Division",
+        "description": "Spend Investiture to set target's space on fire. Ongoing damage equal to Division modifier.",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "★"
+      },
+      {
+        "id": "tal_inescapable_spark",
+        "name": "Inescapable Spark",
+        "description": "Spark extends to bond range. No line of effect needed if sensed. Targets cannot Brace.",
+        "prerequisites": "Spark Sending talent",
+        "specialty": "Division",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_spark_sending",
+        "name": "Spark Sending",
+        "description": "Use Division through solid surfaces if reach is blocked (up to 20 feet).",
+        "prerequisites": "Division 1+",
+        "specialty": "Division",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_unleashed_entropy",
+        "name": "Unleashed Entropy",
+        "description": "Division skill cost reduced by 1. Under Pressure DC lowered by 5.",
+        "prerequisites": "Division 3+",
+        "specialty": "Division",
+        "activation": "★"
+      },
+      {
+        "id": "tal_aerial_squadron",
+        "name": "Aerial Squadron",
+        "description": "Use Group Flight talent in combat.",
+        "prerequisites": "Gravitation 3+; Group Flight talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_flying_ace",
+        "name": "Flying Ace",
+        "description": "Fly up to gravitation rate (40 ft). Spend 1 focus to attack during flight.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Gravitation",
+        "activation": "►"
+      },
+      {
+        "id": "tal_gravitational_slam",
+        "name": "Gravitational Slam",
+        "description": "Collision from Basic Lashing movement deals damage (1d4 per 10ft).",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_group_flight",
+        "name": "Group Flight",
+        "description": "Infuse multiple allies with Gravitation at once outside combat.",
+        "prerequisites": "Stable Flight talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_lashing_shot",
+        "name": "Lashing Shot",
+        "description": "Propel object at target with Basic Lashings. Ranged Gravitation attack dealing 2d4.",
+        "prerequisites": "Gravitational Slam talent",
+        "specialty": "Gravitation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_master_of_the_skies",
+        "name": "Master of the Skies",
+        "description": "While you have 1 Investiture, gain benefits of being infused with Gravitation without spending it.",
+        "prerequisites": "Group Flight talent or Lashing Shot talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_multiple_lashings",
+        "name": "Multiple Lashings",
+        "description": "Apply multiple Basic Lashings. Infuse unwilling target with Investiture up to ranks to prolong effect.",
+        "prerequisites": "Gravitational Slam talent",
+        "specialty": "Gravitation",
+        "activation": "★"
+      },
+      {
+        "id": "tal_stable_flight",
+        "name": "Stable Flight",
+        "description": "Ranged attacks do not suffer disadvantage from flying.",
+        "prerequisites": "Flying Ace talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      }
+    ]
+  },
+  "Stoneward": {
+    "keyTalent": "First Ideal (Stoneward)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_stoneward",
+        "name": "First Ideal (Stoneward)",
+        "description": "Initiates bonding with a peakspren. Grants Investiture and access to Cohesion and Tension surges.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_stoneward",
+        "name": "Second Ideal (Stoneward)",
+        "description": "I will be there when I am needed.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Peakspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_stoneward",
+        "name": "Third Ideal (Stoneward)",
+        "description": "Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Peakspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_stoneward",
+        "name": "Fourth Ideal (Stoneward)",
+        "description": "Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Peakspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Peakspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Peakspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Cohesion/Tension) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Peakspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Peakspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_cohesive_teamwork",
+        "name": "Cohesive Teamwork",
+        "description": "After Gain Advantage, next ally test vs target has advantage. Cannot be moved/knocked Prone on stone.",
+        "prerequisites": "Cohesion 2+; Tension 2+; Speak the First Ideal",
+        "specialty": "Peakspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_flowing_earth",
+        "name": "Flowing Earth",
+        "description": "Shape stone beneath feet to push self up to 5ft x Cohesion ranks.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Cohesion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_memories_of_stone",
+        "name": "Memories of Stone",
+        "description": "Communicate with stone to receive images and whispers.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Cohesion",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_sinkhole",
+        "name": "Sinkhole",
+        "description": "Soften ground to Immobilize targets.",
+        "prerequisites": "Stone Spear talent",
+        "specialty": "Cohesion",
+        "activation": "►"
+      },
+      {
+        "id": "tal_stone_spear",
+        "name": "Stone Spear",
+        "description": "Ranged Cohesion attack dealing 2d4 impact damage. Can knock target Prone.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Cohesion",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_through_the_stone",
+        "name": "Through the Stone",
+        "description": "Use Cohesion through stone surfaces as if reach is 20 feet.",
+        "prerequisites": "Sinkhole talent",
+        "specialty": "Cohesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_true_stoneshaping",
+        "name": "True Stoneshaping",
+        "description": "Instantly reshape stone without additional actions/time.",
+        "prerequisites": "Cohesion 2+; Tunneling talent",
+        "specialty": "Cohesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_tunneling",
+        "name": "Tunneling",
+        "description": "Move through stone as difficult terrain, leaving a tunnel.",
+        "prerequisites": "Sinkhole talent",
+        "specialty": "Cohesion",
+        "activation": "►"
+      },
+      {
+        "id": "tal_unbound_cohesion",
+        "name": "Unbound Cohesion",
+        "description": "Use Cohesion on any solid non-living material, not just stone.",
+        "prerequisites": "Cohesion 4+; Through the Stone talent",
+        "specialty": "Cohesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cloth_mastery",
+        "name": "Cloth Mastery",
+        "description": "Instantly create intricate/complex objects using Tension.",
+        "prerequisites": "Tension 2+",
+        "specialty": "Tension",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_clothsmith",
+        "name": "Clothsmith",
+        "description": "Hardened Defense increases Physical defense by 4. Created weapons deal +1d4 damage.",
+        "prerequisites": "Cloth Mastery talent or Surface Tension talent",
+        "specialty": "Tension",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_extended_tension",
+        "name": "Extended Tension",
+        "description": "Tension infusions expend 1 Investiture per (ranks in Tension) rounds. Maintain infusions on held/worn items.",
+        "prerequisites": "Stormlight Reclamation talent",
+        "specialty": "Tension",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_fine_control",
+        "name": "Fine Control",
+        "description": "Alter rigidity of object parts. Object health becomes 5x ranks, defense 10+mod.",
+        "prerequisites": "Cloth Mastery talent",
+        "specialty": "Tension",
+        "activation": "►"
+      },
+      {
+        "id": "tal_rigged_weaponry",
+        "name": "Rigged Weaponry",
+        "description": "Extend melee reach by 10 ft (1 Investiture). Infuse object held by target on hit (1-2 focus).",
+        "prerequisites": "Tension 1+",
+        "specialty": "Tension",
+        "activation": "★"
+      },
+      {
+        "id": "tal_stormlight_reclamation",
+        "name": "Stormlight Reclamation",
+        "description": "End active Tension infusions to recover remaining Investiture.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Tension",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_surface_tension",
+        "name": "Surface Tension",
+        "description": "Solidify liquid surface to walk on it. Area up to 2x Tension ranks.",
+        "prerequisites": "Extended Tension talent",
+        "specialty": "Tension",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_tension_parry",
+        "name": "Tension Parry",
+        "description": "Reaction to stiffen clothing for +2 Physical defense against attack.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Tension",
+        "activation": "↻"
+      }
+    ]
+  },
+  "Truthwatcher": {
+    "keyTalent": "First Ideal (Truthwatcher)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_truthwatcher",
+        "name": "First Ideal (Truthwatcher)",
+        "description": "Initiates bonding with a mistspren. Grants Investiture and access to Illumination and Progression.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_truthwatcher",
+        "name": "Second Ideal (Truthwatcher)",
+        "description": "I will seek truth.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Mistspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_truthwatcher",
+        "name": "Third Ideal (Truthwatcher)",
+        "description": "I will reveal truth where it is hidden. Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Mistspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_truthwatcher",
+        "name": "Fourth Ideal (Truthwatcher)",
+        "description": "I will interpret truth for those who cannot. Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Mistspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Mistspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Mistspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Illumination/Progression) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Mistspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Mistspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_spiritual_healing",
+        "name": "Spiritual Healing",
+        "description": "Can spend 2 Investiture to restore focus to self or ally equal to half the health that would have been restored.",
+        "prerequisites": "Illumination 2+; Progression 2+; Speak the First Ideal",
+        "specialty": "Mistspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_disorienting_flash",
+        "name": "Disorienting Flash",
+        "description": "Burst of light/sound. Targets failing Cognitive defense are Disoriented.",
+        "prerequisites": "Distracting Illusion talent",
+        "specialty": "Illumination",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_distracting_illusion",
+        "name": "Distracting Illusion",
+        "description": "Create a moving illusory duplicate. Attacks against it have disadvantage.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Illumination",
+        "activation": "►"
+      },
+      {
+        "id": "tal_endless_illusions",
+        "name": "Endless Illusions",
+        "description": "Maintain illusions indefinitely without spending Investiture at start of turn (min 1 Investiture).",
+        "prerequisites": "Multiplicative Lightweaving talent or Spiritual Illumination talent",
+        "specialty": "Illumination",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_lingering_lightweaving",
+        "name": "Lingering Lightweaving",
+        "description": "Infuse spheres with illusions. Expends 1 Investiture per (ranks in Illumination) rounds.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Illumination",
+        "activation": "★"
+      },
+      {
+        "id": "tal_multiplicative_lightweaving",
+        "name": "Multiplicative Lightweaving",
+        "description": "Create additional illusions up to ranks in Illumination without extra cost.",
+        "prerequisites": "Stormlight Reclamation talent",
+        "specialty": "Illumination",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_painful_truth",
+        "name": "Painful Truth",
+        "description": "Haunting image. Target is Slowed and must spend focus or flee.",
+        "prerequisites": "Spiritual Illumination talent",
+        "specialty": "Illumination",
+        "activation": "►"
+      },
+      {
+        "id": "tal_spiritual_illumination",
+        "name": "Spiritual Illumination",
+        "description": "Inspiring Lightweaving. Ally becomes Determined and Focused.",
+        "prerequisites": "Disorienting Flash talent",
+        "specialty": "Illumination",
+        "activation": "►"
+      },
+      {
+        "id": "tal_stormlight_reclamation",
+        "name": "Stormlight Reclamation",
+        "description": "End active illusions to recover remaining Investiture.",
+        "prerequisites": "Distracting Illusion talent",
+        "specialty": "Illumination",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_explosive_growth",
+        "name": "Explosive Growth",
+        "description": "Spend 1 Investiture to grow plants explosively, dealing 2d4 damage in an area. Can Immobilize targets.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Progression",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_extended_regrowth",
+        "name": "Extended Regrowth",
+        "description": "Regrowth infusions expend 1 Investiture per (ranks in Progression) rounds.",
+        "prerequisites": "Swift Regeneration talent",
+        "specialty": "Progression",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_font_of_life",
+        "name": "Font of Life",
+        "description": "Costs 1 fewer Investiture to use Progression and its talents.",
+        "prerequisites": "Extended Regrowth talent or Reliable Progression talent",
+        "specialty": "Progression",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_from_the_brink",
+        "name": "From the Brink",
+        "description": "Revive a willing character who died within the last minute to Unconscious with 0 health.",
+        "prerequisites": "Progression 3+; Extended Regrowth talent",
+        "specialty": "Progression",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_injury_regrowth",
+        "name": "Injury Regrowth",
+        "description": "Recover from temporary (2 Investiture) or permanent (3 Investiture) injuries rapidly.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Progression",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_overgrowth",
+        "name": "Overgrowth",
+        "description": "Grow a plant beyond normal size limits. Increases health by 2d4.",
+        "prerequisites": "Explosive Growth talent",
+        "specialty": "Progression",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_reliable_progression",
+        "name": "Reliable Progression",
+        "description": "Treat low rolls for Growth/Regrowth as equal to your ranks in Progression.",
+        "prerequisites": "Progression 2+; Overgrowth talent",
+        "specialty": "Progression",
+        "activation": "★"
+      },
+      {
+        "id": "tal_swift_regeneration",
+        "name": "Swift Regeneration",
+        "description": "Regenerate 1d6 + mod health. Add modifier to injury rolls.",
+        "prerequisites": "Progression 2+; Injury Regrowth talent",
+        "specialty": "Progression",
+        "activation": "★"
+      }
+    ]
+  },
+  "Willshaper": {
+    "keyTalent": "First Ideal (Willshaper)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_willshaper",
+        "name": "First Ideal (Willshaper)",
+        "description": "Initiates bonding with a reacher. Grants Investiture and access to Cohesion and Transportation.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_willshaper",
+        "name": "Second Ideal (Willshaper)",
+        "description": "I will seek freedom for those who are in bondage.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Reacher Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_willshaper",
+        "name": "Third Ideal (Willshaper)",
+        "description": "Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Reacher Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_willshaper",
+        "name": "Fourth Ideal (Willshaper)",
+        "description": "Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Reacher Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Reacher Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Reacher Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Cohesion/Transportation) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Reacher Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Reacher Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_spiritual_cohesion",
+        "name": "Spiritual Cohesion",
+        "description": "Once per scene, make allies Determined. If used for Opportunity, they gain +2 Cognitive/Spiritual defense.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Reacher Bond",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_cognitive_farsight",
+        "name": "Cognitive Farsight",
+        "description": "See 3x bond range in Shadesmar. Always aware of North/civilization.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Transportation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_cognitive_vision",
+        "name": "Cognitive Vision",
+        "description": "Learn Intent of enemies or Locate Objects in Shadesmar.",
+        "prerequisites": "Cognitive Farsight talent",
+        "specialty": "Transportation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_elsecalling",
+        "name": "Elsecalling",
+        "description": "Transport between Physical and Cognitive Realms.",
+        "prerequisites": "Speak the Third Ideal; Realmic Step talent",
+        "specialty": "Transportation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_elsegate",
+        "name": "Elsegate",
+        "description": "Transport yourself and up to 10 companions to visited Oathgate/Perpendicularity.",
+        "prerequisites": "Speak the Fourth Ideal",
+        "specialty": "Transportation",
+        "activation": "★"
+      },
+      {
+        "id": "tal_realmic_evasion",
+        "name": "Realmic Evasion",
+        "description": "Reaction to avoid attack by testing Transportation vs attack result.",
+        "prerequisites": "Speak the Second Ideal",
+        "specialty": "Transportation",
+        "activation": "↻"
+      },
+      {
+        "id": "tal_realmic_step",
+        "name": "Realmic Step",
+        "description": "Briefly transport to Cognitive Realm to move within bond range.",
+        "prerequisites": "Realmic Evasion talent",
+        "specialty": "Transportation",
+        "activation": "►"
+      },
+      {
+        "id": "tal_realmwalker",
+        "name": "Realmwalker",
+        "description": "Automatically succeed on Transportation tests for talents.",
+        "prerequisites": "Elsecalling talent",
+        "specialty": "Transportation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_shared_transportation",
+        "name": "Shared Transportation",
+        "description": "Transport willing characters with you via Elsecalling or Realmic Step.",
+        "prerequisites": "Transportation 4+; Elsecalling talent",
+        "specialty": "Transportation",
+        "activation": "★"
+      },
+      {
+        "id": "tal_flowing_earth",
+        "name": "Flowing Earth",
+        "description": "Shape stone beneath feet to push self up to 5ft x Cohesion ranks.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Cohesion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_memories_of_stone",
+        "name": "Memories of Stone",
+        "description": "Communicate with stone to receive images and whispers.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Cohesion",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_sinkhole",
+        "name": "Sinkhole",
+        "description": "Soften ground to Immobilize targets.",
+        "prerequisites": "Stone Spear talent",
+        "specialty": "Cohesion",
+        "activation": "►"
+      },
+      {
+        "id": "tal_stone_spear",
+        "name": "Stone Spear",
+        "description": "Ranged Cohesion attack dealing 2d4 impact damage. Can knock target Prone.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Cohesion",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_through_the_stone",
+        "name": "Through the Stone",
+        "description": "Use Cohesion through stone surfaces as if reach is 20 feet.",
+        "prerequisites": "Sinkhole talent",
+        "specialty": "Cohesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_true_stoneshaping",
+        "name": "True Stoneshaping",
+        "description": "Instantly reshape stone without additional actions/time.",
+        "prerequisites": "Cohesion 2+; Tunneling talent",
+        "specialty": "Cohesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_tunneling",
+        "name": "Tunneling",
+        "description": "Move through stone as difficult terrain, leaving a tunnel.",
+        "prerequisites": "Sinkhole talent",
+        "specialty": "Cohesion",
+        "activation": "►"
+      },
+      {
+        "id": "tal_unbound_cohesion",
+        "name": "Unbound Cohesion",
+        "description": "Use Cohesion on any solid non-living material, not just stone.",
+        "prerequisites": "Cohesion 4+; Through the Stone talent",
+        "specialty": "Cohesion",
+        "activation": "∞"
+      }
+    ]
+  },
+  "Windrunner": {
+    "keyTalent": "First Ideal (Windrunner)",
+    "talents": [
+      {
+        "id": "tal_first_ideal_windrunner",
+        "name": "First Ideal (Windrunner)",
+        "description": "Initiates the bond with an honorspren. Grants Investiture and access to Adhesion and Gravitation. Unlocks Honorspren Bond.",
+        "prerequisites": "Level 2+",
+        "isKeyTalent": true,
+        "activation": "★"
+      },
+      {
+        "id": "tal_second_ideal_windrunner",
+        "name": "Second Ideal (Windrunner)",
+        "description": "I will protect those who cannot protect themselves.",
+        "prerequisites": "First Ideal; Level 5+",
+        "specialty": "Honorspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_third_ideal_windrunner",
+        "name": "Third Ideal (Windrunner)",
+        "description": "I will protect even those I hate, so long as it is right. Unlocks Shardblade.",
+        "prerequisites": "Second Ideal; Level 9+",
+        "specialty": "Honorspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_fourth_ideal_windrunner",
+        "name": "Fourth Ideal (Windrunner)",
+        "description": "I accept that there will be those I cannot protect. Unlocks Radiant Shardplate.",
+        "prerequisites": "Third Ideal; Level 13+",
+        "specialty": "Honorspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_deepened_bond",
+        "name": "Deepened Bond",
+        "description": "Increases spren bond range to 100 feet. Reduces focus cost to give spren a task by 1 (min 1).",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Honorspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_reverse_lashing",
+        "name": "Reverse Lashing",
+        "description": "Infuse things with a mix of Adhesion and Gravitation to create a pull.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Honorspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_invested",
+        "name": "Invested",
+        "description": "Increase maximum Investiture by your tier.",
+        "prerequisites": "None",
+        "specialty": "Honorspren Bond",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_take_squire",
+        "name": "Take Squire",
+        "description": "Grant surges (Adhesion/Gravitation) to non-Radiant allies. Max squires = 2x level.",
+        "prerequisites": "Speak the Third Ideal",
+        "specialty": "Honorspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_wound_regeneration",
+        "name": "Wound Regeneration",
+        "description": "Spend 2 Investiture to heal temporary injury, 3 for permanent.",
+        "prerequisites": "None",
+        "specialty": "Honorspren Bond",
+        "activation": "★"
+      },
+      {
+        "id": "tal_adhesive_trap",
+        "name": "Adhesive Trap",
+        "description": "Infuse Adhesion into surfaces. Characters touching them are stuck (Full Lashing).",
+        "prerequisites": "Adhesion 1+",
+        "specialty": "Adhesion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_binding_shot",
+        "name": "Binding Shot",
+        "description": "Paint ammunition with Adhesion to transfer infusion to target's possession on hit.",
+        "prerequisites": "Binding Strike talent",
+        "specialty": "Adhesion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_binding_strike",
+        "name": "Binding Strike",
+        "description": "Use Adhesion during melee attacks. Infuse Investiture on hit without extra action.",
+        "prerequisites": "Adhesion 1+",
+        "specialty": "Adhesion",
+        "activation": "★"
+      },
+      {
+        "id": "tal_extended_adhesion",
+        "name": "Extended Adhesion",
+        "description": "Full Lashings expend 1 Investiture per (ranks in Adhesion) rounds.",
+        "prerequisites": "Living Adhesion talent",
+        "specialty": "Adhesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_living_adhesion",
+        "name": "Living Adhesion",
+        "description": "Apply Adhesion to living beings to stick them to surfaces. Targets are Restrained.",
+        "prerequisites": "Adhesion 2+",
+        "specialty": "Adhesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_superior_bond",
+        "name": "Superior Bond",
+        "description": "Full Lashings are harder to break. Automatic success vs Strength <= Adhesion ranks.",
+        "prerequisites": "Adhesion 3+",
+        "specialty": "Adhesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_distant_surgebinding",
+        "name": "Distant Surgebinding",
+        "description": "Use surges as though reach is 20 feet. Stick objects within 5 feet.",
+        "prerequisites": "Stormlight Reclamation talent",
+        "specialty": "Adhesion",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_stormlight_reclamation",
+        "name": "Stormlight Reclamation",
+        "description": "End Adhesion infusions within reach to recover remaining Investiture.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Adhesion",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_aerial_squadron",
+        "name": "Aerial Squadron",
+        "description": "Use Group Flight talent in combat.",
+        "prerequisites": "Gravitation 3+; Group Flight talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_flying_ace",
+        "name": "Flying Ace",
+        "description": "Fly up to gravitation rate (40 ft). Spend 1 focus to attack during flight.",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Gravitation",
+        "activation": "▷"
+      },
+      {
+        "id": "tal_gravitational_slam",
+        "name": "Gravitational Slam",
+        "description": "Collision from Basic Lashing movement deals damage (1d4 per 10ft).",
+        "prerequisites": "Speak the First Ideal",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_group_flight",
+        "name": "Group Flight",
+        "description": "Infuse multiple allies with Gravitation at once outside combat.",
+        "prerequisites": "Stable Flight talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_lashing_shot",
+        "name": "Lashing Shot",
+        "description": "Propel object at target with Basic Lashings. Ranged Gravitation attack dealing 2d4.",
+        "prerequisites": "Gravitational Slam talent",
+        "specialty": "Gravitation",
+        "activation": "►►"
+      },
+      {
+        "id": "tal_master_of_the_skies",
+        "name": "Master of the Skies",
+        "description": "While you have 1 Investiture, gain benefits of being infused with Gravitation without spending it.",
+        "prerequisites": "Group Flight talent or Lashing Shot talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      },
+      {
+        "id": "tal_multiple_lashings",
+        "name": "Multiple Lashings",
+        "description": "Apply multiple Basic Lashings. Infuse unwilling target with Investiture up to ranks to prolong effect.",
+        "prerequisites": "Gravitational Slam talent",
+        "specialty": "Gravitation",
+        "activation": "★"
+      },
+      {
+        "id": "tal_stable_flight",
+        "name": "Stable Flight",
+        "description": "Ranged attacks do not suffer disadvantage from flying.",
+        "prerequisites": "Flying Ace talent",
+        "specialty": "Gravitation",
+        "activation": "∞"
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors - Updated from Official Site */
+  --color-cosmere-blue: #051435;
+  --color-cosmere-blue-hover: #1e3a8a;
+  --color-cosmere-gold: #C59D56;
+  /* Official Gold */
+  --color-cosmere-parchment: #F9F9F9;
+  /* Official site uses white/light background often, but keeps parchment feel in images. I'll stick to a very light off-white if possible, or just white. Let's go with #F9F9F9 for a clean look that matches the "modern" part of their site. */
+  --color-cosmere-dark: #0f172a;
+  --color-destructive: #b91c1c;
+
+  /* Typography */
+  --font-display: var(--font-lora), serif;
+  /* Official Headings */
+  --font-body: var(--font-lato), sans-serif;
+  /* Official Body (Laski Sans equiv) */
+  --font-ui: var(--font-lato), sans-serif;
+
+  /* Animations */
+  --animate-unroll: unroll 0.5s ease-out forwards;
+
+  @keyframes unroll {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    to {
+      max-height: 2000px;
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    @apply bg-cosmere-parchment text-cosmere-blue antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Custom Base Utilities or Component Classes could go here if we weren't fully using Tailwind utilities */
+
+@media print {
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  .printable-sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+}

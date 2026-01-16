@@ -1,0 +1,110 @@
+[
+    {
+        "id": "skill_agi",
+        "name": "Agility",
+        "attribute": "Speed",
+        "attr_abbrev": "SPD"
+    },
+    {
+        "id": "skill_ath",
+        "name": "Athletics",
+        "attribute": "Strength",
+        "attr_abbrev": "STR"
+    },
+    {
+        "id": "skill_hvy",
+        "name": "Heavy Weaponry",
+        "attribute": "Strength",
+        "attr_abbrev": "STR"
+    },
+    {
+        "id": "skill_lgt",
+        "name": "Light Weaponry",
+        "attribute": "Speed",
+        "attr_abbrev": "SPD"
+    },
+    {
+        "id": "skill_stl",
+        "name": "Stealth",
+        "attribute": "Speed",
+        "attr_abbrev": "SPD"
+    },
+    {
+        "id": "skill_thv",
+        "name": "Thievery",
+        "attribute": "Speed",
+        "attr_abbrev": "SPD"
+    },
+    {
+        "id": "skill_crf",
+        "name": "Crafting",
+        "attribute": "Intellect",
+        "attr_abbrev": "INT"
+    },
+    {
+        "id": "skill_ded",
+        "name": "Deduction",
+        "attribute": "Intellect",
+        "attr_abbrev": "INT"
+    },
+    {
+        "id": "skill_dis",
+        "name": "Discipline",
+        "attribute": "Willpower",
+        "attr_abbrev": "WIL"
+    },
+    {
+        "id": "skill_int",
+        "name": "Intimidation",
+        "attribute": "Willpower",
+        "attr_abbrev": "WIL"
+    },
+    {
+        "id": "skill_lor",
+        "name": "Lore",
+        "attribute": "Intellect",
+        "attr_abbrev": "INT"
+    },
+    {
+        "id": "skill_med",
+        "name": "Medicine",
+        "attribute": "Intellect",
+        "attr_abbrev": "INT"
+    },
+    {
+        "id": "skill_dec",
+        "name": "Deception",
+        "attribute": "Presence",
+        "attr_abbrev": "PRE"
+    },
+    {
+        "id": "skill_ins",
+        "name": "Insight",
+        "attribute": "Awareness",
+        "attr_abbrev": "AWA"
+    },
+    {
+        "id": "skill_lea",
+        "name": "Leadership",
+        "attribute": "Presence",
+        "attr_abbrev": "PRE"
+    },
+    {
+        "id": "skill_per",
+        "name": "Perception",
+        "attribute": "Awareness",
+        "attr_abbrev": "AWA"
+    },
+    {
+        "id": "skill_prs",
+        "name": "Persuasion",
+        "attribute": "Presence",
+        "attr_abbrev": "PRE"
+    },
+    {
+        "id": "skill_srv",
+        "name": "Survival",
+        "attribute": "Awareness",
+        "attr_abbrev": "AWA"
+    }
+]

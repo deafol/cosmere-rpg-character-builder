@@ -1,0 +1,478 @@
+[
+  {
+    "id": "eqp_alcohol_1_serving",
+    "name": "Alcohol (1 serving)",
+    "price": "0.5-50 mk",
+    "weight": "0.2 lb.",
+    "description": "A single serving of an intoxicating beverage, which can include various forms like beers, mudbeers, ciders, honu, shiki, juices, and lagers. In Vorin society, these are generally referred to as 'wine' and are distinguished by their distinct colors."
+  },
+  {
+    "id": "eqp_alcohol_bottle",
+    "name": "Alcohol (bottle)",
+    "price": "1-300 mk",
+    "weight": "2-4 lb.",
+    "description": "A bottle containing an intoxicating beverage, which can encompass a variety of drinks such as beers, mudbeers, ciders, honu, shiki, juices, and lagers. Vorin society typically calls all these 'wine' and categorizes them by their infused colors."
+  },
+  {
+    "id": "eqp_anesthetic_5_doses",
+    "name": "Anesthetic (5 doses)",
+    "price": "75 mk",
+    "weight": "1.5 lb.",
+    "description": "This medication can be used to treat a character's injury during a short or long rest, potentially reducing their recovery time by 1d4 days. An injury can only be treated with anesthetic once per day."
+  },
+  {
+    "id": "eqp_antiseptic_potent_5_doses",
+    "name": "Antiseptic (potent, 5 doses)",
+    "price": "50 mk",
+    "weight": "1 lb.",
+    "description": "A strong antiseptic made from ingredients like knobweed milk, fourleaf sap, and lister's oil. A single dose can be applied to a character after a short rest to restore 2d6 health."
+  },
+  {
+    "id": "eqp_antiseptic_weak_5_doses",
+    "name": "Antiseptic (weak, 5 doses)",
+    "price": "25 mk",
+    "weight": "1 lb.",
+    "description": "A milder antiseptic, such as that derived from larmic mucus. A dose can be applied to a character after a short rest to restore 1d6 health."
+  },
+  {
+    "id": "eqp_backpack",
+    "name": "Backpack",
+    "price": "8 mk",
+    "weight": "5 lb.",
+    "description": "A standard bag worn on the back, used for carrying gear and supplies. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_barrel",
+    "name": "Barrel",
+    "price": "15 mk",
+    "weight": "70 lb.",
+    "description": "A cylindrical container, typically made of wood, used for storing or transporting liquids or other goods. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_blanket",
+    "name": "Blanket",
+    "price": "2 mk",
+    "weight": "2 lb.",
+    "description": "A piece of soft material used for warmth or bedding. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_book_reference",
+    "name": "Book (reference)",
+    "price": "10-500 mk",
+    "weight": "1-5 lb.",
+    "description": "A book containing detailed information on a specific subject, such as historical periods, engineering, biology, architecture, or the crafting of specific fabrials. Referencing such a book can provide an advantage on a related Intellect test if you have time to consult it."
+  },
+  {
+    "id": "eqp_bottle_crem",
+    "name": "Bottle (crem)",
+    "price": "0.5 mk",
+    "weight": "3 lb.",
+    "description": "A bottle made for containing crem. While it can hold various substances, a 'crem flask' variant is mentioned to break upon impact if used in an attack. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_bottle_glass",
+    "name": "Bottle (glass)",
+    "price": "1 mk",
+    "weight": "2 lb.",
+    "description": "A container typically made of glass, used for holding liquids. It can be sealed to prevent spillage."
+  },
+  {
+    "id": "eqp_bucket",
+    "name": "Bucket",
+    "price": "1 mk",
+    "weight": "2 lb.",
+    "description": "An open-top container, usually cylindrical or conical, with a handle, used for carrying liquids or granular substances."
+  },
+  {
+    "id": "eqp_candle",
+    "name": "Candle",
+    "price": "0.2 mk",
+    "weight": "0.2 lb.",
+    "description": "When lit, this candle provides light in a 15-foot radius and can burn for up to 6 hours before becoming unusable."
+  },
+  {
+    "id": "eqp_case_leather",
+    "name": "Case (leather)",
+    "price": "4 mk",
+    "weight": "1 lb.",
+    "description": "This is a sealable, cylindrical case crafted from leather. It is designed to hold up to ten pages of paper or parchment, protecting them from the elements."
+  },
+  {
+    "id": "eqp_chain_thick_10_feet",
+    "name": "Chain (thick, 10 feet)",
+    "price": "20 mk",
+    "weight": "10 lb.",
+    "description": "This sturdy, thick chain, assumed to be 10 feet in length, is used for tasks requiring significant strength, such as securing cargo or shackling prisoners. It can be broken with a successful DC 30 Athletics test or by dealing 15 damage to it."
+  },
+  {
+    "id": "eqp_chain_thin_1_foot",
+    "name": "Chain (thin, 1 foot)",
+    "price": "20 mk",
+    "weight": "0.5 lb.",
+    "description": "Often made from precious metals with fine links, this thin chain, assumed to be 1 foot in length, is commonly used in jewelry and Soulcasters. It can be broken with a successful DC 20 Athletics test or by dealing 5 damage to it."
+  },
+  {
+    "id": "eqp_chest",
+    "name": "Chest",
+    "price": "30 mk",
+    "weight": "25 lb.",
+    "description": "A sturdy box, typically with a hinged lid, used for storing valuables or other items securely."
+  },
+  {
+    "id": "eqp_clothing_common",
+    "name": "Clothing (common)",
+    "price": "2 mk",
+    "weight": "3 lb.",
+    "description": "These are plain garments made from affordable, undyed materials, designed to help the wearer blend in with commonfolk. Wearing common clothing provides an advantage on spiritual tests aimed at convincing others of your lower-class status."
+  },
+  {
+    "id": "eqp_clothing_fine",
+    "name": "Clothing (fine)",
+    "price": "50-200 mk",
+    "weight": "6 lb.",
+    "description": "Crafted from high-quality materials like silks, these clothes are colored with expensive dyes and often feature intricate embroidery. Fine clothing helps the wearer integrate into high society, such as noble banquets, without drawing suspicion, and grants an advantage on spiritual tests to convince others of your upper-class status."
+  },
+  {
+    "id": "eqp_clothing_ragged",
+    "name": "Clothing (ragged)",
+    "price": "0.5 mk",
+    "weight": "1.5 lb.",
+    "description": "Once potentially fine or common, this clothing is now barely holding together. Wearing these garments provides an advantage on spiritual tests to convince others that you are destitute."
+  },
+  {
+    "id": "eqp_crowbar",
+    "name": "Crowbar",
+    "price": "10 mk",
+    "weight": "3 lb.",
+    "description": "A crowbar can be used to gain an advantage on Athletics tests where its leverage can be applied."
+  },
+  {
+    "id": "eqp_ear_trumpet",
+    "name": "Ear trumpet",
+    "price": "50 mk",
+    "weight": "1 lb.",
+    "description": "Distant sounds heard through an ear trumpet can be perceived as though they are at half the actual distance. The Game Master may allow more powerful ear trumpets to be available at higher prices."
+  },
+  {
+    "id": "eqp_flask_or_tankard",
+    "name": "Flask or tankard",
+    "price": "1 mk",
+    "weight": "1 lb.",
+    "description": "Used for holding and carrying liquids, such as water or other beverages."
+  },
+  {
+    "id": "eqp_flint_and_steel",
+    "name": "Flint and steel",
+    "price": "4 mk",
+    "weight": "1.5 lb.",
+    "description": "A flint and steel can be used to light abundant fuel that is within reach. Starting a fire in more challenging conditions might take a minute or longer. Herdazians commonly wear a tool called a sparkflicker, which functions similarly to flint and steel, allowing them to create sparks by quickly running their crystalline fingernails along it."
+  },
+  {
+    "id": "eqp_food_ration_1_day",
+    "name": "Food (ration, 1 day)",
+    "price": "0.2 mk",
+    "weight": "0.5 lb.",
+    "description": "Rations are food items specifically designed for extended travel, typically consisting of things like jerky and hard-baked lavis cakes. While generally lacking in flavor, they can remain edible indefinitely if kept dry."
+  },
+  {
+    "id": "eqp_food_street_1_day",
+    "name": "Food (street, 1 day)",
+    "price": "3 mk",
+    "weight": "1.5 lb.",
+    "description": "Street food includes a variety of confections unique to each culture on Roshar, ranging from simple loaves of bread to specific cultural dishes like Herdazian chouta."
+  },
+  {
+    "id": "eqp_food_fine_1_day",
+    "name": "Food (fine, 1 day)",
+    "price": "25 mk",
+    "weight": "0.5 lb.",
+    "description": "Fine food is the kind found in high-class restaurants and served at the feasts of nobles."
+  },
+  {
+    "id": "eqp_grappling_hook",
+    "name": "Grappling hook",
+    "price": "10 mk",
+    "weight": "4 lb.",
+    "description": "A grappling hook is typically attached to a rope to help in climbing or descending walls and cliffs. When securely anchored, it provides an advantage on Acrobatics and Athletics tests for climbing with its rope. You can attach it to an anchor within reach with an Interact action without a test, or throw it up to 20 feet to a suitable anchor with a successful Athletics or Agility test."
+  },
+  {
+    "id": "eqp_hammer_handheld",
+    "name": "Hammer (handheld)",
+    "price": "4 mk",
+    "weight": "3 lb.",
+    "description": "A common tool used for striking, driving nails, or light construction tasks."
+  },
+  {
+    "id": "eqp_ink_1ounce_bottle",
+    "name": "Ink (1-ounce bottle)",
+    "price": "40 mk",
+    "weight": "0.2 lb.",
+    "description": "A bottle containing ink, commonly used for writing or drawing with a pen."
+  },
+  {
+    "id": "eqp_ink_pen",
+    "name": "Ink pen",
+    "price": "0.1 mk",
+    "weight": "0.1 lb.",
+    "description": "A writing instrument used with ink to write or draw on surfaces like paper or parchment."
+  },
+  {
+    "id": "eqp_jug_or_pitcher",
+    "name": "Jug or pitcher",
+    "price": "2 mk",
+    "weight": "4 lb.",
+    "description": "A container, typically with a handle and a spout, used for holding and pouring liquids."
+  },
+  {
+    "id": "eqp_ladder_10foot",
+    "name": "Ladder (10-foot)",
+    "price": "5 mk",
+    "weight": "20 lb.",
+    "description": "A portable set of steps or rungs used for climbing up or down, extending approximately 10 feet in length."
+  },
+  {
+    "id": "eqp_lantern_oil",
+    "name": "Lantern (oil)",
+    "price": "20 mk",
+    "weight": "2 lb.",
+    "description": "When lit, this lantern emits light in a 30-foot radius and can burn for up to 6 hours per pint of oil."
+  },
+  {
+    "id": "eqp_lantern_sphere",
+    "name": "Lantern (sphere)",
+    "price": "20 mk",
+    "weight": "2 lb.",
+    "description": "This lantern features a locked cage, typically just under 1 foot in diameter, designed to hold infused spheres to produce light. The radius of light varies based on how full the lantern is: 60 feet when completely filled with spheres, 30 feet when half full, 15 feet when a quarter-filled, and 5 feet when it contains at least 1 mark or broam. The lock can be opened using its included key or by succeeding on a DC 15 Thievery test."
+  },
+  {
+    "id": "eqp_lock_and_key",
+    "name": "Lock and key",
+    "price": "50 mk",
+    "weight": "1 lb.",
+    "description": "This robust lock can be opened with its accompanying key or by successfully passing a DC 20 Thievery test. The Game Master may introduce locks with higher difficulty classes at increased prices."
+  },
+  {
+    "id": "eqp_lockpick",
+    "name": "Lockpick",
+    "price": "5 mk",
+    "weight": "0.5 lb.",
+    "description": "A lockpick can be used to gain an advantage on Thievery tests when attempting to pick a lock. After the test is resolved, the Game Master has the option to spend a resource to cause the lockpick to break."
+  },
+  {
+    "id": "eqp_magnifying_lens",
+    "name": "Magnifying lens",
+    "price": "400 mk",
+    "weight": "0.2 lb.",
+    "description": "A magnifying lens can be utilized to gain an advantage on skill tests performed to appraise or inspect small or highly detailed items."
+  },
+  {
+    "id": "eqp_manacles",
+    "name": "Manacles",
+    "price": "10 mk",
+    "weight": "6 lb.",
+    "description": "These metal restraints, provided with a key, are capable of binding the wrists or ankles of a Large or smaller character. Escaping them requires a successful DC 25 Agility test, breaking them requires a successful DC 25 Athletics test or dealing 15 damage, and picking the lock requires a successful DC 20 Thievery test. The Game Master can introduce manacles with higher difficulty classes at higher prices."
+  },
+  {
+    "id": "eqp_mirror_handheld",
+    "name": "Mirror (handheld)",
+    "price": "25 mk",
+    "weight": "2 lb.",
+    "description": "A small, portable reflective surface used for personal grooming, signaling, or observing areas indirectly. This item is primarily for roleplaying purposes and does not have specific game statistics or rules."
+  },
+  {
+    "id": "eqp_musical_instrument",
+    "name": "Musical instrument",
+    "price": "1-50 mk",
+    "weight": "0.5-20 lb.",
+    "description": "Roshar's diverse cultures each possess their unique instruments and musical styles, often employed for entertainment, leisure, or earning money through street performances. When playing an instrument, the quality of a performance can be determined by a skill test using a relevant skill (e.g., Agility for stringed instruments, Athletics for drums, or Discipline for instruments with many keys). Expertise in a particular instrument grants an advantage on such tests."
+  },
+  {
+    "id": "eqp_net_hunting",
+    "name": "Net (hunting)",
+    "price": "4 mk",
+    "weight": "5 lb.",
+    "description": "This thick rope net is designed to ensnare both animals and adversaries. When wielding it, an Athletics test can be made against the Physical defense of a Large or smaller character within 15 feet. A successful hit results in the target being Restrained and knocked Prone. The trapped character or another nearby can use an Interact action to attempt a DC 15 Athletics test to free them. If a character is entangled by multiple nets, each must be freed individually."
+  },
+  {
+    "id": "eqp_net_fishing",
+    "name": "Net (fishing)",
+    "price": "10 mk",
+    "weight": "15 lb.",
+    "description": "A net made of fine mesh, specifically used for catching fish. Utilizing this net provides an advantage on physical tests associated with fishing."
+  },
+  {
+    "id": "eqp_oil_1_flask",
+    "name": "Oil (1 flask)",
+    "price": "1 mk",
+    "weight": "1 lb.",
+    "description": "Oil typically comes in a 1-pint flask crafted from dried crem. It is highly flammable and serves multiple purposes: fueling oil lanterns, creating hazardous terrain in an area, or as an improvised weapon (sling). When a target is hit or grazed with oil as an improvised weapon, they become coated in oil in addition to taking normal damage. Regardless of the attack's outcome, the crem flask breaks afterward, and any remaining oil is lost."
+  },
+  {
+    "id": "eqp_paper_or_parchment_1_sheet",
+    "name": "Paper or parchment (1 sheet)",
+    "price": "0.5 mk",
+    "weight": "0.1 lb.",
+    "description": "A thin, flat material used for writing, drawing, or keeping records. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_perfume_1_vial",
+    "name": "Perfume (1 vial)",
+    "price": "20 mk",
+    "weight": "0.5 lb.",
+    "description": "A small container holding a fragrant liquid, used to impart a pleasant scent to a person or object. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_pick_mining",
+    "name": "Pick (mining)",
+    "price": "10 mk",
+    "weight": "10 lb.",
+    "description": "A tool with a pointed or chiseled head, used for breaking rocks and extracting minerals. This item is primarily for roleplaying and does not have specific mechanical statistics or rules."
+  },
+  {
+    "id": "eqp_poison_weak_1_dose",
+    "name": "Poison (weak, 1 dose)",
+    "price": "20 mk",
+    "weight": "0.2 lb.",
+    "description": "Poisons are often made from Roshar's lethal blackbane plant and come in single-dose glass vials. It can be added to food, liquid, or a container, or applied to a melee weapon or ammunition. This may require a Stealth test to avoid detection. When ingested or delivered via a poisoned weapon/ammunition, the poison is consumed, and the target must succeed on a DC 12 Athletics test or suffer 1d6 vital damage."
+  },
+  {
+    "id": "eqp_poison_effectual_1_dose",
+    "name": "Poison (effectual, 1 dose)",
+    "price": "50 mk",
+    "weight": "0.2 lb.",
+    "description": "Poisons are often made from Roshar's lethal blackbane plant and come in single-dose glass vials. It can be added to food, liquid, or a container, or applied to a melee weapon or ammunition. This may require a Stealth test to avoid detection. When ingested or delivered via a poisoned weapon/ammunition, the poison is consumed, and the target must succeed on a DC 14 Athletics test or take 2d8 vital damage and be Stunned for 1 hour."
+  },
+  {
+    "id": "eqp_poison_potent_1_dose",
+    "name": "Poison (potent, 1 dose)",
+    "price": "120 mk",
+    "weight": "0.2 lb.",
+    "description": "Poisons are often made from Roshar's lethal blackbane plant and come in single-dose glass vials. It can be added to food, liquid, or a container, or applied to a melee weapon or ammunition. This may require a Stealth test to avoid detection. When ingested or delivered via a poisoned weapon/ammunition, the poison is consumed, and the target must succeed on a DC 16 Athletics test or take 3d10 vital damage and be Stunned for 1 hour, also becoming Immobilized while Stunned in this manner."
+  },
+  {
+    "id": "eqp_pot_iron",
+    "name": "Pot (iron)",
+    "price": "8 mk",
+    "weight": "10 lb.",
+    "description": "An iron pot, typically used for cooking, boiling water, or holding liquids and other materials. This item is listed for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_pouch",
+    "name": "Pouch",
+    "price": "1 mk",
+    "weight": "1 lb.",
+    "description": "A small bag, often made of cloth or leather, used for carrying small personal items, coins, or components. This item is listed for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_pulley_system",
+    "name": "Pulley system",
+    "price": "100 mk",
+    "weight": "12 lb.",
+    "description": "This system is most commonly utilized by engineers and artifabrians. It includes four pulley wheels, 30 feet of rope, and a hook. When a pulley apparatus is set up before lifting an object, the object is treated as if it weighs a quarter of its normal weight."
+  },
+  {
+    "id": "eqp_rope_50_feet",
+    "name": "Rope (50 feet)",
+    "price": "30 mk",
+    "weight": "5 lb.",
+    "description": "Rope is generally crafted from seasilk, or less frequently from lavis grain or rockbud fibers, and is sold in 50-foot segments. These lengths can be cut and tied as needed to adjust their length. A rope can be cut by inflicting 2 damage to it, or it can be torn apart with a successful DC 20 Athletics test."
+  },
+  {
+    "id": "eqp_sack",
+    "name": "Sack",
+    "price": "0.2 mk",
+    "weight": "0.5 lb.",
+    "description": "A simple bag, usually made of coarse material, used for carrying larger quantities of items, such as provisions or collected materials. This item is listed for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_scale",
+    "name": "Scale",
+    "price": "20 mk",
+    "weight": "3 lb.",
+    "description": "Primarily employed by scholars, ardents, appraisers, and gem cutters, a scale offers precise determination of an object's weight, up to a maximum of 2 pounds."
+  },
+  {
+    "id": "eqp_shovel",
+    "name": "Shovel",
+    "price": "8 mk",
+    "weight": "5 lb.",
+    "description": "A tool with a broad blade and a handle, used for digging, lifting, and moving loose material like earth or sand. This item is listed for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_soap",
+    "name": "Soap",
+    "price": "1 mk",
+    "weight": "0.1 lb.",
+    "description": "A substance used for washing and cleaning, typically in cake or bar form. This item is listed for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_spyglass",
+    "name": "Spyglass",
+    "price": "500 mk",
+    "weight": "1 lb.",
+    "description": "When viewing distant objects through a spyglass, they appear as though they are at half their actual distance. More advanced spyglasses that make distant objects seem even closer may be available at higher prices, at the GM's discretion."
+  },
+  {
+    "id": "eqp_surgical_supplies",
+    "name": "Surgical supplies",
+    "price": "20 mk",
+    "weight": "3 lb.",
+    "description": "This satchel contains sufficient bandages, salves, splints, and other medical necessities for 10 uses. These supplies are utilized when performing a Medicine test to treat a wounded character."
+  },
+  {
+    "id": "eqp_tent_twoperson",
+    "name": "Tent (two-person)",
+    "price": "10 mk",
+    "weight": "20 lb.",
+    "description": "A portable shelter designed to accommodate two individuals, providing cover from the elements and a place to rest during travel or camping. This item is primarily for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_treatment_medical_1_dose",
+    "name": "Treatment (medical, 1 dose)",
+    "price": "10 mk",
+    "weight": "0.2 lb.",
+    "description": "Rosharan surgeons utilize various treatments, often crafted from bitterleaf or bloodivy. A single dose can be used during a short rest to cure a character of certain conditions, provided the condition isn't a permanent injury. These conditions include Disoriented, Exhausted (which reduces the penalty by 1), or Stunned."
+  },
+  {
+    "id": "eqp_tuning_fork",
+    "name": "Tuning fork",
+    "price": "50 mk",
+    "weight": "0.5 lb.",
+    "description": "This device facilitates the transfer of Stormlight between spheres or gemstones. By using a tuning fork, you can recharge fabrials, Shardplate, and half-shards with Stormlight from spheres, treating the spheres as if they were unencased gemstones."
+  },
+  {
+    "id": "eqp_unencased_gem_infused",
+    "name": "Unencased gem (infused)",
+    "price": "2 mk",
+    "weight": "0.01 lb.",
+    "description": "Unlike spheres that encase gemstones in glass, unencased infused gems rapidly leak Stormlight, becoming dun within a few days depending on their cut. This permeability allows them to recharge fabrials and Shardplate. Additionally, Radiants can breathe in Stormlight from these unencased gems, receiving the same benefits as breathing from spheres."
+  },
+  {
+    "id": "eqp_vial_glass",
+    "name": "Vial (glass)",
+    "price": "4 mk",
+    "weight": "0.2 lb.",
+    "description": "A small glass container, typically used for holding liquids such as potions, perfumes, or other precious substances. This item is primarily for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_waterskin",
+    "name": "Waterskin",
+    "price": "1 mk",
+    "weight": "1 lb. (empty)",
+    "description": "A durable container, often made from animal hide, used for carrying and storing water or other beverages during travel. This item is primarily for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_wax_1_block",
+    "name": "Wax (1 block)",
+    "price": "2 mk",
+    "weight": "0.5 lb.",
+    "description": "A solid block of wax, useful for a variety of purposes such as sealing letters, creating candles, waterproofing, or as a component in crafting. This item is primarily for roleplaying purposes and does not have specific statistics or rules."
+  },
+  {
+    "id": "eqp_whetstone",
+    "name": "Whetstone",
+    "price": "0.2 mk",
+    "weight": "1 lb.",
+    "description": "A stone used for sharpening blades and other tools, helping to maintain their edge and effectiveness. This item is primarily for roleplaying purposes and does not have specific statistics or rules."
+  }
+]

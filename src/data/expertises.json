@@ -1,0 +1,70 @@
+{
+    "cultural": [
+        "Alethi",
+        "Herdazian",
+        "Unkalaki",
+        "Veden",
+        "Kharbranthian",
+        "Wayfarer",
+        "Azish",
+        "Thaylen",
+        "Shin",
+        "Reshi",
+        "Iriali",
+        "Purelake",
+        "Listener",
+        "Natan"
+    ],
+    "utility": [
+        "Animal Care",
+        "Armor Crafting",
+        "Engineering",
+        "Equipment Crafting",
+        "High Society",
+        "History",
+        "Military Strategy",
+        "Religion",
+        "Riding Horses",
+        "Weapon Crafting"
+    ],
+    "weapon": [
+        "Axe",
+        "Crossbow",
+        "Greatsword",
+        "Hammer",
+        "Improvised Weapon",
+        "Javelin",
+        "Knife",
+        "Longbow",
+        "Longspear",
+        "Longsword",
+        "Mace",
+        "Poleaxe",
+        "Rapier",
+        "Shield",
+        "Shortbow",
+        "Shortspear",
+        "Sidesword",
+        "Sling",
+        "Staff",
+        "Unarmed Attacks"
+    ],
+    "armor": [
+        "Uniform",
+        "Leather",
+        "Chain",
+        "Breastplate",
+        "Half Plate",
+        "Full Plate"
+    ],
+    "specialist": [
+        "Fabrial Crafting",
+        "Grandbows",
+        "Half-Shards",
+        "The Knights Radiant",
+        "Shardblades",
+        "Shardplate",
+        "Singer History",
+        "Warhammers"
+    ]
+}

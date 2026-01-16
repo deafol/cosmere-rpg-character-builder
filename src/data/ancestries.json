@@ -1,0 +1,21 @@
+[
+  {
+    "id": "anc_human",
+    "name": "Human",
+    "description": "Most of Roshar is divided into human-ruled nations with majority-human populations. Various ethnic groups exist within the human species, with some individuals possessing distant singer ancestry. While ethnic groups share common physical traits, these characteristics can manifest differently across individuals. Due to the Vorin 'right of travel,' international relations, and diasporas resulting from conflict, most nations exhibit some level of ethnic diversity among their citizens.",
+    "innate_abilities": [
+      "Size: Medium",
+      "Ancestry Bonus Talents (Level 1, 6, 11, 16, and 21): When creating a character (step 5), you receive one bonus talent. As a human, this talent must be chosen from a heroic path. You gain an additional bonus talent from a heroic path each time you reach a new tier as indicated on the Character Advancement table."
+    ]
+  },
+  {
+    "id": "anc_singer",
+    "name": "Singer",
+    "description": "Singers are the native inhabitants of Roshar; however, this knowledge was suppressed by humans and lost over many Desolations. Singers can transform their appearance and abilities by bonding spren during highstorms. Their intellectual and emotional capacities are equivalent to humans, but unlike humans, singer forms possess the remarkable ability to temporarily enhance certain abilities while others remain dormant. Singers have skin marbled with black, white, or red, and their hair can be orange, red, or black. Parts of their bodies are covered by protective carapace, with some forms featuring more substantial biological armor. Adopting a new form can influence a singer's physicality, aspects of their personality, and their ability to access or lack certain rhythms. Singers use Roshar's pervasive rhythms to add emotional context and depth to their words, associating specific emotions with rhythms. Each singer infuses their words with a cadence reflecting their mood, and with concentration, they can attune a false rhythm to self-correct or mislead.",
+    "innate_abilities": [
+      "Size: Medium",
+      "Unique Talent Tree (Level 1): When choosing a new talent, you can select it from the Singer talent tree in this chapter, in addition to other available trees.",
+      "Change Form (Level 1)"
+    ]
+  }
+]

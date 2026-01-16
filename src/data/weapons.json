@@ -1,0 +1,334 @@
+[
+  {
+    "id": "wpn_javelin",
+    "name": "Javelin",
+    "category": "Light",
+    "damage": "1d6 keen",
+    "range": "Melee",
+    "properties": [
+      "Thrown [30/120]",
+      "Indirect"
+    ],
+    "weight": "2 lb.",
+    "price": "20 mk"
+  },
+  {
+    "id": "wpn_knife",
+    "name": "Knife",
+    "category": "Light",
+    "damage": "1d4 keen",
+    "range": "Melee",
+    "properties": [
+      "Discreet",
+      "Offhand",
+      "Thrown [20/60]"
+    ],
+    "weight": "1 lb.",
+    "price": "8 mk"
+  },
+  {
+    "id": "wpn_mace",
+    "name": "Mace",
+    "category": "Light",
+    "damage": "1d6 impact",
+    "range": "Melee",
+    "properties": [
+      "Momentum"
+    ],
+    "weight": "3 lb.",
+    "price": "20 mk"
+  },
+  {
+    "id": "wpn_rapier",
+    "name": "Rapier",
+    "category": "Light",
+    "damage": "1d6 keen",
+    "range": "Melee",
+    "properties": [
+      "Quickdraw",
+      "Defensive"
+    ],
+    "weight": "2 lb.",
+    "price": "100 mk"
+  },
+  {
+    "id": "wpn_shortspear",
+    "name": "Shortspear",
+    "category": "Light",
+    "damage": "1d8 keen",
+    "range": "Melee",
+    "properties": [
+      "Two-Handed"
+    ],
+    "weight": "3 lb.",
+    "price": "10 mk"
+  },
+  {
+    "id": "wpn_sidesword",
+    "name": "Sidesword",
+    "category": "Light",
+    "damage": "1d6 keen",
+    "range": "Melee",
+    "properties": [
+      "Quickdraw",
+      "Offhand"
+    ],
+    "weight": "2 lb.",
+    "price": "40 mk"
+  },
+  {
+    "id": "wpn_staff",
+    "name": "Staff",
+    "category": "Light",
+    "damage": "1d6 impact",
+    "range": "Melee",
+    "properties": [
+      "Discreet",
+      "Two-Handed",
+      "Defensive"
+    ],
+    "weight": "4 lb.",
+    "price": "1 mk"
+  },
+  {
+    "id": "wpn_shortbow",
+    "name": "Shortbow",
+    "category": "Light",
+    "damage": "1d6 keen",
+    "range": "Ranged [80/320]",
+    "properties": [
+      "Two-Handed",
+      "Quickdraw"
+    ],
+    "weight": "2 lb.",
+    "price": "80 mk"
+  },
+  {
+    "id": "wpn_sling",
+    "name": "Sling",
+    "category": "Light",
+    "damage": "1d4 impact",
+    "range": "Ranged [30/120]",
+    "properties": [
+      "Discreet",
+      "Indirect"
+    ],
+    "weight": "1 lb.",
+    "price": "2 mk"
+  },
+  {
+    "id": "wpn_axe",
+    "name": "Axe",
+    "category": "Heavy",
+    "damage": "1d6 keen",
+    "range": "Melee",
+    "properties": [
+      "Thrown [20/60]",
+      "Offhand"
+    ],
+    "weight": "2 lb.",
+    "price": "20 mk"
+  },
+  {
+    "id": "wpn_greatsword",
+    "name": "Greatsword",
+    "category": "Heavy",
+    "damage": "1d10 keen",
+    "range": "Melee",
+    "properties": [
+      "Two-Handed",
+      "Deadly"
+    ],
+    "weight": "7 lb.",
+    "price": "200 mk"
+  },
+  {
+    "id": "wpn_hammer",
+    "name": "Hammer",
+    "category": "Heavy",
+    "damage": "1d10 impact",
+    "range": "Melee",
+    "properties": [
+      "Two-Handed",
+      "Momentum"
+    ],
+    "weight": "8 lb.",
+    "price": "40 mk"
+  },
+  {
+    "id": "wpn_longspear",
+    "name": "Longspear",
+    "category": "Heavy",
+    "damage": "1d8 keen",
+    "range": "Melee [+5]",
+    "properties": [
+      "Two-Handed",
+      "Defensive"
+    ],
+    "weight": "9 lb.",
+    "price": "15 mk"
+  },
+  {
+    "id": "wpn_longsword",
+    "name": "Longsword",
+    "category": "Heavy",
+    "damage": "1d8 keen",
+    "range": "Melee",
+    "properties": [
+      "Quickdraw",
+      "Two-Handed"
+    ],
+    "weight": "3 lb.",
+    "price": "60 mk"
+  },
+  {
+    "id": "wpn_poleaxe",
+    "name": "Poleaxe",
+    "category": "Heavy",
+    "damage": "1d10 keen",
+    "range": "Melee",
+    "properties": [
+      "Two-Handed",
+      "Melee [+5]"
+    ],
+    "weight": "5 lb.",
+    "price": "40 mk"
+  },
+  {
+    "id": "wpn_shield",
+    "name": "Shield",
+    "category": "Heavy",
+    "damage": "1d4 impact",
+    "range": "Melee",
+    "properties": [
+      "Defensive",
+      "Offhand"
+    ],
+    "weight": "2 lb.",
+    "price": "10 mk"
+  },
+  {
+    "id": "wpn_crossbow",
+    "name": "Crossbow",
+    "category": "Heavy",
+    "damage": "1d8 keen",
+    "range": "Ranged [100/400]",
+    "properties": [
+      "Loaded",
+      "Two-Handed",
+      "Deadly"
+    ],
+    "weight": "7 lb.",
+    "price": "200 mk"
+  },
+  {
+    "id": "wpn_longbow",
+    "name": "Longbow",
+    "category": "Heavy",
+    "damage": "1d6 keen",
+    "range": "Ranged [150/600]",
+    "properties": [
+      "Two-Handed",
+      "Indirect"
+    ],
+    "weight": "3 lb.",
+    "price": "100 mk"
+  },
+  {
+    "id": "wpn_improvised_weapon",
+    "name": "Improvised Weapon",
+    "category": "Special",
+    "damage": "Same as similar weapon",
+    "range": "Melee",
+    "properties": [
+      "Fragile",
+      "Unique"
+    ],
+    "weight": "Varies",
+    "price": "Varies"
+  },
+  {
+    "id": "wpn_unarmed_attack",
+    "name": "Unarmed Attack",
+    "category": "Special",
+    "damage": "Unique",
+    "range": "Melee",
+    "properties": [
+      "Unique",
+      "Momentum",
+      "Offhand"
+    ],
+    "weight": "Weightless",
+    "price": "N/A"
+  },
+  {
+    "id": "wpn_half_shard",
+    "name": "Half-Shard",
+    "category": "Special",
+    "damage": "2d4 impact",
+    "range": "Melee",
+    "properties": [
+      "Defensive",
+      "Two-Handed",
+      "Unique",
+      "Momentum"
+    ],
+    "weight": "10 lb.",
+    "price": "2,000 mk"
+  },
+  {
+    "id": "wpn_shardblade",
+    "name": "Shardblade",
+    "category": "Special",
+    "damage": "2d8 spirit",
+    "range": "Melee",
+    "properties": [
+      "Dangerous",
+      "Deadly",
+      "Unique"
+    ],
+    "weight": "4 lb.",
+    "price": "Reward only"
+  },
+  {
+    "id": "wpn_shardblade_radiant",
+    "name": "Shardblade (Radiant)",
+    "category": "Special",
+    "damage": "2d* spirit",
+    "range": "Melee",
+    "properties": [
+      "Deadly",
+      "Unique"
+    ],
+    "weight": "Weightless",
+    "price": "Talent only"
+  },
+  {
+    "id": "wpn_warhammer",
+    "name": "Warhammer",
+    "category": "Special",
+    "damage": "2d10 impact",
+    "range": "Melee",
+    "properties": [
+      "Cumbersome",
+      "Two-Handed",
+      "Unique"
+    ],
+    "weight": "150 lb.",
+    "price": "400 mk"
+  },
+  {
+    "id": "wpn_grandbow",
+    "name": "Grandbow",
+    "category": "Special",
+    "damage": "2d6 keen",
+    "range": "Ranged [200/800]",
+    "properties": [
+      "Cumbersome",
+      "Two-Handed",
+      "Pierce"
+    ],
+    "weight": "20 lb.",
+    "price": "1,000 mk"
+  }
+]

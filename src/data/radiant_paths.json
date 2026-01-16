@@ -1,0 +1,101 @@
+[
+    {
+        "id": "rpath_dustbringer",
+        "name": "Dustbringer",
+        "description": "Dustbringers are powerful individuals who embody strong discipline. They are capable of manipulating their surroundings, such as eroding surfaces, unleashing fire, and precisely shaping materials. They also act to protect innocents.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Ashspren",
+            "Abrasion (Surge)",
+            "Division (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_edgedancer",
+        "name": "Edgedancer",
+        "description": "Remember and serve those who others forget.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Cultivationspren",
+            "Abrasion (Surge)",
+            "Progression (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_elsecaller",
+        "name": "Elsecaller",
+        "description": "Strive to reach your true potential.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Inkspren",
+            "Transformation (Surge)",
+            "Transportation (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_lightweaver",
+        "name": "Lightweaver",
+        "description": "Separate truth from lies.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Cryptic",
+            "Illumination (Surge)",
+            "Transformation (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_skybreaker",
+        "name": "Skybreaker",
+        "description": "Enforce the law and strive for justice.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Highspren",
+            "Division (Surge)",
+            "Gravitation (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_stoneward",
+        "name": "Stoneward",
+        "description": "Be the support on which others can depend.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Peakspren",
+            "Cohesion (Surge)",
+            "Tension (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_truthwatcher",
+        "name": "Truthwatcher",
+        "description": "Search for fundamental truth and share it.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Mistspren",
+            "Illumination (Surge)",
+            "Progression (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_willshaper",
+        "name": "Willshaper",
+        "description": "Seek freedom and choice for all peoples.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Lightspren",
+            "Cohesion (Surge)",
+            "Transportation (Surge)"
+        ]
+    },
+    {
+        "id": "rpath_windrunner",
+        "name": "Windrunner",
+        "description": "Protect the innocent and the defenseless.",
+        "associated_orders": [],
+        "key_attributes": [
+            "Honorspren",
+            "Adhesion (Surge)",
+            "Gravitation (Surge)"
+        ]
+    }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "arm_uniform",
+    "name": "Uniform",
+    "category": "Light",
+    "deflect": "0",
+    "properties": [
+      "Presentable"
+    ],
+    "price": "40 mk",
+    "weight": "5 lb."
+  },
+  {
+    "id": "arm_leather",
+    "name": "Leather",
+    "category": "Light",
+    "deflect": "1",
+    "properties": [
+      "Presentable"
+    ],
+    "price": "60 mk",
+    "weight": "10 lb."
+  },
+  {
+    "id": "arm_chain",
+    "name": "Chain",
+    "category": "Medium",
+    "deflect": "2",
+    "properties": [
+      "Cumbersome (3)",
+      "Unique: loses Cumbersome trait"
+    ],
+    "price": "80 mk",
+    "weight": "25 lb."
+  },
+  {
+    "id": "arm_breastplate",
+    "name": "Breastplate",
+    "category": "Medium",
+    "deflect": "2",
+    "properties": [
+      "Cumbersome (3)",
+      "Presentable"
+    ],
+    "price": "120 mk",
+    "weight": "30 lb."
+  },
+  {
+    "id": "arm_half_plate",
+    "name": "Half Plate",
+    "category": "Heavy",
+    "deflect": "3",
+    "properties": [
+      "Cumbersome (4)",
+      "Unique: Cumbersome (3) instead of Cumbersome (4)"
+    ],
+    "price": "400 mk",
+    "weight": "40 lb."
+  },
+  {
+    "id": "arm_full_plate",
+    "name": "Full Plate",
+    "category": "Heavy",
+    "deflect": "4",
+    "properties": [
+      "Cumbersome (5)"
+    ],
+    "price": "1,600 mk",
+    "weight": "55 lb."
+  },
+  {
+    "id": "arm_shardplate",
+    "name": "Shardplate",
+    "category": "Shardplate",
+    "deflect": "5",
+    "properties": [
+      "Dangerous",
+      "Unique",
+      "Expert Trait: Unique",
+      "Provides full-body armor",
+      "Enhances physical capabilities",
+      "Blocks Shardblade strikes",
+      "Protects from Invested abilities",
+      "Has 4 charges",
+      "Invested when >1 charge",
+      "Cumbersome (6) when uncharged",
+      "Breakable"
+    ],
+    "price": "Reward only",
+    "weight": "1400 lb."
+  },
+  {
+    "id": "arm_shardplate_radiant",
+    "name": "Shardplate (Radiant)",
+    "category": "Shardplate",
+    "deflect": "5",
+    "properties": [
+      "Unique",
+      "Wielded by Radiants (4th Ideal)",
+      "Living Armor",
+      "Restraining Armor"
+    ],
+    "price": "Talent only",
+    "weight": "Weightless"
+  }
+]

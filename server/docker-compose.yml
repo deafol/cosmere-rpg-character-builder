@@ -1,0 +1,160 @@
+# ================================================================================
+# Cosmere RPG Character Builder - Production Stack
+# Docker Compose for Raspberry Pi 5 Deployment
+# ================================================================================
+#
+# Usage:
+#   1. Copy this file to your production server
+#   2. Create .env file with required secrets (see .env.example)
+#   3. Run: docker compose up -d
+#
+# ================================================================================
+
+services:
+  # ============================================================================
+  # Main Application
+  # ============================================================================
+  app:
+    image: ghcr.io/deafol/cosmere-rpg-character-builder:latest
+    container_name: character-builder
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - frontend
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ============================================================================
+  # Cloudflare Tunnel (Secure External Access)
+  # ============================================================================
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - frontend
+    depends_on:
+      - app
+
+  # ============================================================================
+  # Watchtower (Automatic Updates)
+  # ============================================================================
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=300 # Check every 5 minutes
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${NOTIFICATION_URL:-} # Optional: Discord/Slack webhook
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.docker/config.json:/config.json:ro # For private registry auth
+
+  # ============================================================================
+  # Netdata (System Monitoring)
+  # ============================================================================
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    restart: unless-stopped
+    hostname: cosmere-pi
+    ports:
+      - "19999:19999"
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN:-}
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+    networks:
+      - monitoring
+
+  # ============================================================================
+  # Umami Analytics (User Analytics)
+  # ============================================================================
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: umami
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      DATABASE_URL: postgresql://umami:${UMAMI_DB_PASSWORD}@umami-db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: ${UMAMI_APP_SECRET}
+      DISABLE_BOT_CHECK: "false"
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    networks:
+      - frontend
+      - analytics
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  umami-db:
+    image: postgres:15-alpine
+    container_name: umami-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: ${UMAMI_DB_PASSWORD}
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    networks:
+      - analytics
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U umami" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# ================================================================================
+# Networks
+# ================================================================================
+networks:
+  frontend:
+    driver: bridge
+  monitoring:
+    driver: bridge
+  analytics:
+    driver: bridge
+
+# ================================================================================
+# Volumes
+# ================================================================================
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+  umami-db-data:

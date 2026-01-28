@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { CharacterForm } from './forms/CharacterForm';
 import { useCharacter } from '../context/CharacterContext';
 import { initialCharacterData } from '../types/character';
 import { exportToPdf } from '../utils/pdfExport';
 import { serializeCharacter, deserializeCharacter, isCompactFormat } from '../utils/characterSerializer';
 import { Modal, NotificationModal } from './ui';
+import Image from 'next/image';
 
 // Import data for deserialization lookups
 import ancestriesData from '../data/ancestries.json';
@@ -24,27 +25,16 @@ export const BuilderLayout = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Track if character has been modified (unsaved changes)
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const [lastSavedData, setLastSavedData] = useState<string>("");
+    const [lastSavedData, setLastSavedData] = useState(() => JSON.stringify(data));
+
+    // Derive unsaved changes
+    const hasUnsavedChanges = lastSavedData !== JSON.stringify(data);
 
     // Modal states
     const [showNewCharacterModal, setShowNewCharacterModal] = useState(false);
     const [showLoadWarningModal, setShowLoadWarningModal] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationConfig, setNotificationConfig] = useState({ title: "", message: "", variant: "info" as "info" | "success" | "error" | "warning" });
-
-    // Track changes
-    useEffect(() => {
-        const currentData = JSON.stringify(data);
-        if (lastSavedData && currentData !== lastSavedData) {
-            setHasUnsavedChanges(true);
-        }
-    }, [data, lastSavedData]);
-
-    // Initialize lastSavedData on mount
-    useEffect(() => {
-        setLastSavedData(JSON.stringify(data));
-    }, []);
 
     const showNotificationModal = (title: string, message: string, variant: "info" | "success" | "error" | "warning" = "info") => {
         setNotificationConfig({ title, message, variant });
@@ -70,7 +60,6 @@ export const BuilderLayout = () => {
 
         // Mark as saved
         setLastSavedData(JSON.stringify(data));
-        setHasUnsavedChanges(false);
     };
 
     const handleLoadClick = () => {
@@ -113,7 +102,6 @@ export const BuilderLayout = () => {
 
                 loadData(loadedData);
                 setLastSavedData(JSON.stringify(loadedData));
-                setHasUnsavedChanges(false);
                 showNotificationModal("Character Loaded", `Successfully loaded ${characterName}!`, "success");
             } catch (error) {
                 console.error("Failed to load JSON", error);
@@ -136,7 +124,6 @@ export const BuilderLayout = () => {
     const createNewCharacter = () => {
         resetData();
         setLastSavedData(JSON.stringify(initialCharacterData));
-        setHasUnsavedChanges(false);
         setShowNewCharacterModal(false);
     };
 
@@ -144,7 +131,9 @@ export const BuilderLayout = () => {
         <>
             <div className="max-w-[1200px] mx-auto min-h-screen pb-12 font-body">
                 <header className="mb-8 flex justify-between items-center bg-cosmere-blue text-stone-100 p-6 rounded-b-lg shadow-lg border-b-4 border-cosmere-gold">
-                    <img src="/icons/paths/radiant/bondsmith.png" alt="" className="w-36 h-36" />
+                    <div className="w-36 h-36 relative">
+                        <Image src="/icons/paths/radiant/bondsmith.png" alt="" fill className="object-contain" />
+                    </div>
                     <div>
                         <h1 className="text-3xl font-display font-bold tracking-widest text-cosmere-gold drop-shadow-md">COSMERE RPG</h1>
                         <span className="text-xl font-body tracking-[0.2em] text-cosmere-gold font-bold block mt-1">Character Builder</span>

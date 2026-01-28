@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { CharacterData, initialCharacterData, Skill } from '../types/character';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import surgesData from '../data/surges.json';
+import { CharacterData, initialCharacterData } from '../types/character';
 
 interface CharacterContextType {
     data: CharacterData;
@@ -23,7 +23,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
 
     const updateData = (updates: Partial<CharacterData>) => {
         setData(prev => {
-            let newData = { ...prev, ...updates };
+            const newData = { ...prev, ...updates };
 
             // Logic for Auto-Selecting Surges based on Radiant Paths
             if (updates.paths) {
@@ -44,7 +44,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
 
                 // 3. Update Skills
                 // filter out any existing skills that are Surges but NOT active anymore
-                let newSkills = newData.skills.filter(s => !allSurgeNames.has(s.name) || activeSurges.has(s.name));
+                const newSkills = newData.skills.filter(s => !allSurgeNames.has(s.name) || activeSurges.has(s.name));
 
                 // add any active Surges that are NOT in skills yet
                 activeSurges.forEach(surgeName => {

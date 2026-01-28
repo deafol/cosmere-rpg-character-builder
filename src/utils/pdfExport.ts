@@ -1,11 +1,40 @@
 
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import { CharacterData } from '../types/character';
-import surgesData from '../data/surges.json';
+import { PDFDocument, PDFPage, PDFFont } from 'pdf-lib';
 import heroicTalents from '../data/heroic_talents.json';
 import radiantTalents from '../data/radiant_talents.json';
-const talentsData = { ...heroicTalents, ...radiantTalents };
+import surgesData from '../data/surges.json';
+import { CharacterData, Talent } from '../types/character';
+
+// Type for talent lookup data structure
+interface TalentDataEntry {
+    name: string;
+    specialty?: string;
+    activation?: string;
+    description?: string;
+}
+
+interface PathTalentData {
+    keyTalent?: string;
+    talents: TalentDataEntry[];
+}
+
+type TalentsDataMap = Record<string, PathTalentData>;
+
+// Type for skill with originalCategory
+interface ExtraSkill {
+    name: string;
+    attribute: string;
+    attr_abbrev: string;
+    originalCategory?: string;
+}
+
+// Extended talent with activation
+interface TalentWithActivation extends Talent {
+    activation?: string;
+}
+
+const talentsData: TalentsDataMap = { ...heroicTalents, ...radiantTalents };
 
 export async function exportToPdf(data: CharacterData) {
     try {
@@ -44,19 +73,19 @@ export async function exportToPdf(data: CharacterData) {
         }
 
         // 2. Define Field Creation Logic
-        const addField = (targetPage: any, name: string, x: number, y: number, width: number, height: number = 15, size: number = 10) => {
+        const addField = (targetPage: PDFPage, name: string, x: number, y: number, width: number, height: number = 15, size: number = 10) => {
             const field = form.createTextField(name);
             field.setText('');
             field.addToPage(targetPage, { x, y, width, height, borderWidth: 0 });
             field.setFontSize(size);
         };
 
-        const addCheckBox = (targetPage: any, name: string, x: number, y: number, width: number = 9, height: number = 9) => {
+        const addCheckBox = (targetPage: PDFPage, name: string, x: number, y: number, width: number = 9, height: number = 9) => {
             const checkBox = form.createCheckBox(name);
             checkBox.addToPage(targetPage, { x, y, width, height, borderWidth: 0.1 });
         };
 
-        const addArea = (targetPage: any, name: string, x: number, y: number, w: number, h: number, fontSize: number = 10) => {
+        const addArea = (targetPage: PDFPage, name: string, x: number, y: number, w: number, h: number, fontSize: number = 10) => {
             const field = form.createTextField(name);
             field.addToPage(targetPage, { x, y, width: w, height: h, borderWidth: 0 });
             field.setFontSize(fontSize);
@@ -64,7 +93,7 @@ export async function exportToPdf(data: CharacterData) {
         };
 
         // Header Helper
-        const createHeader = (pg: any, prefix: string = "") => {
+        const createHeader = (pg: PDFPage, prefix: string = "") => {
             const firstRowY = 747;
             const secondRowY = 715;
             const thirdRowY = 685;
@@ -75,7 +104,7 @@ export async function exportToPdf(data: CharacterData) {
             addField(pg, `${prefix}playerName`, 35, thirdRowY, 150);
         };
         // Attributes Helper
-        const createAttributes = (pg: any, prefix: string = "") => {
+        const createAttributes = (pg: PDFPage, prefix: string = "") => {
             const attrY = 620;
             addField(pg, `${prefix}attr_str`, 35, attrY, 30, 20, 15);
             addField(pg, `${prefix}attr_spd`, 145, attrY, 30, 20, 15);
@@ -107,7 +136,7 @@ export async function exportToPdf(data: CharacterData) {
         const skillStartY = 541;
         const skillGap = 23;
 
-        const addSkillRow = (prefix: string, startX: number, startY: number, extraSkills: { name: string, attribute: string, attr_abbrev: string }[] = []) => {
+        const addSkillRow = (prefix: string, startX: number, startY: number, extraSkills: ExtraSkill[] = []) => {
             const skills = prefix === 'phy'
                 ? ['agility', 'athletics', 'hvy_weap', 'lgt_weap', 'stealth', 'thievery']
                 : prefix === 'cog'
@@ -143,8 +172,8 @@ export async function exportToPdf(data: CharacterData) {
                 //   If current=Cog (355) and orig=Spi -> Point Right
                 //   If current=Spi (555) and orig=Phy/Cog -> Point Left
 
-                if ((s as any).originalCategory && (s as any).originalCategory !== prefix) {
-                    const orig = (s as any).originalCategory;
+                if (s.originalCategory && s.originalCategory !== prefix) {
+                    const orig = s.originalCategory;
                     let pointRight = false;
 
                     if (prefix === 'phy') pointRight = true; // Must be to right
@@ -206,7 +235,7 @@ export async function exportToPdf(data: CharacterData) {
         const extraSkills = data.skills.filter(s => !standardNames.has(s.name));
 
         // Bucket extra skills
-        const buckets: Record<string, any[]> = { phy: [], cog: [], spi: [] };
+        const buckets: Record<string, ExtraSkill[]> = { phy: [], cog: [], spi: [] };
         data.skills.filter(s => !standardNames.has(s.name)).forEach(s => {
             buckets[getCategory(s.attribute)].push({ ...s, originalCategory: getCategory(s.attribute) });
         });
@@ -294,11 +323,11 @@ export async function exportToPdf(data: CharacterData) {
             try {
                 const field = form.getTextField(name);
                 if (field) field.setText(String(val));
-            } catch (e) { }
+            } catch { /* ignore */ }
         };
 
         // Special fill for Unicode content - uses custom font with optional size
-        const fillWithFont = (name: string, val: string, font: any, fontSize?: number) => {
+        const fillWithFont = (name: string, val: string, font: PDFFont, fontSize?: number) => {
             try {
                 const field = form.getTextField(name);
                 if (field) {
@@ -370,7 +399,7 @@ export async function exportToPdf(data: CharacterData) {
                     try {
                         const cb = form.getCheckBox(`${pdfName}_${r}`);
                         if (cb) cb.check();
-                    } catch (e) { }
+                    } catch { /* ignore */ }
                 }
             }
         };
@@ -420,29 +449,29 @@ export async function exportToPdf(data: CharacterData) {
 
         // Filter talents into General and Surge-Specific
         const surgeNames = new Set(surgesData.surges.map(s => s.name));
-        const surgeTalentsMap = new Map<string, any[]>();
-        const generalTalents: any[] = [];
+        const surgeTalentsMap = new Map<string, TalentWithActivation[]>();
+        const generalTalents: TalentWithActivation[] = [];
 
         data.talents.forEach(t => {
             // Lookup specialty and activation in talentsData
             let specialty = "";
             let activation = "";
-            const pathData = (talentsData as any)[t.path];
+            const pathData = talentsData[t.path];
             if (pathData) {
-                const tData = pathData.talents.find((td: any) => td.name === t.name);
+                const tData = pathData.talents.find((td) => td.name === t.name);
                 if (tData) {
-                    specialty = tData.specialty;
-                    activation = tData.activation;
+                    specialty = tData.specialty || "";
+                    activation = tData.activation || "";
                 }
             }
-            // Attach activation to the talent object for display
-            (t as any).activation = activation;
+            // Create talent with activation for display
+            const talentWithActivation: TalentWithActivation = { ...t, activation };
 
             if (surgeNames.has(specialty)) {
                 if (!surgeTalentsMap.has(specialty)) surgeTalentsMap.set(specialty, []);
-                surgeTalentsMap.get(specialty)!.push(t);
+                surgeTalentsMap.get(specialty)!.push(talentWithActivation);
             } else {
-                generalTalents.push(t);
+                generalTalents.push(talentWithActivation);
             }
         });
 
@@ -454,7 +483,7 @@ export async function exportToPdf(data: CharacterData) {
 
         const talentsText = sortedGeneralTalents.map(t => {
             const prefix = t.isKeyTalent ? "[KEY] " : "";
-            const act = (t as any).activation ? `${(t as any).activation} ` : "";
+            const act = t.activation ? `${t.activation} ` : "";
             return `${prefix}${act}${t.name}: ${t.description || ''}`;
         }).join('\n');
         fillWithFont('txt_talents', talentsText, customFont, 9);
@@ -479,7 +508,7 @@ export async function exportToPdf(data: CharacterData) {
                         try {
                             const cb = form.getCheckBox(`goal_check_${i}_${c}`);
                             if (cb) cb.check();
-                        } catch (e) { }
+                        } catch { /* ignore */ }
                     }
                 }
             }
@@ -503,7 +532,7 @@ export async function exportToPdf(data: CharacterData) {
                 const cbName = `radiant_ideal_chk_${i}`;
                 addCheckBox(page3, cbName, cbX, cbY, 12, 12);
                 if ((data.radiantIdeal || 0) >= i) {
-                    try { form.getCheckBox(cbName).check(); } catch (e) { }
+                    try { form.getCheckBox(cbName).check(); } catch { /* ignore */ }
                 }
             }
 
@@ -539,7 +568,7 @@ export async function exportToPdf(data: CharacterData) {
                 fillWithFont(`surge_desc_${idx}`, surgeDescription, customFont, 8);
 
                 const surgeTalents = surgeTalentsMap.get(surge.name)?.map(t => {
-                    const act = (t as any).activation ? `${(t as any).activation} ` : "";
+                    const act = t.activation ? `${t.activation} ` : "";
                     return `${act}${t.name}: ${t.description}`;
                 }).join('\n') || "";
                 addArea(page3, `surge_talents_${idx}`, sideMargin + (idx * 295), 31, 260, 200);
@@ -552,7 +581,7 @@ export async function exportToPdf(data: CharacterData) {
         const pdfBytes = await pdfDoc.save();
 
         // Open
-        const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
+        const blob = new Blob([pdfBytes.buffer.slice(pdfBytes.byteOffset, pdfBytes.byteOffset + pdfBytes.byteLength) as ArrayBuffer], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         window.open(url, '_blank');
 

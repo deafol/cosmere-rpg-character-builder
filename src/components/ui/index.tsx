@@ -80,6 +80,8 @@ export const CollapsiblePanel = ({ title, icon, children, defaultOpen = false, f
     const renderIcon = () => {
         if (!icon) return null;
         if (typeof icon === 'string') {
+            // Using img tag for dynamic icon paths - Next.js Image requires known dimensions
+            // eslint-disable-next-line @next/next/no-img-element
             return <img src={icon} alt="" className="w-8 h-8 mr-3 object-contain" />;
         }
         const IconComponent = icon;

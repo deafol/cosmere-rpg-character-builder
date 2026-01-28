@@ -9,8 +9,28 @@
  * - Only stores non-default values for skills
  */
 
-import { CharacterData, initialCharacterData, Skill, Goal, Talent } from '../types/character';
 import skillsData from '../data/skills.json';
+import { CharacterData, initialCharacterData, Talent, Ancestry, HeroicPath, Weapon, Armor, EquipmentItem } from '../types/character';
+
+// Item with ID and name
+interface NamedItem {
+    id?: string;
+    name: string;
+}
+
+// Talent lookup data structure
+interface TalentLookupData {
+    [pathName: string]: {
+        keyTalent?: string;
+        talents: Array<{
+            id?: string;
+            name: string;
+            description?: string;
+            specialty?: string;
+            activation?: string;
+        }>;
+    };
+}
 
 // Compact format interfaces - v2 uses IDs
 interface CompactSaveV2 {
@@ -37,9 +57,9 @@ interface CompactSaveV2 {
     lc: string; // liftingCapacity
     cc: string; // carryingCapacity
     ex: string[]; // expertises (still names, no IDs)
-    wp: (string | any)[]; // weapon IDs or custom objects
-    ar: (string | any)[]; // armor IDs or custom objects
-    eq: (string | any)[]; // equipment IDs or custom objects
+    wp: (string | Weapon)[]; // weapon IDs or custom objects
+    ar: (string | Armor)[]; // armor IDs or custom objects
+    eq: (string | EquipmentItem)[]; // equipment IDs or custom objects
     ta: [string, string, boolean][]; // talents: [id, pathId, isKeyTalent]
     ot: string[]; // otherTalents (free text)
     pu: string[]; // purpose
@@ -93,22 +113,22 @@ interface CompactSaveV1 {
 type CompactSave = CompactSaveV1 | CompactSaveV2;
 
 // Helper to get ID or fallback to name-based ID
-const getIdOrName = (item: { id?: string; name: string }, prefix: string): string => {
+const getIdOrName = (item: NamedItem, prefix: string): string => {
     return item.id || `${prefix}_${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}`;
 };
 
 /**
  * Serialize CharacterData to compact format v2 (using IDs)
  */
-export function serializeCharacter(data: CharacterData, staticData?: { weapons: any[], armor: any[], equipment: any[] }): CompactSaveV2 {
+export function serializeCharacter(data: CharacterData, staticData?: { weapons: Weapon[], armor: Armor[], equipment: EquipmentItem[] }): CompactSaveV2 {
     // Only save skills with non-zero ranks
     const nonZeroSkills: [string, number][] = data.skills
         .filter(s => s.rank > 0)
         .map(s => [getIdOrName(s, 'skill'), s.rank]);
 
     // Helper to serialize items: if static, use ID; if custom, save full object
-    const serializeItem = (item: any, staticList: any[], prefix: string) => {
-        const staticItem = staticList?.find((i: any) => i.id === item.id || i.name === item.name);
+    const serializeItem = <T extends NamedItem>(item: T, staticList: T[] | undefined, prefix: string): string | T => {
+        const staticItem = staticList?.find((i) => i.id === item.id || i.name === item.name);
         if (staticItem) {
             return getIdOrName(staticItem, prefix);
         }
@@ -151,9 +171,9 @@ export function serializeCharacter(data: CharacterData, staticData?: { weapons: 
         lc: data.liftingCapacity,
         cc: data.carryingCapacity,
         ex: data.expertises,
-        wp: data.weapons.map(w => serializeItem(w, staticData?.weapons || [], 'wpn')),
-        ar: data.armor.map(a => serializeItem(a, staticData?.armor || [], 'arm')),
-        eq: data.equipment.map(e => serializeItem(e, staticData?.equipment || [], 'eqp')),
+        wp: data.weapons.map(w => serializeItem(w, staticData?.weapons, 'wpn')),
+        ar: data.armor.map(a => serializeItem(a, staticData?.armor, 'arm')),
+        eq: data.equipment.map(e => serializeItem(e, staticData?.equipment, 'eqp')),
         ta: data.talents.map(t => [getIdOrName(t, 'tal'), t.path, t.isKeyTalent]),
         ot: data.otherTalents,
         pu: data.purpose,
@@ -167,7 +187,7 @@ export function serializeCharacter(data: CharacterData, staticData?: { weapons: 
 }
 
 // Helper to find item by ID or name
-const findByIdOrName = <T extends { id?: string; name: string }>(
+const findByIdOrName = <T extends NamedItem>(
     items: T[],
     idOrName: string
 ): T | undefined => {
@@ -175,19 +195,19 @@ const findByIdOrName = <T extends { id?: string; name: string }>(
 };
 
 // Helper to find talent across all paths
-const findTalent = (idOrName: string, pathName: string, talentsData: any): Talent | undefined => {
+const findTalent = (idOrName: string, pathName: string, talentsData: TalentLookupData): Talent | undefined => {
     // Try to find in the specific path first
     const pathData = talentsData[pathName];
     if (pathData?.talents) {
-        const found = pathData.talents.find((t: any) => t.id === idOrName || t.name === idOrName || getIdOrName(t, 'tal') === idOrName);
-        if (found) return { ...found, path: pathName };
+        const found = pathData.talents.find((t) => t.id === idOrName || t.name === idOrName || getIdOrName(t, 'tal') === idOrName);
+        if (found) return { ...found, path: pathName, isKeyTalent: false };
     }
 
     // If not found (or no path specified), search all paths (expensive but necessary fallback)
-    for (const [pName, pData] of Object.entries(talentsData) as any[]) {
+    for (const [pName, pData] of Object.entries(talentsData)) {
         if (pData.talents) {
-            const found = pData.talents.find((t: any) => t.id === idOrName || t.name === idOrName || getIdOrName(t, 'tal') === idOrName);
-            if (found) return { ...found, path: pName };
+            const found = pData.talents.find((t) => t.id === idOrName || t.name === idOrName || getIdOrName(t, 'tal') === idOrName);
+            if (found) return { ...found, path: pName, isKeyTalent: false };
         }
     }
 
@@ -200,13 +220,13 @@ const findTalent = (idOrName: string, pathName: string, talentsData: any): Talen
  */
 export function deserializeCharacter(
     save: CompactSave,
-    ancestries: any[],
-    heroicPaths: any[],
-    radiantPaths: any[],
-    weapons: any[],
-    armor: any[],
-    equipment: any[],
-    talentsData?: any
+    ancestries: Ancestry[],
+    heroicPaths: HeroicPath[],
+    radiantPaths: HeroicPath[],
+    weapons: Weapon[],
+    armor: Armor[],
+    equipment: EquipmentItem[],
+    talentsData?: TalentLookupData
 ): CharacterData {
     // Start with initial data
     const data: CharacterData = { ...initialCharacterData };
@@ -218,7 +238,7 @@ export function deserializeCharacter(
     data.ancestry = save.a ? findByIdOrName(ancestries, save.a) || null : null;
 
     const allPaths = [...heroicPaths, ...radiantPaths];
-    data.paths = save.h.map(id => findByIdOrName(allPaths, id)).filter(Boolean) as any[];
+    data.paths = save.h.map(id => findByIdOrName(allPaths, id)).filter((p): p is HeroicPath => p !== undefined);
 
     data.radiantIdeal = save.ri;
     data.radiantPath = save.rp;
@@ -267,18 +287,18 @@ export function deserializeCharacter(
     // Lists by ID or name lookup, processing custom objects
     data.expertises = save.ex;
 
-    const deserializeList = (list: any[], staticData: any[]) => {
+    const deserializeList = <T extends NamedItem>(list: (string | T)[], staticData: T[]): T[] => {
         return list.map(item => {
             if (typeof item === 'string') {
                 return findByIdOrName(staticData, item);
             }
             return item; // Custom object
-        }).filter(Boolean);
+        }).filter((item): item is T => item !== undefined);
     };
 
-    data.weapons = deserializeList(save.wp, weapons);
-    data.armor = deserializeList(save.ar, armor);
-    data.equipment = deserializeList(save.eq, equipment);
+    data.weapons = deserializeList(save.wp as (string | Weapon)[], weapons);
+    data.armor = deserializeList(save.ar as (string | Armor)[], armor);
+    data.equipment = deserializeList(save.eq as (string | EquipmentItem)[], equipment);
 
     // Talents - resolve full talent data if available
     data.talents = save.ta.map(([idOrName, path, isKeyTalent]) => {
@@ -321,6 +341,6 @@ export function deserializeCharacter(
 /**
  * Check if a save object is in compact format (v1 or v2)
  */
-export function isCompactFormat(obj: any): obj is CompactSave {
-    return obj && typeof obj.v === 'number' && (obj.v === 1 || obj.v === 2) && typeof obj.p === 'string';
+export function isCompactFormat(obj: unknown): obj is CompactSave {
+    return obj !== null && typeof obj === 'object' && 'v' in obj && typeof (obj as CompactSave).v === 'number' && ((obj as CompactSave).v === 1 || (obj as CompactSave).v === 2) && 'p' in obj && typeof (obj as CompactSave).p === 'string';
 }

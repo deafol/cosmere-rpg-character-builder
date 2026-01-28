@@ -11,40 +11,51 @@ import ancestriesData from '../../data/ancestries.json';
 import weaponsData from '../../data/weapons.json';
 import heroicTalents from '../../data/heroic_talents.json';
 import radiantTalents from '../../data/radiant_talents.json';
-const talentsData = { ...heroicTalents, ...radiantTalents };
+
+// Type for talent lookup data structure
+interface TalentDataEntry {
+    name: string;
+    specialty?: string;
+    activation?: string;
+    description?: string;
+    isKeyTalent?: boolean;
+    prerequisites?: string;
+}
+
+interface PathTalentData {
+    keyTalent?: string;
+    talents: TalentDataEntry[];
+}
+
+type TalentsDataMap = Record<string, PathTalentData>;
+
+const talentsData: TalentsDataMap = { ...heroicTalents, ...radiantTalents };
 import expertisesData from '../../data/expertises.json';
 import armorData from '../../data/armor.json';
 import equipmentData from '../../data/equipment.json';
 import { User, Activity, Sparkles, Sword, Scroll } from 'lucide-react';
+import { Talent, HeroicPath, Ancestry, Armor, EquipmentItem, Weapon } from '../../types/character';
 
 export const CharacterForm = () => {
     const { data, characterVersion, updateData, updateAttribute, updateResource, updateSkillRank } = useCharacter();
     const [showStatement, setShowStatement] = useState(false);
-    const [forceOpenFirstPanel, setForceOpenFirstPanel] = useState(false);
 
     // Auto-open first panel when character is new/loaded
-    useEffect(() => {
-        if (characterVersion > 0) {
-            setForceOpenFirstPanel(true);
-            // Reset after a short delay so it can be triggered again
-            const timer = setTimeout(() => setForceOpenFirstPanel(false), 100);
-            return () => clearTimeout(timer);
-        }
-    }, [characterVersion]);
+    // (Handled via key={characterVersion} and defaultOpen on the panel below)
 
     // Auto-select key talents when paths change
     useEffect(() => {
-        const requiredKeyTalents: any[] = [];
+        const requiredKeyTalents: Talent[] = [];
 
-        data.paths.forEach((path: any) => {
+        data.paths.forEach((path: HeroicPath) => {
             let talentName = "";
             let description = "";
 
             // 1. Try getting Key Talent from static data (works for Radiant paths)
-            const pathData = (talentsData as any)[path.name];
+            const pathData = talentsData[path.name];
             if (pathData?.keyTalent) {
                 talentName = pathData.keyTalent;
-                const talentFromDb = pathData.talents.find((t: any) => t.name === talentName);
+                const talentFromDb = pathData.talents.find((t) => t.name === talentName);
                 description = talentFromDb?.description || "";
             }
 
@@ -56,7 +67,7 @@ export const CharacterForm = () => {
                     if (match) {
                         talentName = match[1].trim();
                         // Try to find description in DB if possible, otherwise use attribute text
-                        const talentFromDb = pathData?.talents.find((t: any) => t.name === talentName);
+                        const talentFromDb = pathData?.talents.find((t) => t.name === talentName);
                         description = talentFromDb?.description || keyTalentAttr;
                     }
                 }
@@ -82,7 +93,7 @@ export const CharacterForm = () => {
         const stringsCurrent = currentKeyTalents.map(t => `${t.name}|${t.path}`).sort().join(',');
         const stringsRequired = requiredKeyTalents.map(t => `${t.name}|${t.path}`).sort().join(',');
 
-        const hasRadiantPath = data.paths.some(p => radiantPathsData.some((rp: any) => rp.name === p.name));
+        const hasRadiantPath = data.paths.some(p => radiantPathsData.some((rp: HeroicPath) => rp.name === p.name));
         const shouldResetIdeal = !hasRadiantPath && data.radiantIdeal !== 0;
 
         if (stringsCurrent !== stringsRequired) {
@@ -95,7 +106,7 @@ export const CharacterForm = () => {
             updateData({ radiantIdeal: 0 });
         }
 
-    }, [data.paths, data.talents, updateData]);
+    }, [data.paths, data.talents, data.radiantIdeal, updateData]);
 
     // Compute and store surges from extra skills
     useEffect(() => {
@@ -147,12 +158,12 @@ export const CharacterForm = () => {
         if (currentSurgesStr !== newSurgesStr) {
             updateData({ surges: computedSurges });
         }
-    }, [data.skills, data.attributes, data.surges, updateData]);
+    }, [data, updateData]);
 
     return (
         <div className="pb-10">
             {/* Group 1: General Characteristics */}
-            <CollapsiblePanel title="General Characteristics" icon={User} forceOpen={forceOpenFirstPanel}>
+            <CollapsiblePanel key={characterVersion} title="General Characteristics" icon={User} defaultOpen={characterVersion > 0}>
                 <div className="space-y-6">
                     {/* Identity */}
                     <div className="space-y-6">
@@ -210,7 +221,7 @@ export const CharacterForm = () => {
                                     <Label>Ancestry</Label>
                                 </div>
                                 <div className="flex flex-wrap gap-2">
-                                    {ancestriesData.map((a: any) => {
+                                    {ancestriesData.map((a: Ancestry) => {
                                         const isSelected = data.ancestry?.name === a.name;
                                         return (
                                             <button
@@ -236,7 +247,7 @@ export const CharacterForm = () => {
                             <Label>Heroic Path</Label>
                         </div>
                         <div className="flex flex-wrap gap-4 mb-8">
-                            {heroicPathsData.map((path: any) => {
+                            {heroicPathsData.map((path: HeroicPath) => {
                                 const isSelected = data.paths.some(p => p.name === path.name);
                                 return (
                                     <button
@@ -262,14 +273,14 @@ export const CharacterForm = () => {
                             <Label>Radiant Path</Label>
                         </div>
                         <div className="flex flex-wrap gap-4 mt-2 mb-8">
-                            {radiantPathsData.map((path: any) => {
+                            {radiantPathsData.map((path: HeroicPath) => {
                                 const isSelected = data.paths.some(p => p.name === path.name);
                                 return (
                                     <button
                                         key={path.name}
                                         onClick={() => {
                                             // Heroic paths are now separate, so we filter by checking against heroicPathsData
-                                            const currentHeroicPaths = data.paths.filter(p => heroicPathsData.some((hp: any) => hp.name === p.name));
+                                            const currentHeroicPaths = data.paths.filter(p => heroicPathsData.some((hp: HeroicPath) => hp.name === p.name));
                                             if (isSelected) {
                                                 updateData({ paths: currentHeroicPaths, radiantPath: "" });
                                             } else {
@@ -286,7 +297,7 @@ export const CharacterForm = () => {
 
                         {/* Radiant Ideal */}
                         {(() => {
-                            const hasRadiantPath = data.paths.some(p => radiantPathsData.some((rp: any) => rp.name === p.name));
+                            const hasRadiantPath = data.paths.some(p => radiantPathsData.some((rp: HeroicPath) => rp.name === p.name));
 
                             return (
                                 <>
@@ -879,7 +890,7 @@ export const CharacterForm = () => {
                             ) : (
                                 <div className="space-y-2">
                                     {[...data.talents].sort((a, b) => (a.isKeyTalent === b.isKeyTalent ? 0 : a.isKeyTalent ? -1 : 1)).map((talent) => {
-                                        const tData = (talentsData as any)[talent.path]?.talents.find((t: any) => t.name === talent.name);
+                                        const tData = talentsData[talent.path]?.talents.find((t) => t.name === talent.name);
                                         const act = tData?.activation ? `${tData.activation}` : null;
                                         return (
                                             <div key={`${talent.path}-${talent.name}`} className={`flex items-start justify-between p-3 border rounded ${talent.isKeyTalent ? 'bg-amber-50 border-amber-300' : 'bg-stone-50 border-stone-300'}`}>
@@ -922,33 +933,35 @@ export const CharacterForm = () => {
                                         onChange={(e) => {
                                             if (e.target.value) {
                                                 const [pathName, talentName] = e.target.value.split('|||');
-                                                const pathData = (talentsData as any)[pathName];
-                                                const talent = pathData?.talents.find((t: any) => t.name === talentName);
+                                                const pathData = talentsData[pathName];
+                                                if (pathData) {
+                                                    const talent = pathData.talents.find((t) => t.name === talentName);
 
-                                                if (talent && !data.talents.some(t => t.name === talent.name && t.path === pathName)) {
-                                                    updateData({
-                                                        talents: [...data.talents, {
-                                                            name: talent.name,
-                                                            path: pathName,
-                                                            isKeyTalent: false,
-                                                            description: talent.description
-                                                        }]
-                                                    });
+                                                    if (talent && !data.talents.some(t => t.name === talent.name && t.path === pathName)) {
+                                                        updateData({
+                                                            talents: [...data.talents, {
+                                                                name: talent.name,
+                                                                path: pathName,
+                                                                isKeyTalent: false,
+                                                                description: talent.description
+                                                            }]
+                                                        });
+                                                    }
+                                                    e.target.value = '';
                                                 }
-                                                e.target.value = '';
                                             }
                                         }}
                                     >
                                         <option value="">Select a talent...</option>
-                                        {data.paths.map((path: any) => {
-                                            const pathData = (talentsData as any)[path.name];
+                                        {data.paths.map((path: HeroicPath) => {
+                                            const pathData = talentsData[path.name];
                                             if (!pathData) return null;
 
                                             return (
                                                 <optgroup key={path.name} label={path.name}>
                                                     {pathData.talents
-                                                        .filter((t: any) => !t.isKeyTalent)
-                                                        .map((talent: any) => (
+                                                        .filter((t) => !t.isKeyTalent)
+                                                        .map((talent) => (
                                                             <option
                                                                 key={`${path.name}|||${talent.name}`}
                                                                 value={`${path.name}|||${talent.name}`}
@@ -966,10 +979,10 @@ export const CharacterForm = () => {
                         )}
                     </div>
                 </div>
-            </CollapsiblePanel>
+            </CollapsiblePanel >
 
             {/* Group 4: Weapons & Equipment */}
-            <CollapsiblePanel title="Weapons, Armor & Equipment" icon={Sword}>
+            < CollapsiblePanel title="Weapons, Armor & Equipment" icon={Sword} >
                 <div className="space-y-8">
                     {/* Weapons */}
                     <div>
@@ -1013,9 +1026,9 @@ export const CharacterForm = () => {
                             <Select
                                 onChange={(e) => {
                                     if (e.target.value) {
-                                        const weapon = weaponsData.find((w: any) => w.name === e.target.value);
+                                        const weapon = weaponsData.find((w: Weapon) => w.name === e.target.value);
                                         if (weapon && !data.weapons.some(w => w.name === weapon.name)) {
-                                            updateData({ weapons: [...data.weapons, weapon as any] });
+                                            updateData({ weapons: [...data.weapons, weapon] });
                                         }
                                         e.target.value = '';
                                     }
@@ -1023,21 +1036,21 @@ export const CharacterForm = () => {
                             >
                                 <option value="">Select a weapon...</option>
                                 <optgroup label="Light">
-                                    {weaponsData.filter((w: any) => w.category === "Light").map((w: any) => (
+                                    {weaponsData.filter((w: Weapon) => w.category === "Light").map((w: Weapon) => (
                                         <option key={w.name} value={w.name} disabled={data.weapons.some(weapon => weapon.name === w.name)}>
                                             {w.name} ({w.damage})
                                         </option>
                                     ))}
                                 </optgroup>
                                 <optgroup label="Heavy">
-                                    {weaponsData.filter((w: any) => w.category === "Heavy").map((w: any) => (
+                                    {weaponsData.filter((w: Weapon) => w.category === "Heavy").map((w: Weapon) => (
                                         <option key={w.name} value={w.name} disabled={data.weapons.some(weapon => weapon.name === w.name)}>
                                             {w.name} ({w.damage})
                                         </option>
                                     ))}
                                 </optgroup>
                                 <optgroup label="Special">
-                                    {weaponsData.filter((w: any) => w.category === "Special").map((w: any) => (
+                                    {weaponsData.filter((w: Weapon) => w.category === "Special").map((w: Weapon) => (
                                         <option key={w.name} value={w.name} disabled={data.weapons.some(weapon => weapon.name === w.name)}>
                                             {w.name} ({w.damage})
                                         </option>
@@ -1082,9 +1095,9 @@ export const CharacterForm = () => {
                                 <Label className="w-52 shrink-0 font-normal text-right">Select Armor</Label>
                                 <Select
                                     onChange={(e) => {
-                                        const selected = armorData.find((a: any) => a.name === e.target.value);
+                                        const selected = armorData.find((a: Armor) => a.name === e.target.value);
                                         if (selected) {
-                                            updateData({ armor: [...data.armor, selected as any] });
+                                            updateData({ armor: [...data.armor, selected] });
                                         }
                                         e.target.value = "";
                                     }}
@@ -1092,7 +1105,7 @@ export const CharacterForm = () => {
                                     <option value="">Select an armor...</option>
                                     {["Light", "Medium", "Heavy", "Shardplate"].map(cat => (
                                         <optgroup key={cat} label={cat}>
-                                            {armorData.filter((a: any) => a.category === cat).map((a: any) => (
+                                            {armorData.filter((a: Armor) => a.category === cat).map((a: Armor) => (
                                                 <option key={a.name} value={a.name}>{a.name} (Deflect {a.deflect}) - {a.price}</option>
                                             ))}
                                         </optgroup>
@@ -1132,7 +1145,7 @@ export const CharacterForm = () => {
                                 <Label className="w-52 shrink-0 font-normal text-right">Select Equipment Item</Label>
                                 <Select
                                     onChange={(e) => {
-                                        const selected = equipmentData.find((eq: any) => eq.name === e.target.value);
+                                        const selected = equipmentData.find((eq: EquipmentItem) => eq.name === e.target.value);
                                         if (selected) {
                                             updateData({ equipment: [...data.equipment, selected] });
                                         }
@@ -1140,7 +1153,7 @@ export const CharacterForm = () => {
                                     }}
                                 >
                                     <option value="">Select an equipment item...</option>
-                                    {equipmentData.map((eq: any) => (
+                                    {equipmentData.map((eq: EquipmentItem) => (
                                         <option key={eq.name} value={eq.name}>{eq.name} - {eq.price}</option>
                                     ))}
                                 </Select>
@@ -1195,10 +1208,10 @@ export const CharacterForm = () => {
                         </div>
                     </div>
                 </div>
-            </CollapsiblePanel>
+            </CollapsiblePanel >
 
             {/* Group 5: Character Details */}
-            <CollapsiblePanel title="Character Details" icon={Scroll}>
+            < CollapsiblePanel title="Character Details" icon={Scroll} >
                 <div className="space-y-6">
                     {/* Purpose */}
                     <div>
@@ -1435,7 +1448,7 @@ export const CharacterForm = () => {
                         </div>
                     </div>
                 </div>
-            </CollapsiblePanel>
+            </CollapsiblePanel >
             <DividerDecoration />
             <div className="text-center space-y-4 max-w-3xl mx-auto">
                 <h4 className="text-sm text-cosmere-blue/70 font-display leading-relaxed">
@@ -1450,70 +1463,72 @@ export const CharacterForm = () => {
             </div>
 
             {/* Statement Modal */}
-            {showStatement && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cosmere-blue/80 backdrop-blur-sm" onClick={() => setShowStatement(false)}>
-                    <div
-                        className="bg-[#fdfaf5] border-2 border-cosmere-gold rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
-                        onClick={e => e.stopPropagation()}
-                    >
-                        {/* Decorative Header */}
-                        <div className="sticky top-0 z-10 bg-cosmere-blue text-cosmere-gold p-4 flex items-center justify-between border-b-2 border-cosmere-gold">
-                            <h3 className="font-display font-bold uppercase tracking-widest text-lg">About & Legal</h3>
-                            <button
-                                onClick={() => setShowStatement(false)}
-                                className="text-cosmere-gold hover:text-white transition-colors text-2xl leading-none font-bold"
-                            >
-                                ×
-                            </button>
-                        </div>
+            {
+                showStatement && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cosmere-blue/80 backdrop-blur-sm" onClick={() => setShowStatement(false)}>
+                        <div
+                            className="bg-[#fdfaf5] border-2 border-cosmere-gold rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
+                            onClick={e => e.stopPropagation()}
+                        >
+                            {/* Decorative Header */}
+                            <div className="sticky top-0 z-10 bg-cosmere-blue text-cosmere-gold p-4 flex items-center justify-between border-b-2 border-cosmere-gold">
+                                <h3 className="font-display font-bold uppercase tracking-widest text-lg">About & Legal</h3>
+                                <button
+                                    onClick={() => setShowStatement(false)}
+                                    className="text-cosmere-gold hover:text-white transition-colors text-2xl leading-none font-bold"
+                                >
+                                    ×
+                                </button>
+                            </div>
 
-                        <div className="p-8 space-y-8">
-                            {/* Legal Section */}
-                            <div className="space-y-4">
-                                <h4 className="font-display font-bold text-cosmere-blue text-xl border-b border-cosmere-gold/30 pb-2">Legal Statement</h4>
-                                <div className="text-sm text-stone-700 space-y-2 leading-relaxed">
-                                    <p>
-                                        This application is an unofficial tool designed to assist players of the <strong>Cosmere RPG</strong>. It is not affiliated with, endorsed, sponsored, or specifically approved by Dragonsteel Entertainment, LLC or Brotherwise Games, LLC.
+                            <div className="p-8 space-y-8">
+                                {/* Legal Section */}
+                                <div className="space-y-4">
+                                    <h4 className="font-display font-bold text-cosmere-blue text-xl border-b border-cosmere-gold/30 pb-2">Legal Statement</h4>
+                                    <div className="text-sm text-stone-700 space-y-2 leading-relaxed">
+                                        <p>
+                                            This application is an unofficial tool designed to assist players of the <strong>Cosmere RPG</strong>. It is not affiliated with, endorsed, sponsored, or specifically approved by Dragonsteel Entertainment, LLC or Brotherwise Games, LLC.
+                                        </p>
+                                        <p>
+                                            <strong>Cosmere®</strong>, <strong>The Stormlight Archive®</strong>, and <strong>Mistborn®</strong> are registered trademarks of Dragonsteel Entertainment, LLC.
+                                        </p>
+                                        <p>
+                                            All specific artwork, logos, and game mechanics referenced herein are the property of their respective owners. This tool is provided free of charge for community use and does not claim ownership over any official intellectual property.
+                                        </p>
+                                        <p>
+                                            The source code of this application is licensed under the <a href="https://github.com/deafol/cosmere-rpg-character-builder/blob/main/LICENSE" className="text-cosmere-blue hover:text-cosmere-blue-hover underline font-bold" target="_blank" rel="noopener noreferrer">MIT License</a>.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Feedback Section */}
+                                <div className="space-y-4">
+                                    <h4 className="font-display font-bold text-cosmere-blue text-xl border-b border-cosmere-gold/30 pb-2">Feedback & Community</h4>
+                                    <p className="text-sm text-stone-700 leading-relaxed">
+                                        This character builder is a labor of love for the Cosmere community. Whether you&apos;ve found a bug, have a feature request, or just want to share your thoughts, we&apos;d love to hear from you!
                                     </p>
-                                    <p>
-                                        <strong>Cosmere®</strong>, <strong>The Stormlight Archive®</strong>, and <strong>Mistborn®</strong> are registered trademarks of Dragonsteel Entertainment, LLC.
-                                    </p>
-                                    <p>
-                                        All specific artwork, logos, and game mechanics referenced herein are the property of their respective owners. This tool is provided free of charge for community use and does not claim ownership over any official intellectual property.
-                                    </p>
-                                    <p>
-                                        The source code of this application is licensed under the <a href="https://github.com/deafol/cosmere-rpg-character-builder/blob/main/LICENSE" className="text-cosmere-blue hover:text-cosmere-blue-hover underline font-bold" target="_blank" rel="noopener noreferrer">MIT License</a>.
+
+                                    <div className="flex justify-center pt-2">
+                                        <a
+                                            href="mailto:cosmere@vinyamar.nl"
+                                            className="inline-flex items-center gap-2 px-6 py-3 bg-cosmere-blue text-cosmere-gold rounded border border-cosmere-gold hover:bg-cosmere-blue-hover transition-all shadow-md group"
+                                        >
+                                            <span className="font-display font-bold uppercase tracking-wide">Send Feedback</span>
+                                            <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                        </a>
+                                    </div>
+                                    <p className="text-center text-xs text-stone-500 mt-2">
+                                        Contact: <span className="text-cosmere-blue font-bold">cosmere@vinyamar.nl</span>
                                     </p>
                                 </div>
                             </div>
 
-                            {/* Feedback Section */}
-                            <div className="space-y-4">
-                                <h4 className="font-display font-bold text-cosmere-blue text-xl border-b border-cosmere-gold/30 pb-2">Feedback & Community</h4>
-                                <p className="text-sm text-stone-700 leading-relaxed">
-                                    This character builder is a labor of love for the Cosmere community. Whether you've found a bug, have a feature request, or just want to share your thoughts, we'd love to hear from you!
-                                </p>
-
-                                <div className="flex justify-center pt-2">
-                                    <a
-                                        href="mailto:cosmere@vinyamar.nl"
-                                        className="inline-flex items-center gap-2 px-6 py-3 bg-cosmere-blue text-cosmere-gold rounded border border-cosmere-gold hover:bg-cosmere-blue-hover transition-all shadow-md group"
-                                    >
-                                        <span className="font-display font-bold uppercase tracking-wide">Send Feedback</span>
-                                        <span className="group-hover:translate-x-1 transition-transform">→</span>
-                                    </a>
-                                </div>
-                                <p className="text-center text-xs text-stone-500 mt-2">
-                                    Contact: <span className="text-cosmere-blue font-bold">cosmere@vinyamar.nl</span>
-                                </p>
-                            </div>
+                            {/* Decorative Footer */}
+                            <div className="h-2 bg-gradient-to-r from-cosmere-blue via-cosmere-gold to-cosmere-blue"></div>
                         </div>
-
-                        {/* Decorative Footer */}
-                        <div className="h-2 bg-gradient-to-r from-cosmere-blue via-cosmere-gold to-cosmere-blue"></div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };

@@ -88,24 +88,12 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/tags/{0}', github.event.inputs.tag || github.ref_name) }}
 
-      - name: Compute image tags
-        id: image_tags
-        shell: bash
-        run: |
-          IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            TAG="${GITHUB_REF#refs/tags/}"
-            VERSION="${TAG#v}"
-            # Produce tags: vX.Y.Z, X.Y.Z, latest
-            echo "TAGS=${IMAGE}:${TAG},${IMAGE}:${VERSION},${IMAGE}:latest" >> $GITHUB_OUTPUT
-          else
-            # For non-tag events, use latest only
-            echo "TAGS=${IMAGE}:latest" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Debug computed tags
-        run: echo "Computed TAGS=${{ steps.image_tags.outputs.TAGS }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -114,7 +102,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ steps.image_tags.outputs.TAGS }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -144,7 +132,7 @@ jobs:
         run: |
           # Extract the changelog section for this version
           VERSION="${{ steps.version.outputs.VERSION }}"
-          CHANGELOG=$(awk "/## \\[$VERSION\\]/{flag=1; next} /## \\[/{flag=0} flag" CHANGELOG.md)
+          CHANGELOG=$(awk "/## \[$VERSION\]/{flag=1; next} /## \\[/{flag=0} flag" CHANGELOG.md)
 
           # Handle multi-line output
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT

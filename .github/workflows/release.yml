@@ -46,13 +46,6 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-output
-          path: .next/
-          retention-days: 1
-
   # ============================================================================
   # Create Docker Image
   # ============================================================================

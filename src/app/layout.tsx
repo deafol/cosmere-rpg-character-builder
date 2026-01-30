@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from 'next/script';
 import { Cinzel, Lato, Lora } from "next/font/google";
 import "./globals.css";
 
@@ -29,6 +30,9 @@ export const metadata: Metadata = {
   description: "A character builder for the Cosmere RPG",
 };
 
+const UMAMI_WEBSITE_ID = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+const UMAMI_URL = process.env.NEXT_PUBLIC_UMAMI_URL;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,6 +40,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {UMAMI_WEBSITE_ID && UMAMI_URL && (
+          <Script
+            defer
+            src={`${UMAMI_URL}/script.js`}
+            data-website-id={UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body
         className={`${lato.variable} ${cinzel.variable} ${lora.variable} antialiased bg-[#f4ede0] text-[#051435]`}
       >

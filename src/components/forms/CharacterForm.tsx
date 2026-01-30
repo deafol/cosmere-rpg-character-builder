@@ -35,6 +35,7 @@ import armorData from '../../data/armor.json';
 import equipmentData from '../../data/equipment.json';
 import { User, Activity, Sparkles, Sword, Scroll } from 'lucide-react';
 import { Talent, HeroicPath, Ancestry, Armor, EquipmentItem, Weapon } from '../../types/character';
+import pkg from '../../../package.json';
 
 export const CharacterForm = () => {
     const { data, characterVersion, updateData, updateAttribute, updateResource, updateSkillRank } = useCharacter();
@@ -1519,6 +1520,8 @@ export const CharacterForm = () => {
                                     </div>
                                     <p className="text-center text-xs text-stone-500 mt-2">
                                         Contact: <span className="text-cosmere-blue font-bold">cosmere@vinyamar.nl</span>
+                                        <span className="mx-2 text-stone-300">|</span>
+                                        v{pkg.version}
                                     </p>
                                 </div>
                             </div>

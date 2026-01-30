@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Nothing yet
+
+### Changed
+- Nothing yet
+
+### Fixed
+- Nothing yet
+
+---
+
+## [1.0.1] - 2026-01-30
+
+### Added
 - basic analytics tracking via Umami
 - display app version in footer
 

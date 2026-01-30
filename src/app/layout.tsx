@@ -30,14 +30,17 @@ export const metadata: Metadata = {
   description: "A character builder for the Cosmere RPG",
 };
 
-const UMAMI_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID;
-const UMAMI_URL = process.env.UMAMI_URL;
+// Force Next.js to treat this as a dynamic page so it reads environment variables at runtime
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const UMAMI_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID;
+  const UMAMI_URL = process.env.UMAMI_URL;
+
   return (
     <html lang="en">
       <head>

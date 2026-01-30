@@ -7,14 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Nothing yet
-
-### Changed
-- Nothing yet
-
 ### Fixed
-- Nothing yet
+- Analytics
 
 ---
 
@@ -23,9 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - basic analytics tracking via Umami
 - display app version in footer
-
-### Changed
-- Nothing yet
 
 ### Fixed
 - refined release process

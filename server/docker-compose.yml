@@ -22,6 +22,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - UMAMI_URL=${UMAMI_URL:-}
+      - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
     networks:
       - frontend
     labels:

@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   description: "A character builder for the Cosmere RPG",
 };
 
-const UMAMI_WEBSITE_ID = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-const UMAMI_URL = process.env.NEXT_PUBLIC_UMAMI_URL;
+const UMAMI_WEBSITE_ID = process.env.UMAMI_WEBSITE_ID;
+const UMAMI_URL = process.env.UMAMI_URL;
 
 export default function RootLayout({
   children,

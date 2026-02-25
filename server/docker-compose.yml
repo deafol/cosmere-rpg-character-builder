@@ -24,6 +24,7 @@ services:
       - NODE_ENV=production
       - UMAMI_URL=${UMAMI_URL:-}
       - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
+      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-false}
     networks:
       - frontend
     labels:

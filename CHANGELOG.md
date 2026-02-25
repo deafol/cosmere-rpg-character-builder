@@ -8,13 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Nothing yet
+- Maintenance mode toggle via environment variable
+- High-aesthetic themed maintenance page (/maintenance)
 
-### Changed
-- Nothing yet
-
-### Fixed
-- Nothing yet
 
 ---
 

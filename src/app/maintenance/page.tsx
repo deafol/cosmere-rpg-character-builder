@@ -42,7 +42,7 @@ export default function MaintenancePage() {
 
                 <div className="flex flex-col items-center gap-4">
                     <p className="text-white/40 text-sm tracking-widest uppercase italic">
-                        "I will protect even those I hate, so long as it is right."
+                        I will protect even those I hate, so long as it is right.
                     </p>
                     <div className="w-48 h-1 bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent"></div>
                 </div>

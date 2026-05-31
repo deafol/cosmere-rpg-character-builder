@@ -14,7 +14,7 @@ export interface HeroicPath {
     name: string;
     description: string;
     key_attributes: string[];
-    associated_orders?: string[];
+    specialties?: string[];
 }
 
 export interface Ancestry {

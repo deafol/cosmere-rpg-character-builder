@@ -891,7 +891,13 @@ export const CharacterForm = () => {
                             ) : (
                                 <div className="space-y-2">
                                     {[...data.talents].sort((a, b) => (a.isKeyTalent === b.isKeyTalent ? 0 : a.isKeyTalent ? -1 : 1)).map((talent) => {
-                                        const tData = talentsData[talent.path]?.talents.find((t) => t.name === talent.name);
+                                        let tData = talentsData[talent.path]?.talents.find((t) => t.name === talent.name);
+                                        if (!tData) {
+                                            Object.values(talentsData).some(group => {
+                                                tData = group.talents.find(t => t.name === talent.name);
+                                                return !!tData;
+                                            });
+                                        }
                                         const act = tData?.activation ? `${tData.activation}` : null;
                                         return (
                                             <div key={`${talent.path}-${talent.name}`} className={`flex items-start justify-between p-3 border rounded ${talent.isKeyTalent ? 'bg-amber-50 border-amber-300' : 'bg-stone-50 border-stone-300'}`}>
@@ -954,25 +960,31 @@ export const CharacterForm = () => {
                                         }}
                                     >
                                         <option value="">Select a talent...</option>
-                                        {data.paths.map((path: HeroicPath) => {
-                                            const pathData = talentsData[path.name];
-                                            if (!pathData) return null;
+                                        {data.paths.flatMap((path: HeroicPath) => {
+                                            const specialties = path.specialties || [];
+                                            const groupsToRender = specialties.length > 0 ? specialties : [path.name];
 
-                                            return (
-                                                <optgroup key={path.name} label={path.name}>
-                                                    {pathData.talents
-                                                        .filter((t) => !t.isKeyTalent)
-                                                        .map((talent) => (
+                                            return groupsToRender.map(groupName => {
+                                                const groupData = talentsData[groupName];
+                                                if (!groupData) return null;
+
+                                                const regularTalents = groupData.talents.filter((t) => !t.isKeyTalent);
+                                                if (regularTalents.length === 0) return null;
+
+                                                return (
+                                                    <optgroup key={`${path.name}-${groupName}`} label={`${groupName} (${path.name})`}>
+                                                        {regularTalents.map((talent) => (
                                                             <option
-                                                                key={`${path.name}|||${talent.name}`}
-                                                                value={`${path.name}|||${talent.name}`}
-                                                                disabled={data.talents.some(t => t.name === talent.name && t.path === path.name)}
+                                                                key={`${groupName}|||${talent.name}`}
+                                                                value={`${groupName}|||${talent.name}`}
+                                                                disabled={data.talents.some(t => t.name === talent.name && (t.path === groupName || t.path === path.name))}
                                                             >
                                                                 {talent.activation ? `${talent.activation} ` : ''}{talent.name} {talent.specialty ? `(${talent.specialty})` : ''} - {talent.prerequisites}
                                                             </option>
                                                         ))}
-                                                </optgroup>
-                                            );
+                                                    </optgroup>
+                                                );
+                                            });
                                         }).filter(Boolean)}
                                     </Select>
                                 </div>

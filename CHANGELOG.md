@@ -21,13 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.5] - 2026-02-25
 
 ### Added
-- Nothing yet
-
-### Changed
-- Nothing yet
-
-### Fixed
-- Nothing yet
+- Linting check on commit
 
 ---
 

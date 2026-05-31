@@ -3,7 +3,11 @@
         "id": "rpath_dustbringer",
         "name": "Dustbringer",
         "description": "Dustbringers are powerful individuals who embody strong discipline. They are capable of manipulating their surroundings, such as eroding surfaces, unleashing fire, and precisely shaping materials. They also act to protect innocents.",
-        "associated_orders": [],
+        "specialties": [
+            "Ashspren Bond",
+            "Abrasion",
+            "Division"
+        ],
         "key_attributes": [
             "Ashspren",
             "Abrasion (Surge)",
@@ -14,7 +18,11 @@
         "id": "rpath_edgedancer",
         "name": "Edgedancer",
         "description": "Remember and serve those who others forget.",
-        "associated_orders": [],
+        "specialties": [
+            "Cultivationspren Bond",
+            "Abrasion",
+            "Progression"
+        ],
         "key_attributes": [
             "Cultivationspren",
             "Abrasion (Surge)",
@@ -25,7 +33,11 @@
         "id": "rpath_elsecaller",
         "name": "Elsecaller",
         "description": "Strive to reach your true potential.",
-        "associated_orders": [],
+        "specialties": [
+            "Inkspren Bond",
+            "Transformation",
+            "Transportation"
+        ],
         "key_attributes": [
             "Inkspren",
             "Transformation (Surge)",
@@ -36,7 +48,11 @@
         "id": "rpath_lightweaver",
         "name": "Lightweaver",
         "description": "Separate truth from lies.",
-        "associated_orders": [],
+        "specialties": [
+            "Cryptic Bond",
+            "Illumination",
+            "Transformation"
+        ],
         "key_attributes": [
             "Cryptic",
             "Illumination (Surge)",
@@ -47,7 +63,11 @@
         "id": "rpath_skybreaker",
         "name": "Skybreaker",
         "description": "Enforce the law and strive for justice.",
-        "associated_orders": [],
+        "specialties": [
+            "Highspren Bond",
+            "Division",
+            "Gravitation"
+        ],
         "key_attributes": [
             "Highspren",
             "Division (Surge)",
@@ -58,7 +78,11 @@
         "id": "rpath_stoneward",
         "name": "Stoneward",
         "description": "Be the support on which others can depend.",
-        "associated_orders": [],
+        "specialties": [
+            "Peakspren Bond",
+            "Cohesion",
+            "Tension"
+        ],
         "key_attributes": [
             "Peakspren",
             "Cohesion (Surge)",
@@ -69,7 +93,11 @@
         "id": "rpath_truthwatcher",
         "name": "Truthwatcher",
         "description": "Search for fundamental truth and share it.",
-        "associated_orders": [],
+        "specialties": [
+            "Mistspren Bond",
+            "Illumination",
+            "Progression"
+        ],
         "key_attributes": [
             "Mistspren",
             "Illumination (Surge)",
@@ -80,7 +108,11 @@
         "id": "rpath_willshaper",
         "name": "Willshaper",
         "description": "Seek freedom and choice for all peoples.",
-        "associated_orders": [],
+        "specialties": [
+            "Reacher Bond",
+            "Cohesion",
+            "Transportation"
+        ],
         "key_attributes": [
             "Lightspren",
             "Cohesion (Surge)",
@@ -91,7 +123,11 @@
         "id": "rpath_windrunner",
         "name": "Windrunner",
         "description": "Protect the innocent and the defenseless.",
-        "associated_orders": [],
+        "specialties": [
+            "Honorspren Bond",
+            "Adhesion",
+            "Gravitation"
+        ],
         "key_attributes": [
             "Honorspren",
             "Adhesion (Surge)",

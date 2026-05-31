@@ -9,7 +9,11 @@
         "prerequisites": "None",
         "isKeyTalent": true,
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Investigator": {
+    "talents": [
       {
         "id": "tal_watchful_eye",
         "name": "Watchful Eye",
@@ -73,11 +77,15 @@
         "prerequisites": "Deduction 3+",
         "specialty": "Investigator",
         "activation": "►►►"
-      },
+      }
+    ]
+  },
+  "Spy": {
+    "talents": [
       {
         "id": "tal_sure_outcome",
         "name": "Sure Outcome",
-        "description": "When you use Opportunist, spend 2 focus to change a blank plot die result to a 4, or change any Complication to a Success.",
+        "description": "When you use Opportunist, spend 2 focus to change a Opportunity plot die result to a 4, or change any Complication to an Opportunity.",
         "prerequisites": "Insight 2+",
         "specialty": "Spy",
         "activation": "★"
@@ -117,7 +125,7 @@
       {
         "id": "tal_mighty",
         "name": "Mighty",
-        "description": "When you hit with a weapon or unarmed attack, for each action spent, deal extra damage equal to 1 + your tier.",
+        "description": "When you hit with a weapon or unarmed attack, for each ► spent, deal extra damage equal to 1 + your tier.",
         "prerequisites": "None",
         "specialty": "Spy",
         "activation": "∞"
@@ -137,7 +145,11 @@
         "prerequisites": "Patron in high society",
         "specialty": "Spy",
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Thief": {
+    "talents": [
       {
         "id": "tal_risky_behavior",
         "name": "Risky Behavior",
@@ -214,7 +226,11 @@
         "prerequisites": "None",
         "isKeyTalent": true,
         "activation": "►"
-      },
+      }
+    ]
+  },
+  "Diplomat": {
+    "talents": [
       {
         "id": "tal_steadfast_challenge",
         "name": "Steadfast Challenge",
@@ -258,7 +274,7 @@
       {
         "id": "tal_high_society_contacts",
         "name": "High Society Contacts",
-        "description": "Gain High Society expertise. Spend 2 focus to add expertise to a test to interact in high society.",
+        "description": "Gain High Society expertise. Spend 2 focus to add an Opportunity to a test to interact in high society.",
         "prerequisites": "Patron in high society",
         "specialty": "Diplomat",
         "activation": "★"
@@ -278,7 +294,11 @@
         "prerequisites": "Persuasion 3+",
         "specialty": "Diplomat",
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Faithful": {
+    "talents": [
       {
         "id": "tal_customary_garb",
         "name": "Customary Garb",
@@ -342,7 +362,11 @@
         "prerequisites": "Discipline 3+",
         "specialty": "Faithful",
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Mentor": {
+    "talents": [
       {
         "id": "tal_sound_advice",
         "name": "Sound Advice",
@@ -370,7 +394,7 @@
       {
         "id": "tal_mighty",
         "name": "Mighty",
-        "description": "When you hit with a weapon or unarmed attack, for each focus spent, deal extra damage equal to 1 + your tier.",
+        "description": "When you hit with a weapon or unarmed attack, for each ► spent, deal extra damage equal to 1 + your tier.",
         "prerequisites": "None",
         "specialty": "Mentor",
         "activation": "∞"
@@ -419,14 +443,18 @@
         "prerequisites": "None",
         "isKeyTalent": true,
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Archer": {
+    "talents": [
       {
         "id": "tal_tagging_shot",
         "name": "Tagging Shot",
         "description": "Move 5 feet and make a ranged attack. On a hit or a graze, the target becomes your quarry.",
         "prerequisites": "Perception 2+",
         "specialty": "Archer",
-        "activation": "►►"
+        "activation": "►►►"
       },
       {
         "id": "tal_combat_training",
@@ -483,7 +511,11 @@
         "prerequisites": "None",
         "specialty": "Archer",
         "activation": "∞"
-      },
+      }
+    ]
+  },
+  "Assassin": {
+    "talents": [
       {
         "id": "tal_startling_blow",
         "name": "Startling Blow",
@@ -506,7 +538,7 @@
         "description": "Attack an unsuspecting target with a light melee weapon vs. Cognitive. Add 4d4 damage, and gain two advantages if the weapon is Discreet. Max damage rolls add a penalty to the injury roll.",
         "prerequisites": "Perception 3+",
         "specialty": "Assassin",
-        "activation": "►"
+        "activation": "►►"
       },
       {
         "id": "tal_shadowing",
@@ -514,12 +546,12 @@
         "description": "Your quarry gains a disadvantage to sense you, and you gain an advantage to avoid their notice. When you succeed vs. Spiritual while in cover or obscured, spend 3 focus to designate that target as your quarry.",
         "prerequisites": "Stealth 2+",
         "specialty": "Assassin",
-        "activation": "▷"
+        "activation": "★"
       },
       {
         "id": "tal_mighty",
         "name": "Mighty",
-        "description": "When you hit with a weapon or unarmed attack, for each action spent, deal extra damage equal to 1 + your tier.",
+        "description": "When you hit with a weapon or unarmed attack, for each ► spent, deal extra damage equal to 1 + your tier.",
         "prerequisites": "None",
         "specialty": "Assassin",
         "activation": "∞"
@@ -538,7 +570,7 @@
         "description": "Spend 1 focus to make a second Strike with the same weapon.",
         "prerequisites": "None",
         "specialty": "Assassin",
-        "activation": "↩"
+        "activation": "►"
       },
       {
         "id": "tal_sidestep",
@@ -546,23 +578,27 @@
         "description": "Gain an additional reaction to Dodge when you're not wearing armor with deflect of 2 or higher.",
         "prerequisites": "Stealth 3+",
         "specialty": "Assassin",
-        "activation": "↩"
-      },
+        "activation": "★"
+      }
+    ]
+  },
+  "Tracker": {
+    "talents": [
       {
         "id": "tal_deadly_trap",
         "name": "Deadly Trap",
         "description": "Conceal a 5-foot entangling or impaling trap. Entangling: Test Survival vs. Cognitive, 2d4 damage, Immobilized. Impaling: Test Survival vs. Physical, 2d4 damage, Afflicted.",
         "prerequisites": "Survival 1+",
         "specialty": "Tracker",
-        "activation": "►"
+        "activation": "►►"
       },
       {
         "id": "tal_animal_bond",
         "name": "Animal Bond",
-        "description": "While your companion is within 10 feet, defenses +1. Use bonus action to give actions to companion. They can use Track as bonus action. Your companion's reach defines your quarry.",
+        "description": "While your companion is within 10 feet, defenses +1. Use ▷ to give ► or ►► to companion. They can use Track as ►►: One target within companion's reach becomes your quarry.",
         "prerequisites": "Animal companion",
         "specialty": "Tracker",
-        "activation": "►"
+        "activation": "★"
       },
       {
         "id": "tal_experienced_trapper",
@@ -570,7 +606,7 @@
         "description": "Easily forage for characters. Fashion natural tools. Deadly Traps increase to 2d6 damage and 2 rounds duration.",
         "prerequisites": "Perception 2+",
         "specialty": "Tracker",
-        "activation": "▷"
+        "activation": "★"
       },
       {
         "id": "tal_protective_bond",
@@ -578,7 +614,7 @@
         "description": "Your animal companion protects an ally within 30 feet, and that ally gains your Animal Bond bonus instead of you.",
         "prerequisites": "Animal Bond talent",
         "specialty": "Tracker",
-        "activation": "↩"
+        "activation": "►"
       },
       {
         "id": "tal_surefooted",
@@ -586,7 +622,7 @@
         "description": "Movement increases by 10. Reduce damage from falling and dangerous terrain by twice your tier.",
         "prerequisites": "None",
         "specialty": "Tracker",
-        "activation": "►"
+        "activation": "∞"
       },
       {
         "id": "tal_feral_connection",
@@ -594,7 +630,7 @@
         "description": "Gain Animal Care expertise. Animal companion health increases by 5 x tier, defenses by 2, and tests gain a bonus equal to Survival ranks.",
         "prerequisites": "Survival 2+",
         "specialty": "Tracker",
-        "activation": "▷"
+        "activation": "∞"
       },
       {
         "id": "tal_hunter_s_edge",
@@ -602,7 +638,7 @@
         "description": "Animal companion gains advantage against quarry. Deadly Traps increase to 2d8 damage and 3 rounds duration.",
         "prerequisites": "Survival 3+",
         "specialty": "Tracker",
-        "activation": "▷"
+        "activation": "∞"
       },
       {
         "id": "tal_pack_hunting",
@@ -610,7 +646,7 @@
         "description": "Spend 1 focus to add your ranks in Survival to an ally's attack or damage roll against your quarry.",
         "prerequisites": "Perception 3+",
         "specialty": "Tracker",
-        "activation": "∞"
+        "activation": "↻"
       }
     ]
   },
@@ -624,11 +660,15 @@
         "prerequisites": "None",
         "isKeyTalent": true,
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Champion": {
+    "talents": [
       {
         "id": "tal_combat_coordination",
         "name": "Combat Coordination",
-        "description": "After you Strike, you can use Decisive Command without spending focus. If your Strike did not hit, you still do not spend focus.",
+        "description": "After you Strike, you can use Decisive Command without spending ►. If your Strike did not hit, you still do not spend focus.",
         "prerequisites": "Leadership 2+",
         "specialty": "Champion",
         "activation": "▷"
@@ -684,11 +724,15 @@
       {
         "id": "tal_mighty",
         "name": "Mighty",
-        "description": "When you hit with a weapon or unarmed attack, for each action spent, deal extra damage equal to 1 + your tier.",
+        "description": "When you hit with a weapon or unarmed attack, for each ► spent, deal extra damage equal to 1 + your tier.",
         "prerequisites": "Imposing Posture talent",
         "specialty": "Champion",
         "activation": "∞"
-      },
+      }
+    ]
+  },
+  "Officer": {
+    "talents": [
       {
         "id": "tal_composed",
         "name": "Composed",
@@ -700,7 +744,7 @@
       {
         "id": "tal_well_supplied",
         "name": "Well Supplied",
-        "description": "You gain Military Logistics expertise. You can spend 2 focus to add to your test when requisitioning resources.",
+        "description": "You gain Military Logistics expertise. You can spend 2 focus to add an Opportunity to your test when requisitioning resources.",
         "prerequisites": "Persuasion 2+",
         "specialty": "Officer",
         "activation": "★"
@@ -716,7 +760,7 @@
       {
         "id": "tal_synchronized_assault",
         "name": "Synchronized Assault",
-        "description": "You can spend 2 focus to test Leadership versus an enemy's Cognitive defense. On a success, allies numbering up to your ranks in Leadership gain an additional Strike against the target.",
+        "description": "You can spend 2 focus to test Leadership versus an enemy's Cognitive defense. On a success, allies up to your ranks in Leadership gain ► for an additional Strike against the target. On failure, only one ally gains ►",
         "prerequisites": "Leadership 3+",
         "specialty": "Officer",
         "activation": "►►►"
@@ -724,7 +768,7 @@
       {
         "id": "tal_through_the_fray",
         "name": "Through the Fray",
-        "description": "An ally within 20 feet of you can Disengage or Gain Advantage as a bonus action.",
+        "description": "An ally within 20 feet of you can Disengage or Gain Advantage as a reaction.",
         "prerequisites": "Persuasion 1+",
         "specialty": "Officer",
         "activation": "►"
@@ -752,11 +796,15 @@
         "prerequisites": "Title granting you command of 5+ people",
         "specialty": "Officer",
         "activation": "∞"
-      },
+      }
+    ]
+  },
+  "Politico": {
+    "talents": [
       {
         "id": "tal_cutthroat_tactics",
         "name": "Cutthroat Tactics",
-        "description": "Your ally can choose to raise the stakes instead of rolling your command die. If they roll, you recover 1 focus.",
+        "description": "Your ally can choose to raise the stakes instead of rolling your command die. If they roll a Complication, you recover 1 focus.",
         "prerequisites": "Deception 1+",
         "specialty": "Politico",
         "activation": "★"
@@ -764,7 +812,7 @@
       {
         "id": "tal_rumormonger",
         "name": "Rumormonger",
-        "description": "Gain Scandal expertise. When you make a test to spread misinformation or gather rumors, you can spend 2 focus to add an Opportunity to the result.",
+        "description": "Gain Scandal expertise. Spend 2 focus to add an Opportunity when you make a test to spread misinformation or gather rumors.",
         "prerequisites": "Have a patron; Cutthroat Tactics talent",
         "specialty": "Politico",
         "activation": "★"
@@ -829,7 +877,11 @@
         "prerequisites": "None",
         "isKeyTalent": true,
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Artifabrian": {
+    "talents": [
       {
         "id": "tal_prized_acquisition",
         "name": "Prized Acquisition",
@@ -881,7 +933,7 @@
       {
         "id": "tal_overcharge",
         "name": "Overcharge",
-        "description": "Once per turn, you can increase the stakes on a fabrial attack, and then spend a resource to Strike with that fabrial as a bonus action.",
+        "description": "Once per turn, you can increase the stakes on a fabrial attack, and then spend an Opportunity to Strike with that fabrial as a free action.",
         "prerequisites": "Crafting 3+",
         "specialty": "Artifabrian",
         "activation": "★"
@@ -893,7 +945,11 @@
         "prerequisites": "Lore 3+",
         "specialty": "Artifabrian",
         "activation": "★"
-      },
+      }
+    ]
+  },
+  "Strategist": {
+    "talents": [
       {
         "id": "tal_strategize",
         "name": "Strategize",
@@ -921,7 +977,7 @@
       {
         "id": "tal_contingency",
         "name": "Contingency",
-        "description": "You can spend 2 focus to remove a disadvantage from the test of an ally within 20 feet.",
+        "description": "You can spend 2 focus to remove a Complication from the test of an ally within 20 feet.",
         "prerequisites": "Lore 3+",
         "specialty": "Strategist",
         "activation": "↻"
@@ -953,11 +1009,15 @@
       {
         "id": "tal_turning_point",
         "name": "Turning Point",
-        "description": "Once per scene, you can spend 2 focus to identify a weakness in an opposing group's strategy. Make a Deduction test against the Cognitive defense of the top-ranking enemy leader. On success, you and allies gain an additional reaction.",
+        "description": "Once per scene, you can spend 2 focus to identify a weakness in an opposing group's strategy. Make a Deduction test against the Cognitive defense of the top-ranking enemy leader. On success, you and allies gain ► on your next turns.",
         "prerequisites": "Deduction 3+",
         "specialty": "Strategist",
         "activation": "►►"
-      },
+      }
+    ]
+  },
+  "Surgeon": {
+    "talents": [
       {
         "id": "tal_field_medicine",
         "name": "Field Medicine",
@@ -977,7 +1037,7 @@
       {
         "id": "tal_swift_healer",
         "name": "Swift Healer",
-        "description": "You can use your Field Medicine talent as a Reaction. Also, when you restore health to another character, they recover additional health equal to your ranks in Medicine.",
+        "description": "You can use your Field Medicine talent as a ▷. Also, when you restore health to another character, they recover additional health equal to your ranks in Medicine.",
         "prerequisites": "Medicine 2+; Field Medicine talent",
         "specialty": "Surgeon",
         "activation": "▷"
@@ -1017,7 +1077,7 @@
       {
         "id": "tal_anatomical_insight",
         "name": "Anatomical Insight",
-        "description": "Your knowledge of anatomy helps you strike vital points to incapacitate enemies while minimizing permanent harm.",
+        "description": "When you hit with an unarmed attack, spend 1 focus or an Opportunity to make the target Exhausted [− half your ranks in Medicine].",
         "prerequisites": "Field Medicine talent",
         "specialty": "Surgeon",
         "activation": "★"

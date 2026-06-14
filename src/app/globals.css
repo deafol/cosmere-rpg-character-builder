@@ -6,7 +6,7 @@
   --color-cosmere-blue-hover: #1e3a8a;
   --color-cosmere-gold: #C59D56;
   /* Official Gold */
-  --color-cosmere-parchment: #F9F9F9;
+  --color-cosmere-parchment: #f4ede0;
   /* Official site uses white/light background often, but keeps parchment feel in images. I'll stick to a very light off-white if possible, or just white. Let's go with #F9F9F9 for a clean look that matches the "modern" part of their site. */
   --color-cosmere-dark: #0f172a;
   --color-destructive: #b91c1c;

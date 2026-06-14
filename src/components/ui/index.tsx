@@ -115,18 +115,14 @@ export const CollapsiblePanel = ({ title, icon, children, defaultOpen = false, f
                 </button>
 
                 {/* Content Area */}
-                <div className={`overflow-hidden bg-[#fdfaf5] relative ${isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className={`overflow-hidden bg-cosmere-parchment relative transition-[max-height,opacity] duration-300 ease-in-out ${isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                     <DividerDecoration />
                     {/* Frame Background (Vector) */}
                     <FrameDecoration />
 
-                    {isOpen && (
-                        <div>
-                            <div className="p-8 relative z-10">
-                                {children}
-                            </div>
-                        </div>
-                    )}
+                    <div className="p-8 relative z-10">
+                        {children}
+                    </div>
                 </div>
             </div>
         </div>

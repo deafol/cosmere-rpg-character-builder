@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import Script from 'next/script';
-import { Cinzel, Lato, Lora } from "next/font/google";
+import { Lato, Lora } from "next/font/google";
 import "./globals.css";
-
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  variable: "--font-cinzel",
-  display: "swap",
-});
 
 const lato = Lato({
   subsets: ["latin"],
@@ -54,7 +48,7 @@ export default function RootLayout({
         )}
       </head>
       <body
-        className={`${lato.variable} ${cinzel.variable} ${lora.variable} antialiased bg-[#f4ede0] text-[#051435]`}
+        className={`${lato.variable} ${lora.variable} antialiased`}
       >
         {children}
       </body>

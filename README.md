@@ -2,69 +2,105 @@
 
 A modern, interactive web-based character builder for the **Cosmere Roleplaying Game**. This tool allows players to easily create, manage, and export characters for their adventures in the Cosmere.
 
-## ✨ Features
+## Features
 
-*   **Interactive Character Sheet**: Real-time updates for attributes, defenses, and resources (Health, Focus, Investiture).
-*   **Path Support**: Full support for both **Heroic Paths** (Agent, Leader, Hunter, etc.) and **Radiant Paths** (Windrunner, Skybreaker, etc.).
-*   **Automatic Calculations**:
-    *   Derived stats (Defenses, Max Health/Focus) calculated automatically based on attributes and level.
-    *   **Surge Calculations**: Automatically determines Surge ranks and die sizes based on skills and attributes.
-*   **Talent Management**:
-    *   Split data architecture for clean management of Heroic and Radiant talents.
-    *   Automatic Key Talent selection.
-    *   Prerequisite tracking and descriptions.
-*   **Equipment & Inventory**: Manage weapons, armor, and general equipment.
-*   **Save & Load**:
-    *   Save your character to a compact JSON file.
-    *   Load functionality to resume editing anytime.
-*   **PDF Export**:
-    *   Generates a print-ready character sheet using a custom PDF template.
-    *   Supports custom fonts for Cosmere symbols (e.g., activation icons).
-    *   Includes a dedicated spell/surge sheet for Radiants.
+- **Interactive Character Sheet**: Real-time updates for attributes, defenses, and resources (Health, Focus, Investiture).
+- **Path Support**: Full support for **Heroic Paths** (Agent, Leader, Hunter, etc.) and **Radiant Paths** (Windrunner, Skybreaker, etc.).
+- **Automatic Calculations**:
+  - Derived stats (Defenses, Movement, Senses, Recovery Die, Lifting/Carrying capacity) calculated automatically from attributes.
+  - **Surge Skills**: Auto-added/removed based on the selected Radiant Path.
+  - **Surge Stats**: Modifier, die size (d4–d12), and area size computed from skill rank + attribute.
+- **Talent Management**: Automatic Key Talent selection from chosen paths; prerequisite display; Heroic and Radiant talent databases.
+- **Equipment & Inventory**: Weapons, armor, general equipment, and custom items.
+- **Save & Load**: Compact v2 JSON format (ID-based) for small file sizes; backward-compatible with legacy full-format saves.
+- **PDF Export**: Generates a print-ready character sheet using a custom PDF template and CosmereFont for activation icons. Includes a Surge sheet for Radiants.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-*   **Framework**: [Next.js](https://nextjs.org/) (React)
-*   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-*   **Icons**: [Lucide React](https://lucide.dev/)
-*   **PDF Generation**: [pdf-lib](https://pdf-lib.js.org/) & [fontkit](https://github.com/foliojs/fontkit)
+| Concern | Library / Tool |
+|---|---|
+| Framework | Next.js 16 (React 19) |
+| Styling | Tailwind CSS v4 |
+| Icons | Lucide React |
+| PDF Generation | pdf-lib + @pdf-lib/fontkit |
+| Testing | Vitest |
+| Linting | ESLint + Husky (lint-staged) |
 
-## 🚀 Getting Started
+## Getting Started
 
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository-url>
-    cd web-app
-    ```
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd web-app
+   ```
 
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-3.  **Run the development server**:
-    ```bash
-    npm run dev
-    ```
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-4.  **Open in Browser**:
-    Navigate to [http://localhost:3000](http://localhost:3000) to see the builder in action.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📂 Project Structure
+## Project Structure
 
-*   `src/components`: React components (Forms, UI elements, Layout).
-*   `src/context`: React Context for global character state management.
-*   `src/data`: JSON data files for game rules (Ancestries, Paths, Talents, Items).
-    *   `heroic_talents.json` & `radiant_talents.json`: Split talent databases.
-*   `src/utils`: Helper functions, including the PDF export logic (`pdfExport.ts`) and serialization.
-*   `public/`: Static assets (Fonts, PDF Templates).
+```
+src/
+├── app/
+│   ├── layout.tsx              # Root layout (fonts, Umami analytics)
+│   ├── page.tsx                # Entry point — wraps CharacterProvider + BuilderLayout
+│   └── maintenance/page.tsx    # Maintenance mode page
+├── components/
+│   ├── BuilderLayout.tsx       # Header (New/Load/Save/Export) + CharacterForm
+│   ├── forms/CharacterForm.tsx # 5 collapsible panels (see Architecture)
+│   └── ui/                     # Shared primitives: Input, Select, NumberControl, Modal…
+├── context/
+│   └── CharacterContext.tsx    # Global CharacterData state + all derived-stat logic
+├── data/                       # Game data (JSON, bundled at build time)
+│   ├── ancestries.json
+│   ├── heroic_paths.json / radiant_paths.json
+│   ├── heroic_talents.json / radiant_talents.json
+│   ├── skills.json / surges.json
+│   └── weapons.json / armor.json / equipment.json / expertises.json
+├── proxy.ts                    # Next.js middleware — maintenance-mode redirect
+├── types/character.ts          # CharacterData interface + initialCharacterData
+└── utils/
+    ├── pdfExport.ts            # PDF generation (fetch template + embed font + fill fields)
+    └── characterSerializer.ts  # Compact v2 save/load format
 
-## 📝 License & Disclaimer
+public/
+├── character-sheet-template.pdf
+├── fonts/CosmereFont.ttf
+└── icons/                      # Ancestry, attribute, and path icons
 
-**Software License**: The source code of this application is licensed under the [MIT License](LICENSE).
+server/
+└── docker-compose.yml          # Production stack (app, cloudflared, umami, netdata, watchtower)
+
+docs/specs/
+└── architecture.md             # System, component, state, and domain diagrams
+```
+
+## Architecture
+
+The app is a fully client-side SPA — no API routes, no database. All game data is bundled as JSON at build time. State is managed by a single React Context (`CharacterContext`) that holds `CharacterData` and exposes typed updater functions. Derived stats (defenses, movement, surge skills, etc.) are recalculated synchronously inside the context on every relevant update.
+
+See **[docs/specs/architecture.md](docs/specs/architecture.md)** for Mermaid diagrams covering the system architecture, component hierarchy, state/data flow, and domain model.
+
+## Deployment
+
+Production runs as a Docker container on a Raspberry Pi 5, exposed via Cloudflare Tunnel. Watchtower auto-pulls updated images from GHCR. Analytics are provided by a self-hosted Umami instance.
+
+See `server/docker-compose.yml` for the full stack definition.
+
+## License & Disclaimer
+
+**Software License**: The source code is licensed under the [MIT License](LICENSE).
 
 **Fan Content Policy Disclaimer**:
 > This is unofficial fan content, created and shared for non-commercial use. It has not been reviewed by Dragonsteel Entertainment, LLC or Brotherwise Games, LLC.
 
 This project is a fan-made tool designed for use with the **Cosmere Roleplaying Game**. It is not affiliated with, endorsed by, or sponsored by Brotherwise Games or Dragonsteel Entertainment. The Cosmere concepts, terms, and setting are copyright of their respective owners.
-

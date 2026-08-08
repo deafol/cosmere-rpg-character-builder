@@ -6,6 +6,7 @@ import {
     parseCharacterFile,
     isCharacterSaveFile,
     importCharacterIntoCampaign,
+    previewCharacterImport,
 } from '@/utils/characterCampaignSerializer';
 import { createCampaign } from '@/utils/campaignSerializer';
 import { CampaignData, createEmptyCampaignData } from '@/types/campaign';
@@ -202,5 +203,49 @@ describe('importCharacterIntoCampaign', () => {
         campaign = importCharacterIntoCampaign(campaign, incoming);
 
         expect(campaign.characters).toHaveLength(1);
+    });
+});
+
+describe('previewCharacterImport', () => {
+    it('reports every referenced entity as new when importing into an empty campaign', () => {
+        const sourceCampaign = { ...createCampaign('Source'), data: seededCampaignData() };
+        const save = toCharacterSaveV3(characterWithSelections(), sourceCampaign.id, sourceCampaign.data, 'char-1');
+        const incoming = parseCharacterFile(exportCharacterFile(save, sourceCampaign.data));
+
+        const targetCampaign = createCampaign('Target');
+        const preview = previewCharacterImport(targetCampaign, incoming);
+
+        expect(preview.characterName).toBe('Robar');
+        expect(preview.isNewCharacter).toBe(true);
+        const byLabel = Object.fromEntries(preview.entities.map(e => [e.label, e]));
+        expect(byLabel.paths).toEqual({ label: 'paths', newCount: 2, updatedCount: 0 });
+        expect(byLabel.talents).toEqual({ label: 'talents', newCount: 3, updatedCount: 0 });
+        expect(byLabel.weapons).toEqual({ label: 'weapons', newCount: 1, updatedCount: 0 });
+    });
+
+    it('reports no *new* entities, only updates, when re-importing into the campaign the character already came from', () => {
+        const sourceCampaign = { ...createCampaign('Source'), data: seededCampaignData() };
+        sourceCampaign.characters.push(toCharacterSaveV3(characterWithSelections(), sourceCampaign.id, sourceCampaign.data, 'char-1'));
+        const save = toCharacterSaveV3(characterWithSelections(), sourceCampaign.id, sourceCampaign.data, 'char-1');
+        const incoming = parseCharacterFile(exportCharacterFile(save, sourceCampaign.data));
+
+        const preview = previewCharacterImport(sourceCampaign, incoming);
+
+        expect(preview.isNewCharacter).toBe(false);
+        expect(preview.entities.every(e => e.newCount === 0)).toBe(true);
+        expect(preview.entities.some(e => e.updatedCount > 0)).toBe(true);
+    });
+
+    it('splits new vs. updated when the target campaign already has some referenced entities', () => {
+        const sourceCampaign = { ...createCampaign('Source'), data: seededCampaignData() };
+        const save = toCharacterSaveV3(characterWithSelections(), sourceCampaign.id, sourceCampaign.data, 'char-1');
+        const incoming = parseCharacterFile(exportCharacterFile(save, sourceCampaign.data));
+
+        const targetCampaign = createCampaign('Target');
+        targetCampaign.data.paths.push({ id: pathAgentId, kind: 'heroic', name: 'Agent (local edits)', description: '', specialties: [] });
+        const preview = previewCharacterImport(targetCampaign, incoming);
+
+        const paths = preview.entities.find(e => e.label === 'paths');
+        expect(paths).toEqual({ label: 'paths', newCount: 1, updatedCount: 1 });
     });
 });

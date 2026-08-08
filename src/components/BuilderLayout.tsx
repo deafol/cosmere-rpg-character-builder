@@ -8,7 +8,13 @@ import { useCharacter } from '../context/CharacterContext';
 import { useCampaign } from '../context/CampaignContext';
 import { useCharacterCampaignSync } from '../hooks/useCharacterCampaignSync';
 import { exportToPdf } from '../utils/pdfExport';
-import { exportCharacterFile, toCharacterSaveV3 } from '../utils/characterCampaignSerializer';
+import {
+    exportCharacterFile,
+    toCharacterSaveV3,
+    parseCharacterFile,
+    previewCharacterImport,
+    CharacterImportPreview,
+} from '../utils/characterCampaignSerializer';
 import { Modal, NotificationModal } from './ui';
 import Image from 'next/image';
 
@@ -26,7 +32,7 @@ export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; char
     const { currentId, notFound } = useCharacterCampaignSync(campaignId, charId);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const [showImportWarning, setShowImportWarning] = useState(false);
+    const [pendingImport, setPendingImport] = useState<{ json: string; preview: CharacterImportPreview } | null>(null);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationConfig, setNotificationConfig] = useState({ title: "", message: "", variant: "info" as "info" | "success" | "error" | "warning" });
 
@@ -59,8 +65,11 @@ export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; char
         URL.revokeObjectURL(url);
     };
 
-    const handleImportClick = () => setShowImportWarning(true);
+    const handleImportClick = () => fileInputRef.current?.click();
 
+    // consent.md §2.6: re-import "offers to add" embedded entities rather
+    // than merging silently — parse + preview here, actually merge only
+    // once the user confirms in the modal below.
     const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -68,8 +77,10 @@ export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; char
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
-                const character = importCharacterFile(event.target?.result as string);
-                router.push(`/campaign/${campaignId}/character/${character.id}`);
+                const json = event.target?.result as string;
+                const parsed = parseCharacterFile(json);
+                if (!campaign) return;
+                setPendingImport({ json, preview: previewCharacterImport(campaign, parsed) });
             } catch (error) {
                 console.error("Failed to import character", error);
                 showNotificationModal("Import Failed", "That file is not a valid character export.", "error");
@@ -77,6 +88,19 @@ export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; char
         };
         reader.readAsText(file);
         e.target.value = "";
+    };
+
+    const confirmImport = () => {
+        if (!pendingImport) return;
+        try {
+            const character = importCharacterFile(pendingImport.json);
+            setPendingImport(null);
+            router.push(`/campaign/${campaignId}/character/${character.id}`);
+        } catch (error) {
+            console.error("Failed to import character", error);
+            setPendingImport(null);
+            showNotificationModal("Import Failed", "That file is not a valid character export.", "error");
+        }
     };
 
     return (
@@ -135,20 +159,41 @@ export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; char
                 </div>
             </div>
 
-            {/* Import Character Warning Modal */}
+            {/* Import Character Preview/Confirm Modal */}
             <Modal
-                isOpen={showImportWarning}
-                title="Import Character?"
-                message="This adds or updates a character in this campaign's roster from a file — it won't affect the character you're currently editing unless the file has the same id."
-                confirmText="Choose File"
+                isOpen={pendingImport !== null}
+                title={`Import "${pendingImport?.preview.characterName}"?`}
+                confirmText="Import"
                 cancelText="Cancel"
-                onConfirm={() => {
-                    setShowImportWarning(false);
-                    fileInputRef.current?.click();
-                }}
-                onCancel={() => setShowImportWarning(false)}
+                onConfirm={confirmImport}
+                onCancel={() => setPendingImport(null)}
                 variant="info"
-            />
+            >
+                <div className="space-y-3 text-sm text-stone-700">
+                    <p>
+                        {pendingImport?.preview.isNewCharacter
+                            ? 'This adds a new character to this campaign.'
+                            : 'This updates a character already in this campaign (same id).'}
+                    </p>
+                    {pendingImport && pendingImport.preview.entities.length > 0 ? (
+                        <div>
+                            <p className="font-bold text-stone-800 mb-1">Campaign data this will add or update:</p>
+                            <ul className="list-disc list-inside space-y-0.5">
+                                {pendingImport.preview.entities.map(e => (
+                                    <li key={e.label}>
+                                        {e.label}
+                                        {e.newCount > 0 && <> — {e.newCount} new</>}
+                                        {e.newCount > 0 && e.updatedCount > 0 && ','}
+                                        {e.updatedCount > 0 && <> {e.updatedCount} updated</>}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <p>No campaign data (paths, talents, etc.) will be added or changed — everything this character references is already here.</p>
+                    )}
+                </div>
+            </Modal>
 
             {/* Notification Modal */}
             <NotificationModal

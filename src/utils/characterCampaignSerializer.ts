@@ -229,6 +229,49 @@ export function parseCharacterFile(json: string): CharacterSaveV3 {
     return parsed;
 }
 
+export interface CharacterImportPreview {
+    characterName: string;
+    isNewCharacter: boolean;
+    /** Per domain, only entries with at least one new or updated entity. */
+    entities: { label: string; newCount: number; updatedCount: number }[];
+}
+
+function diffCounts<T>(existing: T[], incoming: T[] | undefined, keyOf: (item: T) => string): { newCount: number; updatedCount: number } {
+    const existingKeys = new Set(existing.map(keyOf));
+    let newCount = 0;
+    let updatedCount = 0;
+    for (const item of incoming ?? []) {
+        if (existingKeys.has(keyOf(item))) updatedCount++;
+        else newCount++;
+    }
+    return { newCount, updatedCount };
+}
+
+/**
+ * Previews what a standalone character import would change in the target
+ * campaign, before anything is merged — consent.md §2.6: "re-import offers
+ * to add embedded entities to the target campaign's stores."
+ */
+export function previewCharacterImport(campaign: Campaign, incoming: CharacterSaveV3): CharacterImportPreview {
+    const embedded = incoming.embedded ?? {};
+    const entities = [
+        { label: 'paths', ...diffCounts(campaign.data.paths, embedded.paths, p => p.id) },
+        { label: 'talents', ...diffCounts(campaign.data.talents, embedded.talents, t => t.id) },
+        { label: 'surges', ...diffCounts(campaign.data.surges, embedded.surges, s => s.id) },
+        { label: 'expertises', ...diffCounts(campaign.data.expertises, embedded.expertises, e => e.id) },
+        { label: 'weapons', ...diffCounts(campaign.data.weapons, embedded.weapons, w => w.id) },
+        { label: 'armor', ...diffCounts(campaign.data.armor, embedded.armor, a => a.id) },
+        { label: 'equipment', ...diffCounts(campaign.data.equipment, embedded.equipment, e => e.id) },
+        { label: 'ancestry content', ...diffCounts(campaign.data.ancestryContent, embedded.ancestryContent, a => a.ancestryId) },
+    ].filter(e => e.newCount > 0 || e.updatedCount > 0);
+
+    return {
+        characterName: incoming.characterName || 'Unnamed',
+        isNewCharacter: !campaign.characters.some(c => c.id === incoming.id),
+        entities,
+    };
+}
+
 /**
  * Merges a standalone character file into a campaign: its embedded entity
  * snapshot is upserted into the campaign's data stores (incoming wins, by

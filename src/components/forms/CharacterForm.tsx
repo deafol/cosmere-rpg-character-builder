@@ -79,8 +79,7 @@ export const CharacterForm = () => {
     }, [data.paths, data.talents, data.radiantIdeal, campaignData, hasSelectedRadiantPath, updateData]);
 
     // Auto-add/remove surge-skill entries based on the active radiant path's
-    // linked campaign surges (path.surgeIds), replacing the old bundled
-    // surges.json + radiant_paths name-matching.
+    // linked campaign surges (path.surgeIds).
     useEffect(() => {
         const activeSurgeIds = new Set<string>();
         data.paths.forEach(path => {

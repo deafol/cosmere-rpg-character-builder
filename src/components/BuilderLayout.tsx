@@ -119,7 +119,7 @@ export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; char
                                 className="hidden"
                             />
                             <button
-                                onClick={() => exportToPdf(data)}
+                                onClick={() => campaign && exportToPdf(data, campaign.data)}
                                 className="bg-cosmere-gold text-cosmere-blue hover:brightness-90 border border-transparent px-4 py-2 rounded text-xs uppercase font-bold tracking-wider shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
                             >
                                 Export PDF

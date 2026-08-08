@@ -1,13 +1,8 @@
 # Cosmere RPG Character Builder — Architecture Diagrams
 
-> **Status: TARGET ARCHITECTURE — not yet implemented.**
-> These diagrams describe the campaign-based re-architecture approved in
-> [`../../consent.md`](../../consent.md) (2026-08-08), which serves as the
-> PRD for this change. They replace the as-built diagrams from the
-> 2026-07-25 scan (see changelog at the bottom for what changed and why).
-> Until the phases in `consent.md` §6 are implemented, the *actual* running
-> app still matches the single-character, single-page shape these diagrams
-> describe as superseded.
+> **Status: IMPLEMENTED.** All nine phases in `consent.md` §6 are complete
+> as of 2026-08-08, including the phase-9 purge — these diagrams now match
+> the running app, not just the target. See changelog at the bottom.
 
 ---
 
@@ -81,7 +76,7 @@ flowchart TD
     Editors["Domain Editors\n(Path · Talent · Surge · Expertise\nWeapon · Armor · Equipment · AncestryContent)"]
     CharApp["BuilderLayout + CharacterForm\n(5 panels, unchanged internally)"]
     PDFUtil["pdfExport.ts"]
-    Serializer["campaignSerializer.ts\n+ characterSerializer.ts (v3)"]
+    Serializer["campaignSerializer.ts\n+ characterCampaignSerializer.ts (v3)"]
 
     Layout --> R1 & R2 & R3 & R4
     R1 & R2 & R3 --> CProvider
@@ -311,3 +306,10 @@ erDiagram
   localStorage + merge-on-import persistence, and unified `Path`/`Talent`
   entities. Marked file status as **target architecture, not yet implemented**.
   Superseded diagrams are recoverable from git history prior to this commit.
+- 2026-08-08: all nine implementation phases landed — routing, generic
+  domain-editor CRUD, campaign-aware CharacterForm, CharacterSaveV3
+  serialization with autosave, the standalone legacy-character converter
+  script, and the src/data/ purge. Status updated from target to
+  implemented; `characterSerializer.ts` renamed to
+  `characterCampaignSerializer.ts` in the component-hierarchy diagram to
+  match what actually shipped.

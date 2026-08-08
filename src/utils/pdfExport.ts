@@ -1,25 +1,8 @@
 
 import fontkit from '@pdf-lib/fontkit';
 import { PDFDocument, PDFPage, PDFFont } from 'pdf-lib';
-import heroicTalents from '../data/heroic_talents.json';
-import radiantTalents from '../data/radiant_talents.json';
-import surgesData from '../data/surges.json';
 import { CharacterData, Talent } from '../types/character';
-
-// Type for talent lookup data structure
-interface TalentDataEntry {
-    name: string;
-    specialty?: string;
-    activation?: string;
-    description?: string;
-}
-
-interface PathTalentData {
-    keyTalent?: string;
-    talents: TalentDataEntry[];
-}
-
-type TalentsDataMap = Record<string, PathTalentData>;
+import { CampaignData } from '../types/campaign';
 
 // Type for skill with originalCategory
 interface ExtraSkill {
@@ -34,9 +17,7 @@ interface TalentWithActivation extends Talent {
     activation?: string;
 }
 
-const talentsData: TalentsDataMap = { ...heroicTalents, ...radiantTalents };
-
-export async function exportToPdf(data: CharacterData) {
+export async function exportToPdf(data: CharacterData, campaignData: CampaignData) {
     try {
         // 1. Load the RAW TEMPLATE
         const existingPdfBytes = await fetch('/character-sheet-template.pdf').then(res => res.arrayBuffer());
@@ -448,21 +429,18 @@ export async function exportToPdf(data: CharacterData) {
         fill('txt_weapons', weaponsText);
 
         // Filter talents into General and Surge-Specific
-        const surgeNames = new Set(surgesData.surges.map(s => s.name));
+        const surgeNames = new Set(campaignData.surges.map(s => s.name));
         const surgeTalentsMap = new Map<string, TalentWithActivation[]>();
         const generalTalents: TalentWithActivation[] = [];
 
         data.talents.forEach(t => {
-            // Lookup specialty and activation in talentsData
+            // Lookup specialty and activation from the campaign's own talent entity
             let specialty = "";
             let activation = "";
-            const pathData = talentsData[t.path];
-            if (pathData) {
-                const tData = pathData.talents.find((td) => td.name === t.name);
-                if (tData) {
-                    specialty = tData.specialty || "";
-                    activation = tData.activation || "";
-                }
+            const campaignTalent = t.id ? campaignData.talents.find(ct => ct.id === t.id) : undefined;
+            if (campaignTalent) {
+                specialty = campaignTalent.specialty || "";
+                activation = campaignTalent.activation || "";
             }
             // Create talent with activation for display
             const talentWithActivation: TalentWithActivation = { ...t, activation };
@@ -557,9 +535,9 @@ export async function exportToPdf(data: CharacterData) {
                 fill(`surge_die_${idx}`, surge.die);
 
                 let surgeDescription = "";
-                const surgeInfo = surgesData.surges.find(s => s.name === surge.name);
+                const surgeInfo = campaignData.surges.find(s => s.name === surge.name);
                 if (surgeInfo) {
-                    if (surgeInfo.short_description) surgeDescription += `${surgeInfo.short_description}\n\n`;
+                    if (surgeInfo.description) surgeDescription += `${surgeInfo.description}\n\n`;
                     if (surgeInfo.activation) {
                         surgeDescription += `${surgeInfo.activation.join('\n')}`;
                     }

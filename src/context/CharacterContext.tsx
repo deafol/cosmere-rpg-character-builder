@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useState } from 'react';
-import surgesData from '../data/surges.json';
 import { CharacterData, initialCharacterData } from '../types/character';
 
 interface CharacterContextType {
@@ -21,52 +20,11 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     const [data, setData] = useState<CharacterData>(initialCharacterData);
     const [characterVersion, setCharacterVersion] = useState(0);
 
+    // Surge-skill auto-add based on active radiant paths lives in CharacterForm
+    // (it needs the active campaign's Path -> Surge UUID links), not here —
+    // this context has no campaign awareness by design.
     const updateData = (updates: Partial<CharacterData>) => {
-        setData(prev => {
-            const newData = { ...prev, ...updates };
-
-            // Logic for Auto-Selecting Surges based on Radiant Paths
-            if (updates.paths) {
-                // 1. Identify all selected paths that are Radiant paths
-                const activeWrapperNames = new Set(newData.paths.map(p => p.name));
-                const allSurgeNames = new Set(surgesData.surges.map(s => s.name));
-
-                // 2. Determine which Surges should be active
-                const activeSurges = new Set<string>();
-
-                surgesData.surges.forEach(surge => {
-                    // Check if any of the surge's radiant_paths are in the character's active paths
-                    const isActive = surge.radiant_paths.some(rp => activeWrapperNames.has(rp));
-                    if (isActive) {
-                        activeSurges.add(surge.name);
-                    }
-                });
-
-                // 3. Update Skills
-                // filter out any existing skills that are Surges but NOT active anymore
-                const newSkills = newData.skills.filter(s => !allSurgeNames.has(s.name) || activeSurges.has(s.name));
-
-                // add any active Surges that are NOT in skills yet
-                activeSurges.forEach(surgeName => {
-                    if (!newSkills.find(s => s.name === surgeName)) {
-                        const surgeInfo = surgesData.surges.find(s => s.name === surgeName);
-                        if (surgeInfo) {
-                            const attr_abbrev = surgeInfo.attribute === 'Speed' ? 'SPD' : surgeInfo.attribute.slice(0, 3).toUpperCase();
-                            newSkills.push({
-                                name: surgeName,
-                                attribute: surgeInfo.attribute,
-                                attr_abbrev,
-                                rank: 0 // Start at rank 0, user can mark it
-                            });
-                        }
-                    }
-                });
-
-                newData.skills = newSkills;
-            }
-
-            return newData;
-        });
+        setData(prev => ({ ...prev, ...updates }));
     };
 
     const updateAttribute = (attr: keyof CharacterData['attributes'], value: number) => {

@@ -1,85 +1,55 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCharacter } from '../../context/CharacterContext';
+import { useCampaign } from '../../context/CampaignContext';
 import { Label, Input, Select, NumberControl, CollapsiblePanel, DividerDecoration } from '../ui';
+import { generateId } from '../../utils/uuid';
+import { createEmptyCampaignData } from '../../types/campaign';
 
-// Import data directly (Next.js handles JSON imports)
-import heroicPathsData from '../../data/heroic_paths.json';
-import radiantPathsData from '../../data/radiant_paths.json';
+// Ancestry names stay bundled/static (consent.md §3) — everything else a
+// character can pick from now lives in the active campaign's data stores.
 import ancestriesData from '../../data/ancestries.json';
-import weaponsData from '../../data/weapons.json';
-import heroicTalents from '../../data/heroic_talents.json';
-import radiantTalents from '../../data/radiant_talents.json';
-
-// Type for talent lookup data structure
-interface TalentDataEntry {
-    name: string;
-    specialty?: string;
-    activation?: string;
-    description?: string;
-    isKeyTalent?: boolean;
-    prerequisites?: string;
-}
-
-interface PathTalentData {
-    keyTalent?: string;
-    talents: TalentDataEntry[];
-}
-
-type TalentsDataMap = Record<string, PathTalentData>;
-
-const talentsData: TalentsDataMap = { ...heroicTalents, ...radiantTalents };
-import expertisesData from '../../data/expertises.json';
-import armorData from '../../data/armor.json';
-import equipmentData from '../../data/equipment.json';
 import { User, Activity, Sparkles, Sword, Scroll } from 'lucide-react';
-import { Talent, HeroicPath, Ancestry, Armor, EquipmentItem, Weapon } from '../../types/character';
+import { Talent, HeroicPath, Ancestry } from '../../types/character';
 import pkg from '../../../package.json';
 
 export const CharacterForm = () => {
     const { data, characterVersion, updateData, updateAttribute, updateResource, updateSkillRank } = useCharacter();
+    const { campaign, updateCampaignData } = useCampaign();
     const [showStatement, setShowStatement] = useState(false);
+
+    // Reachable only via /campaign/[id]/character/[charId], which guards on
+    // a loaded campaign before mounting this — campaign should always be set
+    // here, but fall back to an empty store rather than crash mid-render.
+    const campaignData = campaign?.data ?? createEmptyCampaignData();
+    const radiantPathIds = useMemo(
+        () => new Set(campaignData.paths.filter(p => p.kind === 'radiant').map(p => p.id)),
+        [campaignData]
+    );
+    const hasSelectedRadiantPath = data.paths.some(p => p.id && radiantPathIds.has(p.id));
 
     // Auto-open first panel when character is new/loaded
     // (Handled via key={characterVersion} and defaultOpen on the panel below)
 
-    // Auto-select key talents when paths change
+    // Auto-select key talents when paths change, resolved via each campaign
+    // Path's keyTalentId link rather than bundled-JSON name matching.
     useEffect(() => {
         const requiredKeyTalents: Talent[] = [];
 
         data.paths.forEach((path: HeroicPath) => {
-            let talentName = "";
-            let description = "";
+            const campaignPath = path.id ? campaignData.paths.find(p => p.id === path.id) : undefined;
+            const keyTalent = campaignPath?.keyTalentId
+                ? campaignData.talents.find(t => t.id === campaignPath.keyTalentId)
+                : undefined;
 
-            // 1. Try getting Key Talent from static data (works for Radiant paths)
-            const pathData = talentsData[path.name];
-            if (pathData?.keyTalent) {
-                talentName = pathData.keyTalent;
-                const talentFromDb = pathData.talents.find((t) => t.name === talentName);
-                description = talentFromDb?.description || "";
-            }
-
-            // 2. Fallback: Parse from key_attributes (Legacy/Heroic paths)
-            if (!talentName && path.key_attributes) {
-                const keyTalentAttr = path.key_attributes.find((attr: string) => attr.includes('Key Talent'));
-                if (keyTalentAttr) {
-                    const match = keyTalentAttr.match(/^(.+?)\s*\(Key Talent\)/);
-                    if (match) {
-                        talentName = match[1].trim();
-                        // Try to find description in DB if possible, otherwise use attribute text
-                        const talentFromDb = pathData?.talents.find((t) => t.name === talentName);
-                        description = talentFromDb?.description || keyTalentAttr;
-                    }
-                }
-            }
-
-            if (talentName) {
+            if (keyTalent && campaignPath) {
                 requiredKeyTalents.push({
-                    name: talentName,
-                    path: path.name,
+                    id: keyTalent.id,
+                    name: keyTalent.name,
+                    path: campaignPath.name,
                     isKeyTalent: true,
-                    description: description
+                    description: keyTalent.description,
                 });
             }
         });
@@ -90,12 +60,11 @@ export const CharacterForm = () => {
         // Check if update is needed
         const currentKeyTalents = data.talents.filter(t => t.isKeyTalent);
 
-        // Simple comparison: Check names and paths to see if the SET of key talents changed
-        const stringsCurrent = currentKeyTalents.map(t => `${t.name}|${t.path}`).sort().join(',');
-        const stringsRequired = requiredKeyTalents.map(t => `${t.name}|${t.path}`).sort().join(',');
+        // Simple comparison: Check ids (or name|path as a legacy fallback) to see if the SET of key talents changed
+        const stringsCurrent = currentKeyTalents.map(t => t.id ?? `${t.name}|${t.path}`).sort().join(',');
+        const stringsRequired = requiredKeyTalents.map(t => t.id ?? `${t.name}|${t.path}`).sort().join(',');
 
-        const hasRadiantPath = data.paths.some(p => radiantPathsData.some((rp: HeroicPath) => rp.name === p.name));
-        const shouldResetIdeal = !hasRadiantPath && data.radiantIdeal !== 0;
+        const shouldResetIdeal = !hasSelectedRadiantPath && data.radiantIdeal !== 0;
 
         if (stringsCurrent !== stringsRequired) {
             // Update: Put Key Talents FIRST
@@ -107,7 +76,37 @@ export const CharacterForm = () => {
             updateData({ radiantIdeal: 0 });
         }
 
-    }, [data.paths, data.talents, data.radiantIdeal, updateData]);
+    }, [data.paths, data.talents, data.radiantIdeal, campaignData, hasSelectedRadiantPath, updateData]);
+
+    // Auto-add/remove surge-skill entries based on the active radiant path's
+    // linked campaign surges (path.surgeIds), replacing the old bundled
+    // surges.json + radiant_paths name-matching.
+    useEffect(() => {
+        const activeSurgeIds = new Set<string>();
+        data.paths.forEach(path => {
+            if (!path.id || !radiantPathIds.has(path.id)) return;
+            const campaignPath = campaignData.paths.find(p => p.id === path.id);
+            (campaignPath?.surgeIds ?? []).forEach(id => activeSurgeIds.add(id));
+        });
+
+        const activeSurges = campaignData.surges.filter(s => activeSurgeIds.has(s.id));
+        const activeSurgeNames = new Set(activeSurges.map(s => s.name));
+        const allCampaignSurgeNames = new Set(campaignData.surges.map(s => s.name));
+
+        // Drop surge-skill entries that are no longer active; standard skills are untouched.
+        const newSkills = data.skills.filter(s => !allCampaignSurgeNames.has(s.name) || activeSurgeNames.has(s.name));
+
+        activeSurges.forEach(surge => {
+            if (!newSkills.find(s => s.name === surge.name)) {
+                const attr_abbrev = surge.attribute === 'Speed' ? 'SPD' : surge.attribute.slice(0, 3).toUpperCase();
+                newSkills.push({ name: surge.name, attribute: surge.attribute, attr_abbrev, rank: 0 });
+            }
+        });
+
+        if (JSON.stringify(data.skills) !== JSON.stringify(newSkills)) {
+            updateData({ skills: newSkills });
+        }
+    }, [data.paths, data.skills, campaignData, radiantPathIds, updateData]);
 
     // Compute and store surges from extra skills
     useEffect(() => {
@@ -160,6 +159,35 @@ export const CharacterForm = () => {
             updateData({ surges: computedSurges });
         }
     }, [data, updateData]);
+
+    // "Create new…" auto-add (consent.md §2.12): a custom expertise/equipment
+    // item typed here becomes a real entity in the campaign store — reused by
+    // name on repeat entry — rather than a one-off object living only on this
+    // character.
+    const addCustomExpertise = (rawValue: string) => {
+        const value = rawValue.trim();
+        if (!value || data.expertises.includes(value)) return;
+        const existing = campaignData.expertises.find(exp => exp.name.toLowerCase() === value.toLowerCase());
+        if (!existing) {
+            updateCampaignData({
+                expertises: [...campaignData.expertises, { id: generateId(), name: value, category: 'utility' }],
+            });
+        }
+        updateData({ expertises: [...data.expertises, existing?.name ?? value] });
+    };
+
+    const addCustomEquipment = (rawValue: string) => {
+        const value = rawValue.trim();
+        if (!value) return;
+        let item = campaignData.equipment.find(eq => eq.name.toLowerCase() === value.toLowerCase());
+        if (!item) {
+            item = { id: generateId(), name: value, price: "0", weight: "0", description: "Custom item" };
+            updateCampaignData({ equipment: [...campaignData.equipment, item] });
+        }
+        updateData({ equipment: [...data.equipment, item] });
+    };
+
+    if (!campaign) return null;
 
     return (
         <div className="pb-10">
@@ -248,18 +276,29 @@ export const CharacterForm = () => {
                             <Label>Heroic Path</Label>
                         </div>
                         <div className="flex flex-wrap gap-4 mb-8">
-                            {heroicPathsData.map((path: HeroicPath) => {
-                                const isSelected = data.paths.some(p => p.name === path.name);
+                            {campaignData.paths.filter(p => p.kind === 'heroic').length === 0 && (
+                                <p className="text-xs text-stone-400 italic">No heroic paths yet — add one in Campaign Settings.</p>
+                            )}
+                            {campaignData.paths.filter(p => p.kind === 'heroic').map(path => {
+                                const isSelected = data.paths.some(p => p.id === path.id);
                                 return (
                                     <button
-                                        key={path.name}
+                                        key={path.id}
                                         onClick={() => {
                                             if (isSelected) {
                                                 // Deselect: Remove this specific path, keep everything else
-                                                updateData({ paths: data.paths.filter(p => p.name !== path.name) });
+                                                updateData({ paths: data.paths.filter(p => p.id !== path.id) });
                                             } else {
                                                 // Select: Add this path, keep everything else
-                                                updateData({ paths: [...data.paths, path] });
+                                                updateData({
+                                                    paths: [...data.paths, {
+                                                        id: path.id,
+                                                        name: path.name,
+                                                        description: path.description,
+                                                        key_attributes: [],
+                                                        specialties: path.specialties,
+                                                    }],
+                                                });
                                             }
                                         }}
                                         className={`px-3 py-1 text-m rounded border transition-all font-display font-bold uppercase tracking-wide ${isSelected ? 'bg-cosmere-blue text-cosmere-gold border-cosmere-gold shadow-md transform scale-105' : 'bg-transparent text-cosmere-blue/70 border-cosmere-blue/20 hover:bg-cosmere-blue/5 hover:border-cosmere-blue/50'}`}
@@ -274,18 +313,30 @@ export const CharacterForm = () => {
                             <Label>Radiant Path</Label>
                         </div>
                         <div className="flex flex-wrap gap-4 mt-2 mb-8">
-                            {radiantPathsData.map((path: HeroicPath) => {
-                                const isSelected = data.paths.some(p => p.name === path.name);
+                            {campaignData.paths.filter(p => p.kind === 'radiant').length === 0 && (
+                                <p className="text-xs text-stone-400 italic">No radiant paths yet — add one in Campaign Settings.</p>
+                            )}
+                            {campaignData.paths.filter(p => p.kind === 'radiant').map(path => {
+                                const isSelected = data.paths.some(p => p.id === path.id);
                                 return (
                                     <button
-                                        key={path.name}
+                                        key={path.id}
                                         onClick={() => {
-                                            // Heroic paths are now separate, so we filter by checking against heroicPathsData
-                                            const currentHeroicPaths = data.paths.filter(p => heroicPathsData.some((hp: HeroicPath) => hp.name === p.name));
+                                            // Keep only non-radiant (heroic) paths — only one radiant path at a time
+                                            const currentHeroicPaths = data.paths.filter(p => !p.id || !radiantPathIds.has(p.id));
                                             if (isSelected) {
                                                 updateData({ paths: currentHeroicPaths, radiantPath: "" });
                                             } else {
-                                                updateData({ paths: [...currentHeroicPaths, path], radiantPath: path.name });
+                                                updateData({
+                                                    paths: [...currentHeroicPaths, {
+                                                        id: path.id,
+                                                        name: path.name,
+                                                        description: path.description,
+                                                        key_attributes: [],
+                                                        specialties: path.specialties,
+                                                    }],
+                                                    radiantPath: path.name,
+                                                });
                                             }
                                         }}
                                         className={`px-3 py-1 text-m rounded border transition-all font-display font-bold uppercase tracking-wide ${isSelected ? 'bg-cosmere-blue text-cosmere-gold border-cosmere-gold shadow-md transform scale-105' : 'bg-transparent text-cosmere-blue/70 border-cosmere-blue/20 hover:bg-cosmere-blue/5 hover:border-cosmere-blue/50'}`}
@@ -298,7 +349,7 @@ export const CharacterForm = () => {
 
                         {/* Radiant Ideal */}
                         {(() => {
-                            const hasRadiantPath = data.paths.some(p => radiantPathsData.some((rp: HeroicPath) => rp.name === p.name));
+                            const hasRadiantPath = hasSelectedRadiantPath;
 
                             return (
                                 <>
@@ -792,7 +843,11 @@ export const CharacterForm = () => {
                         <div className="mb-4 flex items-center gap-4">
                             <Label className="w-52 shrink-0 font-normal text-right">Select Expertise</Label>
                             <div className="flex-1">
-                                <p className="text-xs text-stone-500 mb-1">Select from available expertises.</p>
+                                <p className="text-xs text-stone-500 mb-1">
+                                    {campaignData.expertises.length === 0
+                                        ? 'No expertises yet — add one in Campaign Settings, or type a custom one below.'
+                                        : 'Select from available expertises.'}
+                                </p>
                                 <Select
                                     onChange={(e) => {
                                         if (e.target.value && !data.expertises.includes(e.target.value)) {
@@ -802,41 +857,15 @@ export const CharacterForm = () => {
                                     }}
                                 >
                                     <option value="">Select an expertise...</option>
-                                    <optgroup label="Cultural">
-                                        {expertisesData.cultural.map((exp: string) => (
-                                            <option key={exp} value={exp} disabled={data.expertises.includes(exp)}>
-                                                {exp}
-                                            </option>
-                                        ))}
-                                    </optgroup>
-                                    <optgroup label="Utility">
-                                        {expertisesData.utility.map((exp: string) => (
-                                            <option key={exp} value={exp} disabled={data.expertises.includes(exp)}>
-                                                {exp}
-                                            </option>
-                                        ))}
-                                    </optgroup>
-                                    <optgroup label="Weapon">
-                                        {expertisesData.weapon.map((exp: string) => (
-                                            <option key={exp} value={exp} disabled={data.expertises.includes(exp)}>
-                                                {exp}
-                                            </option>
-                                        ))}
-                                    </optgroup>
-                                    <optgroup label="Armor">
-                                        {expertisesData.armor.map((exp: string) => (
-                                            <option key={exp} value={exp} disabled={data.expertises.includes(exp)}>
-                                                {exp}
-                                            </option>
-                                        ))}
-                                    </optgroup>
-                                    <optgroup label="Specialist">
-                                        {expertisesData.specialist.map((exp: string) => (
-                                            <option key={exp} value={exp} disabled={data.expertises.includes(exp)}>
-                                                {exp}
-                                            </option>
-                                        ))}
-                                    </optgroup>
+                                    {Array.from(new Set(campaignData.expertises.map(exp => exp.category))).sort().map(category => (
+                                        <optgroup key={category} label={category.charAt(0).toUpperCase() + category.slice(1)}>
+                                            {campaignData.expertises.filter(exp => exp.category === category).map(exp => (
+                                                <option key={exp.id} value={exp.name} disabled={data.expertises.includes(exp.name)}>
+                                                    {exp.name}
+                                                </option>
+                                            ))}
+                                        </optgroup>
+                                    ))}
                                 </Select>
                             </div>
                         </div>
@@ -851,23 +880,16 @@ export const CharacterForm = () => {
                                 placeholder="Enter custom expertise name..."
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
-                                        const input = e.currentTarget;
-                                        const value = input.value.trim();
-                                        if (value && !data.expertises.includes(value)) {
-                                            updateData({ expertises: [...data.expertises, value] });
-                                            input.value = '';
-                                        }
+                                        addCustomExpertise(e.currentTarget.value);
+                                        e.currentTarget.value = '';
                                     }
                                 }}
                             />
                             <button
                                 onClick={() => {
                                     const input = document.getElementById('custom-expertise') as HTMLInputElement;
-                                    const value = input?.value.trim();
-                                    if (value && !data.expertises.includes(value)) {
-                                        updateData({ expertises: [...data.expertises, value] });
-                                        input.value = '';
-                                    }
+                                    addCustomExpertise(input?.value ?? '');
+                                    if (input) input.value = '';
                                 }}
                                 className="px-2 py-2 bg-cosmere-blue text-cosmere-gold text-sm border border-cosmere-gold/30 rounded font-display uppercase tracking-widest hover:bg-cosmere-blue-hover transition-colors whitespace-nowrap shadow-md"
                             >
@@ -891,16 +913,10 @@ export const CharacterForm = () => {
                             ) : (
                                 <div className="space-y-2">
                                     {[...data.talents].sort((a, b) => (a.isKeyTalent === b.isKeyTalent ? 0 : a.isKeyTalent ? -1 : 1)).map((talent) => {
-                                        let tData = talentsData[talent.path]?.talents.find((t) => t.name === talent.name);
-                                        if (!tData) {
-                                            Object.values(talentsData).some(group => {
-                                                tData = group.talents.find(t => t.name === talent.name);
-                                                return !!tData;
-                                            });
-                                        }
-                                        const act = tData?.activation ? `${tData.activation}` : null;
+                                        const campaignTalent = talent.id ? campaignData.talents.find(t => t.id === talent.id) : undefined;
+                                        const act = campaignTalent?.activation || null;
                                         return (
-                                            <div key={`${talent.path}-${talent.name}`} className={`flex items-start justify-between p-3 border rounded ${talent.isKeyTalent ? 'bg-amber-50 border-amber-300' : 'bg-stone-50 border-stone-300'}`}>
+                                            <div key={talent.id ?? `${talent.path}-${talent.name}`} className={`flex items-start justify-between p-3 border rounded ${talent.isKeyTalent ? 'bg-amber-50 border-amber-300' : 'bg-stone-50 border-stone-300'}`}>
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2">
                                                         {act && <span className={`text-stone-600 font-medium mr-1 ${act.includes('∞') ? 'text-xl leading-none translate-y-0.5 inline-block' : 'text-sm'}`}>{act}</span>}
@@ -916,7 +932,11 @@ export const CharacterForm = () => {
                                                 </div>
                                                 {!talent.isKeyTalent && (
                                                     <button
-                                                        onClick={() => updateData({ talents: data.talents.filter(t => t.name !== talent.name || t.path !== talent.path) })}
+                                                        onClick={() => updateData({
+                                                            talents: data.talents.filter(t =>
+                                                                talent.id ? t.id !== talent.id : (t.name !== talent.name || t.path !== talent.path)
+                                                            ),
+                                                        })}
                                                         className="ml-4 text-destructive hover:text-red-800 font-bold px-2 text-xl leading-none"
                                                         title="Remove"
                                                     >
@@ -939,53 +959,45 @@ export const CharacterForm = () => {
                                     <Select
                                         onChange={(e) => {
                                             if (e.target.value) {
-                                                const [pathName, talentName] = e.target.value.split('|||');
-                                                const pathData = talentsData[pathName];
-                                                if (pathData) {
-                                                    const talent = pathData.talents.find((t) => t.name === talentName);
-
-                                                    if (talent && !data.talents.some(t => t.name === talent.name && t.path === pathName)) {
-                                                        updateData({
-                                                            talents: [...data.talents, {
-                                                                name: talent.name,
-                                                                path: pathName,
-                                                                isKeyTalent: false,
-                                                                description: talent.description
-                                                            }]
-                                                        });
-                                                    }
-                                                    e.target.value = '';
+                                                const campaignTalent = campaignData.talents.find(t => t.id === e.target.value);
+                                                const campaignPath = campaignTalent
+                                                    ? campaignData.paths.find(p => p.id === campaignTalent.pathId)
+                                                    : undefined;
+                                                if (campaignTalent && campaignPath && !data.talents.some(t => t.id === campaignTalent.id)) {
+                                                    updateData({
+                                                        talents: [...data.talents, {
+                                                            id: campaignTalent.id,
+                                                            name: campaignTalent.name,
+                                                            path: campaignPath.name,
+                                                            isKeyTalent: false,
+                                                            description: campaignTalent.description,
+                                                        }],
+                                                    });
                                                 }
+                                                e.target.value = '';
                                             }
                                         }}
                                     >
                                         <option value="">Select a talent...</option>
-                                        {data.paths.flatMap((path: HeroicPath) => {
-                                            const specialties = path.specialties || [];
-                                            const groupsToRender = specialties.length > 0 ? specialties : [path.name];
+                                        {data.paths.map((path: HeroicPath) => {
+                                            if (!path.id) return null;
+                                            const talents = campaignData.talents.filter(t => t.pathId === path.id && !t.isKeyTalent);
+                                            if (talents.length === 0) return null;
 
-                                            return groupsToRender.map(groupName => {
-                                                const groupData = talentsData[groupName];
-                                                if (!groupData) return null;
-
-                                                const regularTalents = groupData.talents.filter((t) => !t.isKeyTalent);
-                                                if (regularTalents.length === 0) return null;
-
-                                                return (
-                                                    <optgroup key={`${path.name}-${groupName}`} label={`${groupName} (${path.name})`}>
-                                                        {regularTalents.map((talent) => (
-                                                            <option
-                                                                key={`${groupName}|||${talent.name}`}
-                                                                value={`${groupName}|||${talent.name}`}
-                                                                disabled={data.talents.some(t => t.name === talent.name && (t.path === groupName || t.path === path.name))}
-                                                            >
-                                                                {talent.activation ? `${talent.activation} ` : ''}{talent.name} {talent.specialty ? `(${talent.specialty})` : ''} - {talent.prerequisites}
-                                                            </option>
-                                                        ))}
-                                                    </optgroup>
-                                                );
-                                            });
-                                        }).filter(Boolean)}
+                                            return (
+                                                <optgroup key={path.id} label={path.name}>
+                                                    {talents.map(talent => (
+                                                        <option
+                                                            key={talent.id}
+                                                            value={talent.id}
+                                                            disabled={data.talents.some(t => t.id === talent.id)}
+                                                        >
+                                                            {talent.activation ? `${talent.activation} ` : ''}{talent.name}{talent.specialty ? ` (${talent.specialty})` : ''}{talent.prerequisite ? ` - ${talent.prerequisite}` : ''}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
+                                            );
+                                        })}
                                     </Select>
                                 </div>
                             </div>
@@ -1039,36 +1051,26 @@ export const CharacterForm = () => {
                             <Select
                                 onChange={(e) => {
                                     if (e.target.value) {
-                                        const weapon = weaponsData.find((w: Weapon) => w.name === e.target.value);
-                                        if (weapon && !data.weapons.some(w => w.name === weapon.name)) {
+                                        const weapon = campaignData.weapons.find(w => w.id === e.target.value);
+                                        if (weapon && !data.weapons.some(w => w.id === weapon.id)) {
                                             updateData({ weapons: [...data.weapons, weapon] });
                                         }
                                         e.target.value = '';
                                     }
                                 }}
                             >
-                                <option value="">Select a weapon...</option>
-                                <optgroup label="Light">
-                                    {weaponsData.filter((w: Weapon) => w.category === "Light").map((w: Weapon) => (
-                                        <option key={w.name} value={w.name} disabled={data.weapons.some(weapon => weapon.name === w.name)}>
-                                            {w.name} ({w.damage})
-                                        </option>
-                                    ))}
-                                </optgroup>
-                                <optgroup label="Heavy">
-                                    {weaponsData.filter((w: Weapon) => w.category === "Heavy").map((w: Weapon) => (
-                                        <option key={w.name} value={w.name} disabled={data.weapons.some(weapon => weapon.name === w.name)}>
-                                            {w.name} ({w.damage})
-                                        </option>
-                                    ))}
-                                </optgroup>
-                                <optgroup label="Special">
-                                    {weaponsData.filter((w: Weapon) => w.category === "Special").map((w: Weapon) => (
-                                        <option key={w.name} value={w.name} disabled={data.weapons.some(weapon => weapon.name === w.name)}>
-                                            {w.name} ({w.damage})
-                                        </option>
-                                    ))}
-                                </optgroup>
+                                <option value="">
+                                    {campaignData.weapons.length === 0 ? 'No weapons yet — add one in Campaign Settings' : 'Select a weapon...'}
+                                </option>
+                                {Array.from(new Set(campaignData.weapons.map(w => w.category || 'Other'))).sort().map(category => (
+                                    <optgroup key={category} label={category}>
+                                        {campaignData.weapons.filter(w => (w.category || 'Other') === category).map(w => (
+                                            <option key={w.id} value={w.id} disabled={data.weapons.some(weapon => weapon.id === w.id)}>
+                                                {w.name} ({w.damage})
+                                            </option>
+                                        ))}
+                                    </optgroup>
+                                ))}
                             </Select>
                         </div>
                     </div>
@@ -1108,18 +1110,20 @@ export const CharacterForm = () => {
                                 <Label className="w-52 shrink-0 font-normal text-right">Select Armor</Label>
                                 <Select
                                     onChange={(e) => {
-                                        const selected = armorData.find((a: Armor) => a.name === e.target.value);
+                                        const selected = campaignData.armor.find(a => a.id === e.target.value);
                                         if (selected) {
                                             updateData({ armor: [...data.armor, selected] });
                                         }
                                         e.target.value = "";
                                     }}
                                 >
-                                    <option value="">Select an armor...</option>
-                                    {["Light", "Medium", "Heavy", "Shardplate"].map(cat => (
+                                    <option value="">
+                                        {campaignData.armor.length === 0 ? 'No armor yet — add one in Campaign Settings' : 'Select an armor...'}
+                                    </option>
+                                    {Array.from(new Set(campaignData.armor.map(a => a.category || 'Other'))).sort().map(cat => (
                                         <optgroup key={cat} label={cat}>
-                                            {armorData.filter((a: Armor) => a.category === cat).map((a: Armor) => (
-                                                <option key={a.name} value={a.name}>{a.name} (Deflect {a.deflect}) - {a.price}</option>
+                                            {campaignData.armor.filter(a => (a.category || 'Other') === cat).map(a => (
+                                                <option key={a.id} value={a.id}>{a.name} (Deflect {a.deflect}) - {a.price}</option>
                                             ))}
                                         </optgroup>
                                     ))}
@@ -1158,16 +1162,18 @@ export const CharacterForm = () => {
                                 <Label className="w-52 shrink-0 font-normal text-right">Select Equipment Item</Label>
                                 <Select
                                     onChange={(e) => {
-                                        const selected = equipmentData.find((eq: EquipmentItem) => eq.name === e.target.value);
+                                        const selected = campaignData.equipment.find(eq => eq.id === e.target.value);
                                         if (selected) {
                                             updateData({ equipment: [...data.equipment, selected] });
                                         }
                                         e.target.value = "";
                                     }}
                                 >
-                                    <option value="">Select an equipment item...</option>
-                                    {equipmentData.map((eq: EquipmentItem) => (
-                                        <option key={eq.name} value={eq.name}>{eq.name} - {eq.price}</option>
+                                    <option value="">
+                                        {campaignData.equipment.length === 0 ? 'No equipment yet — add one below' : 'Select an equipment item...'}
+                                    </option>
+                                    {campaignData.equipment.map(eq => (
+                                        <option key={eq.id} value={eq.id}>{eq.name} - {eq.price}</option>
                                     ))}
                                 </Select>
                             </div>
@@ -1180,14 +1186,8 @@ export const CharacterForm = () => {
                                         placeholder="Enter custom equipment item name..."
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
-                                                const input = e.currentTarget;
-                                                const value = input.value.trim();
-                                                if (value) {
-                                                    updateData({
-                                                        equipment: [...data.equipment, { name: value, price: "0", weight: "0", description: "Custom item" }]
-                                                    });
-                                                    input.value = "";
-                                                }
+                                                addCustomEquipment(e.currentTarget.value);
+                                                e.currentTarget.value = "";
                                             }
                                         }}
                                     />
@@ -1195,13 +1195,8 @@ export const CharacterForm = () => {
                                         className="px-2 py-2 bg-cosmere-blue text-cosmere-gold text-sm border border-cosmere-gold/30 rounded font-display uppercase tracking-widest hover:bg-cosmere-blue-hover transition-colors whitespace-nowrap shadow-sm"
                                         onClick={() => {
                                             const input = document.getElementById('custom-equipment') as HTMLInputElement;
-                                            const value = input?.value.trim();
-                                            if (value) {
-                                                updateData({
-                                                    equipment: [...data.equipment, { name: value, price: "0", weight: "0", description: "Custom item" }]
-                                                });
-                                                input.value = "";
-                                            }
+                                            addCustomEquipment(input?.value ?? "");
+                                            if (input) input.value = "";
                                         }}
                                     >
                                         Add

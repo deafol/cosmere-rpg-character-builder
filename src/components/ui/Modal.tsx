@@ -5,23 +5,29 @@ import React from 'react';
 interface ModalProps {
     isOpen: boolean;
     title: string;
-    message: string;
+    message?: string;
+    children?: React.ReactNode;
     confirmText?: string;
     cancelText?: string;
     onConfirm: () => void;
     onCancel: () => void;
     variant?: 'warning' | 'info' | 'success';
+    confirmDisabled?: boolean;
+    size?: 'sm' | 'lg';
 }
 
 export const Modal = ({
     isOpen,
     title,
     message,
+    children,
     confirmText = "Confirm",
     cancelText = "Cancel",
     onConfirm,
     onCancel,
-    variant = 'info'
+    variant = 'info',
+    confirmDisabled = false,
+    size = 'sm',
 }: ModalProps) => {
     if (!isOpen) return null;
 
@@ -40,7 +46,7 @@ export const Modal = ({
             />
 
             {/* Modal */}
-            <div className={`relative bg-cosmere-parchment rounded-lg shadow-2xl border-2 ${variantStyles[variant]} max-w-md w-full mx-4 transform transition-all animate-in fade-in zoom-in duration-200`}>
+            <div className={`relative bg-cosmere-parchment rounded-lg shadow-2xl border-2 ${variantStyles[variant]} ${size === 'lg' ? 'max-w-xl' : 'max-w-md'} w-full mx-4 transform transition-all animate-in fade-in zoom-in duration-200`}>
                 {/* Header */}
                 <div className="px-6 py-4 bg-cosmere-blue rounded-t-lg">
                     <h3 className="text-xl font-display font-bold text-cosmere-gold flex items-center gap-3">
@@ -64,8 +70,8 @@ export const Modal = ({
                 </div>
 
                 {/* Body */}
-                <div className="px-6 py-4">
-                    <p className="text-stone-700">{message}</p>
+                <div className="px-6 py-4 max-h-[65vh] overflow-y-auto">
+                    {children ?? <p className="text-stone-700">{message}</p>}
                 </div>
 
                 {/* Footer */}
@@ -78,7 +84,12 @@ export const Modal = ({
                     </button>
                     <button
                         onClick={onConfirm}
-                        className="px-4 py-2 rounded bg-cosmere-blue text-cosmere-gold hover:bg-cosmere-blue-hover font-display font-bold text-sm uppercase tracking-wide transition-colors shadow-md"
+                        disabled={confirmDisabled}
+                        className={`px-4 py-2 rounded font-display font-bold text-sm uppercase tracking-wide transition-colors shadow-md ${
+                            confirmDisabled
+                                ? 'bg-stone-300 text-stone-500 cursor-not-allowed'
+                                : 'bg-cosmere-blue text-cosmere-gold hover:bg-cosmere-blue-hover'
+                        }`}
                     >
                         {confirmText}
                     </button>

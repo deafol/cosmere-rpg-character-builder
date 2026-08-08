@@ -9,11 +9,12 @@ import { Input, Label, Modal, NotificationModal } from './ui';
 
 export const CampaignDashboard = ({ campaignId }: { campaignId: string }) => {
     const router = useRouter();
-    const { updateCampaignMeta, closeCampaign, deleteCampaign, exportCampaignFile, importCampaignFile } = useCampaign();
+    const { updateCampaignMeta, closeCampaign, deleteCampaign, removeCharacter, exportCampaignFile, importCampaignFile } = useCampaign();
     const { campaign, notFound } = useLoadedCampaign(campaignId);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [pendingDeleteCharacterId, setPendingDeleteCharacterId] = useState<string | null>(null);
     const [includeCharactersOnExport, setIncludeCharactersOnExport] = useState(true);
     const [notification, setNotification] = useState<{ title: string; message: string; variant: 'info' | 'success' | 'error' | 'warning' } | null>(null);
 
@@ -73,6 +74,15 @@ export const CampaignDashboard = ({ campaignId }: { campaignId: string }) => {
         router.push('/');
     };
 
+    const pendingDeleteCharacter = campaign.characters.find(c => c.id === pendingDeleteCharacterId) ?? null;
+
+    const handleDeleteCharacter = () => {
+        if (pendingDeleteCharacterId) {
+            removeCharacter(pendingDeleteCharacterId);
+            setPendingDeleteCharacterId(null);
+        }
+    };
+
     return (
         <div className="max-w-3xl mx-auto min-h-screen py-10 px-4 font-body">
             <Link href="/" className="text-sm text-cosmere-blue underline mb-6 inline-block">← All campaigns</Link>
@@ -116,12 +126,20 @@ export const CampaignDashboard = ({ campaignId }: { campaignId: string }) => {
                                     <div className="font-bold text-cosmere-blue">{character.characterName || 'Unnamed'}</div>
                                     <div className="text-xs text-stone-500">Level {character.level} · Played by {character.playerName || 'Unknown'}</div>
                                 </div>
-                                <button
-                                    onClick={() => router.push(`/campaign/${campaign.id}/character/${character.id}`)}
-                                    className="bg-cosmere-blue border border-cosmere-gold/50 text-cosmere-gold hover:bg-cosmere-blue-hover px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors"
-                                >
-                                    Open
-                                </button>
+                                <div className="flex gap-2 shrink-0">
+                                    <button
+                                        onClick={() => router.push(`/campaign/${campaign.id}/character/${character.id}`)}
+                                        className="bg-cosmere-blue border border-cosmere-gold/50 text-cosmere-gold hover:bg-cosmere-blue-hover px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors"
+                                    >
+                                        Open
+                                    </button>
+                                    <button
+                                        onClick={() => setPendingDeleteCharacterId(character.id)}
+                                        className="border border-red-400 text-red-500 hover:bg-red-50 px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -192,6 +210,17 @@ export const CampaignDashboard = ({ campaignId }: { campaignId: string }) => {
                 cancelText="Cancel"
                 onConfirm={handleDelete}
                 onCancel={() => setShowDeleteModal(false)}
+                variant="warning"
+            />
+
+            <Modal
+                isOpen={pendingDeleteCharacterId !== null}
+                title="Delete Character?"
+                message={`Remove "${pendingDeleteCharacter?.characterName || 'Unnamed'}" from this campaign? Export a backup first if you want to keep it.`}
+                confirmText="Delete"
+                cancelText="Cancel"
+                onConfirm={handleDeleteCharacter}
+                onCancel={() => setPendingDeleteCharacterId(null)}
                 variant="warning"
             />
 

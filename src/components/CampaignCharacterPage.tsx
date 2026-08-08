@@ -6,14 +6,12 @@ import { CharacterProvider } from '../context/CharacterContext';
 import { BuilderLayout } from './BuilderLayout';
 
 /**
- * Character editor, nested under its campaign route. For now this still
- * mounts the pre-existing CharacterContext/BuilderLayout unchanged — it
- * doesn't yet read from or save to the campaign's data stores. That
- * rewire (resolving talents/weapons/etc. as UUID refs into CampaignData,
- * saving as CharacterSaveV3) is a later phase; this step only makes sure
- * the character editor is reachable from within a campaign.
+ * Character editor, nested under its campaign route. CharacterProvider is
+ * remounted (key={charId}) whenever charId changes so it always starts
+ * blank before useCharacterCampaignSync (inside BuilderLayout) loads or
+ * creates the right campaign.characters record.
  */
-export const CampaignCharacterPage = ({ campaignId }: { campaignId: string; charId: string }) => {
+export const CampaignCharacterPage = ({ campaignId, charId }: { campaignId: string; charId: string }) => {
     const { campaign, notFound } = useLoadedCampaign(campaignId);
 
     if (notFound) {
@@ -36,8 +34,8 @@ export const CampaignCharacterPage = ({ campaignId }: { campaignId: string; char
                     ← {campaign.name}
                 </Link>
             </div>
-            <CharacterProvider>
-                <BuilderLayout />
+            <CharacterProvider key={charId}>
+                <BuilderLayout campaignId={campaignId} charId={charId} />
             </CharacterProvider>
         </div>
     );

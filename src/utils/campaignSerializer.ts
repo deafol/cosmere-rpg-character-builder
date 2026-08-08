@@ -60,7 +60,7 @@ export function parseCampaignFile(json: string): Campaign {
     return parsed;
 }
 
-function upsertByKey<T, K>(local: T[], incoming: T[], keyFn: (item: T) => K): T[] {
+export function upsertByKey<T, K>(local: T[], incoming: T[], keyFn: (item: T) => K): T[] {
     const merged = new Map<K, T>(local.map(item => [keyFn(item), item]));
     for (const item of incoming) {
         merged.set(keyFn(item), item);
@@ -68,7 +68,7 @@ function upsertByKey<T, K>(local: T[], incoming: T[], keyFn: (item: T) => K): T[
     return Array.from(merged.values());
 }
 
-const upsertById = <T extends { id: string }>(local: T[], incoming: T[]): T[] =>
+export const upsertById = <T extends { id: string }>(local: T[], incoming: T[]): T[] =>
     upsertByKey(local, incoming, item => item.id);
 
 export function mergeCampaignData(local: CampaignData, incoming: CampaignData): CampaignData {

@@ -9,6 +9,7 @@ import {
     mergeCampaign,
     parseCampaignFile,
 } from '../utils/campaignSerializer';
+import { importCharacterIntoCampaign, parseCharacterFile } from '../utils/characterCampaignSerializer';
 import {
     CampaignSummary,
     deleteCampaignFromStorage,
@@ -32,6 +33,7 @@ interface CampaignContextType {
     removeCharacter: (id: string) => void;
     exportCampaignFile: (options?: ExportCampaignOptions) => string;
     importCampaignFile: (json: string) => Campaign;
+    importCharacterFile: (json: string) => CharacterSaveV3;
 }
 
 const CampaignContext = createContext<CampaignContextType | undefined>(undefined);
@@ -140,6 +142,18 @@ export const CampaignProvider = ({ children }: { children: ReactNode }) => {
         return resolved;
     };
 
+    const importCharacterFile = (json: string) => {
+        const incoming = parseCharacterFile(json);
+        const merged = importCharacterIntoCampaign(requireCampaign(campaign), incoming);
+        setCampaign(merged);
+        setCampaignVersion(v => v + 1);
+        const character = merged.characters.find(c => c.id === incoming.id);
+        if (!character) {
+            throw new Error('Character import failed.');
+        }
+        return character;
+    };
+
     return (
         <CampaignContext.Provider
             value={{
@@ -157,6 +171,7 @@ export const CampaignProvider = ({ children }: { children: ReactNode }) => {
                 removeCharacter,
                 exportCampaignFile,
                 importCampaignFile,
+                importCharacterFile,
             }}
         >
             {children}

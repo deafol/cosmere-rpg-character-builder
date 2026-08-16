@@ -1,29 +1,31 @@
 #!/usr/bin/env node
 /**
  * One-time converter (consent.md §6 phase 8): reads compact v1/v2 character
- * saves plus the bundled dynamic-domain JSON (still in src/data/ until the
- * phase-9 purge) and emits a v1-schema Campaign file containing every path,
- * talent, surge, expertise, weapon, armor, and equipment entity those
- * characters actually reference — not the whole bundled catalog.
+ * saves plus a backup of the bundled dynamic-domain JSON (src/data/ was
+ * purged from the repo in phase 9 — this reads the pre-purge copy the user
+ * kept at ~/Downloads/Cosmere/data/) and emits a v1-schema Campaign file
+ * containing the FULL bundled catalog — every path, talent, surge,
+ * expertise, weapon, armor, and equipment entity, not just what the
+ * converted characters happen to reference — plus the characters
+ * themselves, referencing that catalog by UUID.
  *
  * Standalone: not imported by the app, not run by any npm script, reads
  * plain JSON directly (no TS types) so it needs no new devDependencies.
- * Run it, then verify the output by importing it into the running app
- * before deleting the bundled JSON in phase 9 (consent.md §2.13, §2.7).
+ * Run it, then verify the output by importing it into the running app.
  *
  * Usage: node scripts/convert-legacy-character.mjs
- * Input:  every *.json in ~/Downloads/Cosmere/ except the output file itself
+ * Character input: every *.json directly in ~/Downloads/Cosmere/ (not the
+ *   data/ subdirectory), except the output file itself
+ * Bundled-data input: ~/Downloads/Cosmere/data/*.json (pre-purge backup)
  * Output: ~/Downloads/Cosmere/Example Campaign.json
  */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import os from 'node:os';
-import { fileURLToPath } from 'node:url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = path.resolve(__dirname, '..', 'src', 'data');
 const INPUT_DIR = path.join(os.homedir(), 'Downloads', 'Cosmere');
+const DATA_DIR = path.join(INPUT_DIR, 'data');
 const OUTPUT_BASENAME = 'Example Campaign.json';
 const OUTPUT_FILE = path.join(INPUT_DIR, OUTPUT_BASENAME);
 
@@ -157,6 +159,49 @@ function resolveItem(entry, bundledList, entityMap, buildEntity) {
     return entityMap.get(dedupeKey);
 }
 
+// Shared between the full-catalog seed pass and per-character resolution
+// (a character's own wp/ar/eq lists can also carry inline custom objects,
+// which only the latter ever sees).
+const buildWeaponEntity = (uuid, w) => ({
+    id: uuid, name: w.name, category: w.category, damage: w.damage, range: w.range,
+    properties: w.properties || [], weight: w.weight, price: w.price,
+});
+const buildArmorEntity = (uuid, a) => ({
+    id: uuid, name: a.name, category: a.category, deflect: a.deflect,
+    properties: a.properties || [], price: a.price, weight: a.weight,
+});
+const buildEquipmentEntity = (uuid, e) => ({
+    id: uuid, name: e.name, price: e.price, weight: e.weight, description: e.description,
+});
+
+/**
+ * Seeds every bundled path/talent/surge/expertise/weapon/armor/equipment
+ * entity into the maps up front, regardless of whether any converted
+ * character references it — the user wants the full official catalog
+ * available in the example campaign, not just what Robar happens to use.
+ * Per-character resolution below still works unchanged: everything it
+ * looks up is already registered, so it just reuses these entries.
+ */
+function seedFullCatalog() {
+    allBundledPaths.forEach(p => resolvePathStub(p.id));
+
+    for (const [groupName, group] of Object.entries(allTalentGroups)) {
+        for (const talentObj of group.talents) {
+            resolveTalent(talentObj, groupName);
+        }
+    }
+
+    surgesData.forEach(resolveSurge);
+
+    for (const names of Object.values(expertisesData)) {
+        names.forEach(resolveExpertise);
+    }
+
+    weaponsData.forEach(w => resolveItem(w.id, weaponsData, weaponEntityMap, buildWeaponEntity));
+    armorData.forEach(a => resolveItem(a.id, armorData, armorEntityMap, buildArmorEntity));
+    equipmentData.forEach(e => resolveItem(e.id, equipmentData, equipmentEntityMap, buildEquipmentEntity));
+}
+
 function convertCharacter(save, campaignId) {
     // v1 stored sensesRange as a bare number of feet; v2 already stores "N ft.".
     const sensesRange = typeof save.sr === 'number' ? `${save.sr} ft.` : save.sr;
@@ -182,25 +227,17 @@ function convertCharacter(save, campaignId) {
     const expertiseIds = (save.ex || []).map(resolveExpertise);
 
     const weaponIds = (save.wp || [])
-        .map(entry => resolveItem(entry, weaponsData, weaponEntityMap, (uuid, w) => ({
-            id: uuid, name: w.name, category: w.category, damage: w.damage, range: w.range,
-            properties: w.properties || [], weight: w.weight, price: w.price,
-        })))
+        .map(entry => resolveItem(entry, weaponsData, weaponEntityMap, buildWeaponEntity))
         .filter(Boolean)
         .map(r => r.uuid);
 
     const armorIds = (save.ar || [])
-        .map(entry => resolveItem(entry, armorData, armorEntityMap, (uuid, a) => ({
-            id: uuid, name: a.name, category: a.category, deflect: a.deflect,
-            properties: a.properties || [], price: a.price, weight: a.weight,
-        })))
+        .map(entry => resolveItem(entry, armorData, armorEntityMap, buildArmorEntity))
         .filter(Boolean)
         .map(r => r.uuid);
 
     const equipmentIds = (save.eq || [])
-        .map(entry => resolveItem(entry, equipmentData, equipmentEntityMap, (uuid, e) => ({
-            id: uuid, name: e.name, price: e.price, weight: e.weight, description: e.description,
-        })))
+        .map(entry => resolveItem(entry, equipmentData, equipmentEntityMap, buildEquipmentEntity))
         .filter(Boolean)
         .map(r => r.uuid);
 
@@ -332,6 +369,9 @@ function main() {
     const now = new Date().toISOString();
     const characters = [];
 
+    console.log('Seeding full bundled catalog (paths, talents, surges, expertises, weapons, armor, equipment)...');
+    seedFullCatalog();
+
     for (const file of inputFiles) {
         console.log(`Converting ${path.basename(file)}...`);
         const save = loadJson(file);
@@ -345,9 +385,10 @@ function main() {
     }
 
     const sharedData = buildCampaignData();
-    // weapon/armor/equipment entities are deduped globally (across every
-    // character processed above) in their entity maps — build the final
-    // lists from those now that all characters have been converted.
+    // weapon/armor/equipment entities are deduped globally (the full-catalog
+    // seed pass plus every character processed above share one entity map
+    // per domain) — build the final lists from those now that everything's
+    // been resolved.
     const weapons = Array.from(weaponEntityMap.values()).map(e => e.entity);
     const armor = Array.from(armorEntityMap.values()).map(e => e.entity);
     const equipment = Array.from(equipmentEntityMap.values()).map(e => e.entity);
@@ -356,7 +397,7 @@ function main() {
         schemaVersion: CAMPAIGN_SCHEMA_VERSION,
         id: campaignId,
         name: 'Example Campaign',
-        description: 'Generated by scripts/convert-legacy-character.mjs from legacy character saves. Contains copyrighted Cosmere RPG text for local reference only — do not distribute.',
+        description: 'Generated by scripts/convert-legacy-character.mjs — the full official Cosmere RPG catalog (paths, talents, surges, expertises, weapons, armor, equipment) plus legacy character saves. Contains copyrighted Cosmere RPG text for local reference only — do not distribute.',
         createdAt: now,
         updatedAt: now,
         data: {
@@ -377,7 +418,7 @@ function main() {
     console.log(`  paths: ${sharedData.paths.length}, talents: ${sharedData.talents.length}, surges: ${sharedData.surges.length}`);
     console.log(`  expertises: ${sharedData.expertises.length}, weapons: ${weapons.length}, armor: ${armor.length}, equipment: ${equipment.length}`);
     console.log('');
-    console.log('Verify by importing this file via the campaign picker before running the phase 9 purge.');
+    console.log('Verify by importing this file via the campaign picker.');
 }
 
 main();

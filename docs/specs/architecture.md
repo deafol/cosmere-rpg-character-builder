@@ -1,7 +1,8 @@
 # Cosmere RPG Character Builder — Architecture Diagrams
 
-Source: codebase scan (2026-07-25). No PRD exists yet; these diagrams
-describe the *as-built* system.
+> **Status: IMPLEMENTED.** All nine phases in `consent.md` §6 are complete
+> as of 2026-08-08, including the phase-9 purge — these diagrams now match
+> the running app, not just the target. See changelog at the bottom.
 
 ---
 
@@ -9,10 +10,17 @@ describe the *as-built* system.
 
 *How the browser, app, static assets, and deployment infrastructure relate.*
 
+No copyrighted game content (talents, paths, surges, expertises, weapons,
+armor, equipment) is bundled at build time anymore — it lives in
+user-created **Campaign** files, held in `localStorage` and exchanged as
+readable JSON. Only mechanical/structural data (`skills.json`, and
+`ancestries.json` stripped to `id` + `name`) stays bundled.
+
 ```mermaid
 flowchart TB
     subgraph Browser["Browser (Client)"]
         UI["Next.js React App\n(fully client-side after hydration)"]
+        LS[("localStorage\ncampaign index + per-campaign data")]
     end
 
     subgraph Deployment["Raspberry Pi 5 — Docker Compose"]
@@ -24,8 +32,8 @@ flowchart TB
         ND["netdata\n(monitoring :19999)"]
     end
 
-    subgraph Static["Bundled at Build Time"]
-        JSON["src/data/*.json\n(ancestries, paths, talents,\nskills, surges, items)"]
+    subgraph Static["Bundled at Build Time (no copyrighted content)"]
+        JSON["src/data/*.json\n(skills; ancestry id+name only)"]
         TMPL["public/character-sheet-template.pdf"]
         FONT["public/fonts/CosmereFont.ttf"]
     end
@@ -33,11 +41,13 @@ flowchart TB
     GHCR["GHCR\n(Container Registry)"]
     CFCloud["Cloudflare\n(Edge / DNS)"]
 
-    User((Player)) -->|HTTPS| CFCloud
+    User((Player / GM)) -->|HTTPS| CFCloud
     CFCloud --> CF
     CF --> APP
     APP --> UI
     UI -->|reads bundled data| JSON
+    UI <-->|"autosave / load campaign"| LS
+    UI -->|"export / import campaign or character"| FILE[/"Readable JSON files\n(user's disk)"/]
     UI -->|fetches at PDF export| TMPL
     UI -->|fetches at PDF export| FONT
     WT -->|polls every 5 min| GHCR
@@ -50,104 +60,116 @@ flowchart TB
 
 ## 2. Component Hierarchy
 
-*React component tree showing ownership and data flow.*
+*React component tree showing ownership and data flow. The app is now
+strictly campaign-first and multi-route (`consent.md` §8 UI decision);
+no character screen exists outside a loaded campaign.*
 
 ```mermaid
 flowchart TD
     Layout["app/layout.tsx\n(fonts + Umami script)"]
-    Page["app/page.tsx"]
-    Provider["CharacterProvider\n(CharacterContext)"]
-    BL["BuilderLayout"]
-    Header["Header\n(New · Load · Save · Export PDF)"]
-    CF["CharacterForm"]
-    P1["Panel 1\nGeneral Characteristics"]
-    P2["Panel 2\nAttributes, Skills & Resources"]
-    P3["Panel 3\nExpertises & Talents"]
-    P4["Panel 4\nWeapons, Armor & Equipment"]
-    P5["Panel 5\nCharacter Details"]
-    UI["UI Primitives\n(Label · Input · Select\nNumberControl · CollapsiblePanel)"]
-    Modal["Modal / NotificationModal"]
+    R1["/ \n(Campaign Picker)"]
+    R2["/campaign/[id]\n(Campaign Dashboard)"]
+    R3["/campaign/[id]/settings\n(Domain Editors, tabbed)"]
+    R4["/campaign/[id]/character/[charId]\n(Character Form)"]
+    CProvider["CampaignProvider\n(CampaignContext)"]
+    ChProvider["CharacterProvider\n(CharacterContext, unchanged shape)"]
+    Editors["Domain Editors\n(Path · Talent · Surge · Expertise\nWeapon · Armor · Equipment · AncestryContent)"]
+    CharApp["BuilderLayout + CharacterForm\n(5 panels, unchanged internally)"]
     PDFUtil["pdfExport.ts"]
-    Serializer["characterSerializer.ts"]
+    Serializer["campaignSerializer.ts\n+ characterCampaignSerializer.ts (v3)"]
 
-    Layout --> Page
-    Page --> Provider
-    Provider --> BL
-    BL --> Header
-    BL --> CF
-    Header -->|"save/load/new events"| Serializer
-    Header -->|"export event"| PDFUtil
-    Header --> Modal
-    CF --> P1
-    CF --> P2
-    CF --> P3
-    CF --> P4
-    CF --> P5
-    P1 & P2 & P3 & P4 & P5 --> UI
-    Provider -->|"CharacterData + updaters"| BL
-    Provider -->|"CharacterData + updaters"| CF
+    Layout --> R1 & R2 & R3 & R4
+    R1 & R2 & R3 --> CProvider
+    R4 --> CProvider
+    R4 --> ChProvider
+    R3 --> Editors
+    ChProvider --> CharApp
+    CProvider -->|"CampaignData + CRUD"| Editors
+    CProvider -->|"resolves UUID refs → CharacterData"| ChProvider
+    CharApp -->|"save/load/export"| Serializer
+    CharApp -->|"export event"| PDFUtil
+    Editors -->|"save/load/export/merge-import"| Serializer
 ```
 
 ---
 
 ## 3. State & Data Flow
 
-*How CharacterContext state changes propagate and trigger derived calculations.*
+*How Campaign and Character state relate, how UUID-linked automation still
+works once paths/talents/surges become campaign data, and how persistence
+(localStorage + file export/import with merge-on-import) fits in.*
 
 ```mermaid
 flowchart LR
-    subgraph Context["CharacterContext (single CharacterData object)"]
-        STATE["CharacterData\nstate"]
+    subgraph CampaignState["CampaignContext"]
+        CDATA["CampaignData\n(paths, talents, surges, expertises,\nweapons, armor, equipment, ancestryContent)"]
+        CHARS["characters: CharacterSaveV3[]"]
     end
 
-    subgraph Triggers["User Actions"]
-        UA["updateAttribute\n(attr, value)"]
-        UD["updateData\n(partial update)"]
-        USR["updateSkillRank\n(skillName, rank)"]
+    subgraph CharState["CharacterContext (per open character)"]
+        CD["CharacterData\n(resolved objects, unchanged shape)"]
     end
 
-    subgraph Derived["Auto-Derived in Context"]
-        DEF["Defenses\n(10 + attr pair)"]
-        MOV["Movement\n(Speed → 20–80 ft)"]
-        SEN["Senses Range\n(Awareness → 5ft–Unobscured)"]
-        REC["Recovery Die\n(Willpower → 1d4–1d12)"]
-        CAP["Lifting / Carrying\n(Strength → 100lb–10,000lb)"]
-        SURGE_SK["Surge Skills\nauto-added/removed\n(paths → surges.json)"]
+    subgraph Derived["Auto-Derived (calc logic unchanged)"]
+        DEF["Defenses · Movement · Senses\nRecovery Die · Lifting/Carrying"]
+        SURGE_SK["Surge skills\nauto-added from linked Path.surgeIds"]
+        KT["Key Talents\nauto-selected from Path.keyTalentId"]
     end
 
-    subgraph Effects["CharacterForm useEffects"]
-        KT["Key Talents\nauto-selected\nfrom paths"]
-        SC["Surge stats computed\n(modifier, die, size)"]
+    subgraph Persist["Persistence"]
+        LS[("localStorage\ncampaign index + data")]
+        EXPC["exportCampaign()\n→ readable JSON\n(± characters)"]
+        IMPC["importCampaign()\nmerge-on-import:\nupsert entities + characters by UUID"]
+        EXPCH["exportCharacter()\n→ v3: refs + embedded snapshot"]
+        IMPCH["importCharacter()\nresolve refs,\noffer embedded entities to store"]
+        PDF["exportToPdf()\nfill AcroForm fields\n→ browser download"]
     end
 
-    subgraph IO["Save · Load · Export"]
-        SAVE["serializeCharacter()\n→ compact v2 JSON\n→ browser download"]
-        LOAD["FileReader\n→ isCompactFormat?\n→ deserializeCharacter()\n→ loadData()"]
-        PDF["exportToPdf()\nfetch template + font\nfill AcroForm fields\n→ browser download"]
-    end
-
-    UA --> DEF & MOV & SEN & REC & CAP
-    UD -->|"paths changed"| SURGE_SK
-    UA & UD & USR --> STATE
-    STATE -->|"paths"| KT
-    STATE -->|"skills + attributes"| SC
-    STATE --> SAVE
-    LOAD --> STATE
-    STATE --> PDF
+    CDATA -->|"UUID refs resolved"| CD
+    CHARS -->|"open character"| CD
+    CD --> DEF
+    CDATA -->|"Path.surgeIds"| SURGE_SK
+    CDATA -->|"Path.keyTalentId"| KT
+    SURGE_SK & KT --> CD
+    CampaignState <-->|"autosave / load"| LS
+    CampaignState --> EXPC
+    IMPC --> CampaignState
+    CD --> EXPCH
+    IMPCH --> CD
+    IMPCH -.->|"new entities"| CDATA
+    CD --> PDF
 ```
 
 ---
 
 ## 4. Domain Model
 
-*Key entities in CharacterData and their relationships.*
+*Key entities and their relationships. `Campaign` is the new top-level
+owner of all copyright-sensitive content (`consent.md` §3–4); everything
+under it is user-entered and UUID-keyed. `Attributes`, `Defenses`,
+`Resource`, and `Goal` stay embedded value objects on the character, just
+as before — only their container is renamed `CharacterSaveV3`. `Ancestry`
+(bundled `id`+`name` list, e.g. `anc_human`) and `Skill` (bundled, id-keyed)
+remain static/code-level and are referenced by plain string id rather than
+modeled as campaign entities — they carry no copyrighted prose.*
 
 ```mermaid
 erDiagram
-    CharacterData {
+    Campaign {
+        string id "UUID"
+        string name
+        string description
+        string createdAt
+        string updatedAt
+    }
+
+    CharacterSaveV3 {
+        string id "UUID"
+        string campaignId "UUID"
         string playerName
         string characterName
         int level
+        string ancestryId "static id, nullable"
         int radiantIdeal
         string sprenName
         int bondRange
@@ -176,43 +198,49 @@ erDiagram
         int max
     }
 
-    Ancestry {
-        string name
-        string description
-        string[] innate_abilities
+    Goal {
+        string text
+        int level
     }
 
-    HeroicPath {
+    Path {
+        string id "UUID"
+        string kind "heroic | radiant"
         string name
         string description
-        string[] key_attributes
         string[] specialties
-    }
-
-    Skill {
-        string name
-        string attribute
-        string attr_abbrev
-        int rank
-    }
-
-    Surge {
-        string name
-        string attribute
-        int rank
-        int modifier
-        string die
-        string size
+        string keyTalentId "UUID, optional"
+        string[] surgeIds "UUID[], radiant only"
+        string[] ideals "radiant only"
     }
 
     Talent {
+        string id "UUID"
+        string pathId "UUID"
+        string specialty
         string name
-        string path
+        string description
+        string prerequisite
+        string activation
         bool isKeyTalent
+    }
+
+    Surge {
+        string id "UUID"
+        string name
+        string attribute
+        string[] activation
         string description
     }
 
+    Expertise {
+        string id "UUID"
+        string name
+        string category "cultural | utility | weapon | custom"
+    }
+
     Weapon {
+        string id "UUID"
         string name
         string category
         string damage
@@ -221,6 +249,7 @@ erDiagram
     }
 
     Armor {
+        string id "UUID"
         string name
         string category
         string deflect
@@ -228,32 +257,59 @@ erDiagram
     }
 
     EquipmentItem {
+        string id "UUID"
         string name
         string price
         string weight
         string description
     }
 
-    Goal {
-        string text
-        int level
+    AncestryContent {
+        string ancestryId "static ancestry id, e.g. anc_human"
+        string description
+        string[] innateAbilities
     }
 
-    CharacterData ||--|| Attributes : has
-    CharacterData ||--|| Defenses : has
-    CharacterData ||--o{ Resource : "health · focus · investiture"
-    CharacterData ||--o| Ancestry : "chooses one"
-    CharacterData ||--o{ HeroicPath : "selects (heroic + radiant)"
-    CharacterData ||--o{ Skill : "ranks 0–5"
-    CharacterData ||--o{ Surge : "auto-derived from paths"
-    CharacterData ||--o{ Talent : "key + chosen"
-    CharacterData ||--o{ Weapon : equips
-    CharacterData ||--o{ Armor : equips
-    CharacterData ||--o{ EquipmentItem : carries
-    CharacterData ||--o{ Goal : tracks
+    Campaign ||--o{ CharacterSaveV3 : contains
+    Campaign ||--o{ Path : owns
+    Campaign ||--o{ Talent : owns
+    Campaign ||--o{ Surge : owns
+    Campaign ||--o{ Expertise : owns
+    Campaign ||--o{ Weapon : owns
+    Campaign ||--o{ Armor : owns
+    Campaign ||--o{ EquipmentItem : owns
+    Campaign ||--o{ AncestryContent : owns
+
+    CharacterSaveV3 ||--|| Attributes : has
+    CharacterSaveV3 ||--|| Defenses : has
+    CharacterSaveV3 ||--o{ Resource : "health · focus · investiture"
+    CharacterSaveV3 ||--o{ Goal : tracks
+    CharacterSaveV3 }o--o{ Path : "pathIds"
+    CharacterSaveV3 }o--o{ Talent : "talentIds"
+    CharacterSaveV3 }o--o{ Expertise : "expertiseIds"
+    CharacterSaveV3 }o--o{ Weapon : "weaponIds"
+    CharacterSaveV3 }o--o{ Armor : "armorIds"
+    CharacterSaveV3 }o--o{ EquipmentItem : "equipmentIds"
+
+    Path ||--o{ Talent : "pathId"
+    Path }o--o{ Surge : "surgeIds (radiant)"
+    Path |o--o| Talent : "keyTalentId (auto-select)"
 ```
 
 ---
 
 *Changelog*
-- 2026-07-25: initial diagrams created from codebase scan
+- 2026-07-25: initial diagrams created from codebase scan (as-built, single-character app)
+- 2026-08-08: replaced all four diagrams for the campaign-based re-architecture
+  (see `../../consent.md`) — introduced `Campaign`/`CampaignData` as the owner
+  of all copyright-sensitive content, multi-route UI, `CampaignContext`,
+  localStorage + merge-on-import persistence, and unified `Path`/`Talent`
+  entities. Marked file status as **target architecture, not yet implemented**.
+  Superseded diagrams are recoverable from git history prior to this commit.
+- 2026-08-08: all nine implementation phases landed — routing, generic
+  domain-editor CRUD, campaign-aware CharacterForm, CharacterSaveV3
+  serialization with autosave, the standalone legacy-character converter
+  script, and the src/data/ purge. Status updated from target to
+  implemented; `characterSerializer.ts` renamed to
+  `characterCampaignSerializer.ts` in the component-hierarchy diagram to
+  match what actually shipped.

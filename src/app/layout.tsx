@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from 'next/script';
 import { Lato, Lora } from "next/font/google";
+import { CampaignProvider } from "../context/CampaignContext";
 import "./globals.css";
 
 const lato = Lato({
@@ -50,7 +51,7 @@ export default function RootLayout({
       <body
         className={`${lato.variable} ${lora.variable} antialiased`}
       >
-        {children}
+        <CampaignProvider>{children}</CampaignProvider>
       </body>
     </html>
   );

@@ -7,14 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Campaign-based re-architecture (see `consent.md` for the full design rationale, git history) — the app now ships with **no copyrighted Cosmere RPG game content bundled**. All talents, paths, surges, expertises, weapons, armor, and equipment are entered per campaign by each table and stored locally, not shipped with the app.
+
 ### Added
-- Nothing yet
+- Campaign as a new top-level entity: create, load, close, delete, export, and merge-on-import, persisted to `localStorage`
+- Multi-route UI: campaign picker (`/`), campaign dashboard, tabbed domain-editor settings page, and a character editor nested under its campaign
+- Generic CRUD editor for every campaign domain (paths, talents, surges, expertises, weapons, armor, equipment, ancestry content), including radiant-only conditional fields and delete-reference warnings
+- Character save format v3 (`CharacterSaveV3`): UUID references into campaign data instead of bundled-content copies; characters now autosave into their campaign as you edit, with no separate "unsaved changes" tracking
+- Standalone character export/import as a portable file with an embedded snapshot of every entity it references, mergeable into any campaign
+- Delete Character action on the campaign dashboard
+- One-time, unbundled converter script (`scripts/convert-legacy-character.mjs`) for migrating old compact v1/v2 character saves into a campaign file
 
 ### Changed
-- Nothing yet
+- Character form pickers (paths, talents, expertises, weapons, armor, equipment) now read from the active campaign instead of bundled JSON, grouped dynamically by whatever the table has actually entered
+- Key-talent auto-select and surge-skill auto-add now resolve via campaign UUID links (`Path.keyTalentId`, `Path.surgeIds`) instead of bundled-data name matching
+- Typing a custom expertise or equipment item now creates a real, reusable entity in the campaign store instead of a one-off object on the character
+- PDF export now resolves talent/surge display text from the active campaign
 
-### Fixed
-- Nothing yet
+### Removed
+- Bundled dynamic-domain game data (`heroic_paths.json`, `radiant_paths.json`, `heroic_talents.json`, `radiant_talents.json`, `surges.json`, `weapons.json`, `armor.json`, `equipment.json`, `expertises.json`) — verified absent from the production build
+- The compact v1/v2 character save format and its bundled-data-dependent serializer/deserializer
 
 ---
 

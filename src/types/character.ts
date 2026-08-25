@@ -20,8 +20,12 @@ export interface HeroicPath {
 export interface Ancestry {
     id?: string;
     name: string;
-    description: string;
-    innate_abilities: string[];
+    // Description and innate abilities now live in campaign AncestryContent
+    // (see src/types/campaign.ts) — no longer bundled to avoid shipping
+    // copyrighted prose. Optional until the character form resolves them
+    // from the active campaign.
+    description?: string;
+    innate_abilities?: string[];
 }
 
 export interface Weapon {

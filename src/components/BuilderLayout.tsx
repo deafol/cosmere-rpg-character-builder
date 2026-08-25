@@ -1,38 +1,38 @@
 "use client";
 
 import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { CharacterForm } from './forms/CharacterForm';
 import { useCharacter } from '../context/CharacterContext';
-import { initialCharacterData } from '../types/character';
+import { useCampaign } from '../context/CampaignContext';
+import { useCharacterCampaignSync } from '../hooks/useCharacterCampaignSync';
 import { exportToPdf } from '../utils/pdfExport';
-import { serializeCharacter, deserializeCharacter, isCompactFormat } from '../utils/characterSerializer';
+import {
+    exportCharacterFile,
+    toCharacterSaveV3,
+    parseCharacterFile,
+    previewCharacterImport,
+    CharacterImportPreview,
+} from '../utils/characterCampaignSerializer';
 import { Modal, NotificationModal } from './ui';
 import Image from 'next/image';
 
-// Import data for deserialization lookups
-import ancestriesData from '../data/ancestries.json';
-import heroicPathsData from '../data/heroic_paths.json';
-import radiantPathsData from '../data/radiant_paths.json';
-import weaponsData from '../data/weapons.json';
-import armorData from '../data/armor.json';
-import equipmentData from '../data/equipment.json';
-import heroicTalents from '../data/heroic_talents.json';
-import radiantTalents from '../data/radiant_talents.json';
-const talentsData = { ...heroicTalents, ...radiantTalents };
-
-export const BuilderLayout = () => {
-    const { data, loadData, resetData } = useCharacter();
+/**
+ * Every edit autosaves into campaign.characters via useCharacterCampaignSync
+ * (consent.md phase 7) — there's no local "unsaved changes" state anymore.
+ * Export/Import work with standalone CharacterSaveV3 files (embedded
+ * snapshots, portable across campaigns); the old v1/v2 compact format and
+ * its bundled-data reconstruction are gone.
+ */
+export const BuilderLayout = ({ campaignId, charId }: { campaignId: string; charId: string }) => {
+    const router = useRouter();
+    const { data } = useCharacter();
+    const { campaign, importCharacterFile } = useCampaign();
+    const { currentId, notFound } = useCharacterCampaignSync(campaignId, charId);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Track if character has been modified (unsaved changes)
-    const [lastSavedData, setLastSavedData] = useState(() => JSON.stringify(data));
-
-    // Derive unsaved changes
-    const hasUnsavedChanges = lastSavedData !== JSON.stringify(data);
-
-    // Modal states
-    const [showNewCharacterModal, setShowNewCharacterModal] = useState(false);
-    const [showLoadWarningModal, setShowLoadWarningModal] = useState(false);
+    const [pendingImport, setPendingImport] = useState<{ json: string; preview: CharacterImportPreview } | null>(null);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationConfig, setNotificationConfig] = useState({ title: "", message: "", variant: "info" as "info" | "success" | "error" | "warning" });
 
@@ -41,15 +41,20 @@ export const BuilderLayout = () => {
         setShowNotification(true);
     };
 
-    const handleSave = () => {
-        // Use compact format for saving
-        const compactData = serializeCharacter(data, {
-            weapons: weaponsData,
-            armor: armorData,
-            equipment: equipmentData
-        });
-        const jsonString = JSON.stringify(compactData, null, 2);
-        const blob = new Blob([jsonString], { type: "application/json" });
+    if (notFound) {
+        return (
+            <div className="max-w-xl mx-auto py-24 text-center font-body">
+                <p className="text-stone-600 mb-4">Character not found in this campaign.</p>
+                <Link href={`/campaign/${campaignId}`} className="text-cosmere-blue underline">Back to campaign</Link>
+            </div>
+        );
+    }
+
+    const handleExport = () => {
+        if (!campaign || !currentId) return;
+        const save = toCharacterSaveV3(data, campaignId, campaign.data, currentId);
+        const json = exportCharacterFile(save, campaign.data);
+        const blob = new Blob([json], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -57,74 +62,45 @@ export const BuilderLayout = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
-        // Mark as saved
-        setLastSavedData(JSON.stringify(data));
+        URL.revokeObjectURL(url);
     };
 
-    const handleLoadClick = () => {
-        if (hasUnsavedChanges) {
-            setShowLoadWarningModal(true);
-        } else {
-            fileInputRef.current?.click();
-        }
-    };
+    const handleImportClick = () => fileInputRef.current?.click();
 
-    const handleLoad = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // consent.md §2.6: re-import "offers to add" embedded entities rather
+    // than merging silently — parse + preview here, actually merge only
+    // once the user confirms in the modal below.
+    const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
-                const parsed = JSON.parse(event.target?.result as string);
-                let loadedData;
-                let characterName = "";
-
-                if (isCompactFormat(parsed)) {
-                    // New compact format
-                    loadedData = deserializeCharacter(
-                        parsed,
-                        ancestriesData,
-                        heroicPathsData,
-                        radiantPathsData,
-                        weaponsData,
-                        armorData,
-                        equipmentData,
-                        talentsData
-                    ); // Pass talentsData for full reconstruction
-                    characterName = parsed.c;
-                } else {
-                    // Legacy full format - merge with defaults
-                    loadedData = { ...initialCharacterData, ...parsed };
-                    characterName = parsed.characterName || "character";
-                }
-
-                loadData(loadedData);
-                setLastSavedData(JSON.stringify(loadedData));
-                showNotificationModal("Character Loaded", `Successfully loaded ${characterName}!`, "success");
+                const json = event.target?.result as string;
+                const parsed = parseCharacterFile(json);
+                if (!campaign) return;
+                setPendingImport({ json, preview: previewCharacterImport(campaign, parsed) });
             } catch (error) {
-                console.error("Failed to load JSON", error);
-                showNotificationModal("Load Failed", "Failed to load character file. Please check the file format.", "error");
+                console.error("Failed to import character", error);
+                showNotificationModal("Import Failed", "That file is not a valid character export.", "error");
             }
         };
         reader.readAsText(file);
-        // Reset the input so the same file can be loaded again
         e.target.value = "";
     };
 
-    const handleNewCharacter = () => {
-        if (hasUnsavedChanges) {
-            setShowNewCharacterModal(true);
-        } else {
-            createNewCharacter();
+    const confirmImport = () => {
+        if (!pendingImport) return;
+        try {
+            const character = importCharacterFile(pendingImport.json);
+            setPendingImport(null);
+            router.push(`/campaign/${campaignId}/character/${character.id}`);
+        } catch (error) {
+            console.error("Failed to import character", error);
+            setPendingImport(null);
+            showNotificationModal("Import Failed", "That file is not a valid character export.", "error");
         }
-    };
-
-    const createNewCharacter = () => {
-        resetData();
-        setLastSavedData(JSON.stringify(initialCharacterData));
-        setShowNewCharacterModal(false);
     };
 
     return (
@@ -132,7 +108,7 @@ export const BuilderLayout = () => {
             <div className="max-w-[1200px] mx-auto min-h-screen pb-12 font-body">
                 <header className="mb-8 flex justify-between items-center bg-cosmere-blue text-stone-100 p-6 rounded-b-lg shadow-lg border-b-4 border-cosmere-gold">
                     <div className="w-36 h-36 relative">
-                        <Image src="/icons/paths/radiant/bondsmith.png" alt="" fill className="object-contain" />
+                        <Image src="/icons/paths/radiant/bondsmith.png" alt="" fill sizes="144px" className="object-contain" />
                     </div>
                     <div>
                         <h1 className="text-3xl font-display font-bold tracking-widest text-cosmere-gold drop-shadow-md">COSMERE RPG</h1>
@@ -142,35 +118,32 @@ export const BuilderLayout = () => {
                     <div className="flex gap-4 items-center">
                         <div className="flex gap-3">
                             <button
-                                onClick={handleNewCharacter}
+                                onClick={() => router.push(`/campaign/${campaignId}/character/new`)}
                                 className="bg-cosmere-blue border border-cosmere-gold/50 text-cosmere-gold hover:bg-cosmere-blue-hover px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors"
                             >
                                 New Character
                             </button>
                             <button
-                                onClick={handleLoadClick}
+                                onClick={handleImportClick}
                                 className="bg-cosmere-blue border border-cosmere-gold/50 text-cosmere-gold hover:bg-cosmere-blue-hover px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors"
                             >
-                                Load Character
+                                Import Character
                             </button>
                             <button
-                                onClick={handleSave}
-                                className="bg-cosmere-blue border border-cosmere-gold/50 text-cosmere-gold hover:bg-cosmere-blue-hover px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors relative"
+                                onClick={handleExport}
+                                className="bg-cosmere-blue border border-cosmere-gold/50 text-cosmere-gold hover:bg-cosmere-blue-hover px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors"
                             >
-                                Save Character
-                                {hasUnsavedChanges && (
-                                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-amber-500 rounded-full animate-pulse" title="Unsaved changes" />
-                                )}
+                                Export Character
                             </button>
                             <input
                                 type="file"
                                 ref={fileInputRef}
-                                onChange={handleLoad}
+                                onChange={handleImport}
                                 accept=".json"
                                 className="hidden"
                             />
                             <button
-                                onClick={() => exportToPdf(data)}
+                                onClick={() => campaign && exportToPdf(data, campaign.data)}
                                 className="bg-cosmere-gold text-cosmere-blue hover:brightness-90 border border-transparent px-4 py-2 rounded text-xs uppercase font-bold tracking-wider shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
                             >
                                 Export PDF
@@ -186,32 +159,41 @@ export const BuilderLayout = () => {
                 </div>
             </div>
 
-            {/* New Character Confirmation Modal */}
+            {/* Import Character Preview/Confirm Modal */}
             <Modal
-                isOpen={showNewCharacterModal}
-                title="Create New Character?"
-                message="You have unsaved changes. Creating a new character will discard all current progress. Are you sure you want to continue?"
-                confirmText="Create New"
+                isOpen={pendingImport !== null}
+                title={`Import "${pendingImport?.preview.characterName}"?`}
+                confirmText="Import"
                 cancelText="Cancel"
-                onConfirm={createNewCharacter}
-                onCancel={() => setShowNewCharacterModal(false)}
-                variant="warning"
-            />
-
-            {/* Load Character Warning Modal */}
-            <Modal
-                isOpen={showLoadWarningModal}
-                title="Load Character?"
-                message="You have unsaved changes. Loading a character will discard all current progress. Are you sure you want to continue?"
-                confirmText="Load"
-                cancelText="Cancel"
-                onConfirm={() => {
-                    setShowLoadWarningModal(false);
-                    fileInputRef.current?.click();
-                }}
-                onCancel={() => setShowLoadWarningModal(false)}
-                variant="warning"
-            />
+                onConfirm={confirmImport}
+                onCancel={() => setPendingImport(null)}
+                variant="info"
+            >
+                <div className="space-y-3 text-sm text-stone-700">
+                    <p>
+                        {pendingImport?.preview.isNewCharacter
+                            ? 'This adds a new character to this campaign.'
+                            : 'This updates a character already in this campaign (same id).'}
+                    </p>
+                    {pendingImport && pendingImport.preview.entities.length > 0 ? (
+                        <div>
+                            <p className="font-bold text-stone-800 mb-1">Campaign data this will add or update:</p>
+                            <ul className="list-disc list-inside space-y-0.5">
+                                {pendingImport.preview.entities.map(e => (
+                                    <li key={e.label}>
+                                        {e.label}
+                                        {e.newCount > 0 && <> — {e.newCount} new</>}
+                                        {e.newCount > 0 && e.updatedCount > 0 && ','}
+                                        {e.updatedCount > 0 && <> {e.updatedCount} updated</>}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <p>No campaign data (paths, talents, etc.) will be added or changed — everything this character references is already here.</p>
+                    )}
+                </div>
+            </Modal>
 
             {/* Notification Modal */}
             <NotificationModal
